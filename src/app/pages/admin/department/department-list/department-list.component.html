@@ -1,0 +1,139 @@
+
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <p>{{retryMessage}}</p>
+</div>
+
+<div style="text-align: center; font-size: larger; background-color: white !important" class="card-title-text"> <b> DEPARTMENT </b>
+</div>
+<br>
+ 
+
+<div class="row">
+  <div class="col-md-4 col-sm-4">
+
+  </div>
+  <div class="col-md-1 col-sm-1"></div>
+  <div class="col-sm-1">
+
+    <select style="width: 150px" class="form-control" [(ngModel)]="pageLmit">
+      <option>Item Per Page</option>
+      <option *ngFor="let a of ItemsPerPage" [value]="a.itemPerPage">{{ a.itemPerPage }}</option>
+    </select>
+
+  </div>
+  <div class="col-md-4">
+
+  </div>
+  <div></div>
+</div>
+<br>
+<div class="row" style="position: relative; left: 2px;">
+
+  <div class="col-sm-1">
+    <button (click)="action('Add','')" mat-raised-button color="accent"
+      class="mat-elevation-z12 box-button" type="submit">Add New</button>
+    <mat-spinner *ngIf="statusTrack == 'Decline'" strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+
+  </div>
+  <div class="col-md-1"></div>
+  <div class="col-sm-2">
+
+    <input style="width: 100%;" (keyup)="updateFilter($event, 1)" autocomplete="off" class="form-control" type="text"
+      placeholder="Search Dept Name" />
+  </div>
+  <div class="col-sm-2">
+
+    <input style="width: 100%" (keyup)="updateFilter($event, 2)" autocomplete="off" class="form-control" type="text"
+      placeholder="Search Dept Code" />
+  </div>
+  
+  <div class="col-sm-2">
+
+    <input style="width: 100%" (keyup)="updateFilter($event, 4)" autocomplete="off" class="form-control" type="text"
+      placeholder="Search HOD Name" />
+  </div>
+
+  <div class="col-sm-2">
+
+    <input style="width: 100%" (keyup)="updateFilter($event, 5)" autocomplete="off" class="form-control" type="text"
+      placeholder="Search HOD Email" />
+  </div>
+
+  <div class="col-sm-2">
+    <input style="width: 100%" (keyup)="updateFilter($event, 3)" autocomplete="off" class="form-control" type="text"
+      placeholder="Status" />
+
+
+  </div>
+  
+
+</div>
+<br>
+<div class="displayOnLapTop">
+
+
+  <ngx-datatable style="width: 100%; margin: 0  0% 0 3% !important" class="material ml-0 mr-0" [rows]="rows"
+    [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [limit]="pageLmit"
+    [rowHeight]="'auto'">
+    <ngx-datatable-column name="S/NO" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{rows.indexOf(row) + 1}}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Action" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <span *ngIf = "roleAssign.canView == true" class="viewSpan" (click)="action('View', row)">View</span>
+        <span *ngIf = "roleAssign.canEdit == true" (click)="action('Edit', row)" class="editSpan">Edit</span>
+      
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="DEPARTMENT NAME" [flexGrow]="2">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row?.deptname }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="DEPARTMENT CODE" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row?.deptCode }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="H.O.D NAME" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row?.hodName }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="H.O.D EMAIL" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row?.hodEmail }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="H.O.D ADDRESS" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row?.hodAddress }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="STATUS" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <mat-chip mat-sm-chip class="activestatus" [selected]="row.status" *ngIf="row.status == 'Active'">
+          {{ row.status }}
+        </mat-chip>
+
+        <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Active'">
+          {{ row.status }}
+        </mat-chip>
+      </ng-template>
+    </ngx-datatable-column>
+    
+  </ngx-datatable>
+</div>

@@ -1,0 +1,76 @@
+
+
+<div
+  id="app"
+  class="app"
+  [dir]="settings.rtl ? 'rtl' : 'ltr'"
+  [ngClass]="settings.theme"
+  [class.fixed-header]="settings.fixedHeader"
+  [class.horizontal-menu]="settings.menu == 'horizontal'"
+  [class.compact]="settings.menuType == 'compact'"
+  [class.mini]="settings.menuType == 'mini'"
+>
+
+
+  <router-outlet></router-outlet>
+
+  <div id="app-spinner" [class.hide]="!settings.loadingSpinner">
+    <mat-spinner color="primary"></mat-spinner>
+    <h4>RevAssurance...</h4>
+  </div>
+
+
+  <div class="fadeMe" *ngIf="setDisplayBroadCast">
+
+    <div class="modalx" id="myModals" >
+      <div class="modal-dialog">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+            <button type="button" class="close" (click)="closeBroadCast()" data-dismiss="modal">&times;</button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            <h5>
+              {{ broadCastMessage  }}
+             
+            </h5>
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" (click)="closeBroadCast()" class="btn btn-danger" data-dismiss="modal">
+              <span 
+                matTooltip="Close This Broadcast Message "  
+                
+                class="cursorPointer">
+                CLICK TO CLOSE 
+              </span>
+            </button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- <div id="snackbar" >
+      <span>
+        {{ broadCastMessage  }}
+ 
+      </span>
+      <br><br>
+      <span matTooltip="Close This Broadcast Message "  (click)="closeBroadCast()"
+          class="cursorPointer">
+        CLICK TO CLOSE   
+
+      </span>
+     
+    </div> -->
+  
+  </div>
+
+  
+</div>

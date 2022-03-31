@@ -1,0 +1,69 @@
+
+<div class="preloaderLogin" *ngIf="loginSucc == true">
+   
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+</div>
+
+<mat-sidenav-container style="background-image: url('assets/img/landing/LandingPage.jpg'); background-repeat: no-repeat;background-size: cover;" class="">
+
+      <div   fxLayout="row" fxLayoutAlign="center center" class="h-100">
+
+     <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" fxFlex="80" fxFlex.gt-sm="30" fxFlex.sm="60">
+
+          <mat-card  class="p-0 mat-elevation-z24 box">
+              <div fxLayout="column" fxLayoutAlign="center center" class="bg-primary box-header">
+                  <button mat-fab color="accent" class="mat-elevation-z12" (click)="onSubmit(form.value);">
+                      <mat-icon>lock</mat-icon>
+                  </button>
+                   <span>Change your Password Below</span>
+              </div>
+              <mat-card-content  fxLayout="column" fxLayoutAlign="end center" class="box-content">
+                  <mat-card fxLayout="column" fxLayoutAlign="center center" class="mat-elevation-z12 box-content-inner">
+
+                      <mat-form-field class="w-100">
+                          <input type="password" matInput placeholder="New Password" formControlName="password">
+                          <mat-error *ngIf="form.controls.password.errors?.required">New Password is required</mat-error>
+                         
+                      </mat-form-field> 
+
+                      <mat-form-field class="w-100">
+                        <input type="password" matInput placeholder="Confirm Password" formControlName="confirmPassword">
+                        <mat-error *ngIf="form.controls.confirmPassword.errors?.required">Confirm Password is required</mat-error>
+                      
+                    </mat-form-field> 
+
+                    <!-- <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+                      <div fxFlex="100" fxFlex.gt-xs="100" class="pr-1">
+                        <span   matTooltip="Click to request for a new Password"  class="cursorPointer" 
+                        (click)="gologin()">Go to Login</span> 
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                        <a class="cursorPointer resetPwdLink"  matTooltip="Click to request for a new Password" ></a>
+                
+                      </div>
+                    </div> -->
+                 
+                  </mat-card>
+              
+                  <mat-progress-bar *ngIf="displayloader === true" mode="indeterminate"></mat-progress-bar>
+
+                  <button *ngIf="displayloaderLogin !== true" [disabled]="!form.valid" mat-raised-button color="primary" 
+                  class="mat-elevation-z12 box-button" type="submit">{{ btnChangPwd }}</button>
+
+                  <button (click)="gologin()"  *ngIf="displayloaderLogin === true" mat-raised-button color="primary" 
+                  class="mat-elevation-z12 box-button">Go to Login</button>
+
+                 
+           
+              </mat-card-content>
+          </mat-card>
+      </form>    
+</div>
+
+</mat-sidenav-container> 
+
+
+
+
+<!--Role More than 1-->
+

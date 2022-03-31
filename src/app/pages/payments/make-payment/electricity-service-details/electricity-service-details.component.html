@@ -1,0 +1,110 @@
+<div class="preloader" *ngIf="loadPage == true">
+  <!-- <div class="col-sm-2">
+      <div id="square5">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+      </div> 
+      
+     
+  </div> -->
+
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+
+</div>
+
+<div>
+  Electricity Outstanding Details
+</div>
+
+
+
+<!-- id: 26
+description: "Electricity Charge for March"
+amount: "10000.00"
+status: "Unpaid"
+user_id: 101
+created_at: "2020-01-27 20:46:37"
+updated_at: "2020-03-27 20:46:37" -->
+
+
+
+<ngx-datatable
+class="material ml-0 mr-0"
+[rows]="rows"
+[columnMode]="'flex'"
+[headerHeight]="50"
+[footerHeight]="50"
+[limit]="10"
+[rowHeight]="'auto'">
+ 
+
+<ngx-datatable-column name="S/No" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+  {{rows.indexOf(row) + 1}}
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column name="Description" [flexGrow]="2">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.description }}
+  </ng-template>
+</ngx-datatable-column>
+
+
+<ngx-datatable-column name="Amount(₦)" [flexGrow]="2">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.amount  | number: '.2' }}
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column name="Month" [flexGrow]="2">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.created_at | date: 'd-MMM-y' }}
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column name="Status" [flexGrow]="2">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+  
+    <mat-chip mat-sm-chip class="inactivestatus">
+      {{ row.status }}
+    </mat-chip>
+  </ng-template>
+</ngx-datatable-column>
+</ngx-datatable> 
+
+
+
+<div fxLayout="row wrap" class="divMat">
+  <!--Check Out-->
+
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+ 
+
+</div>
+
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+     
+          <div class="w-100 h-100p divMat">
+             
+            <mat-progress-bar *ngIf="displayloader === true" mode="indeterminate"></mat-progress-bar>
+
+        <button mat-raised-button  color="primary" (click)="addToCart()"
+        class="mat-elevation-z12 box-button btn" type="submit"> 
+        <mat-icon class="icon-sm">add_shopping_cart</mat-icon>
+        {{ btnAction }}</button>  
+
+        <button mat-raised-button color="accent" (click)="back()"
+        class="mat-elevation-z12 box-button btn" type="submit"> 
+        <mat-icon class="icon-sm">keyboard_arrow_left</mat-icon>  
+        Back</button> 
+          </div>
+     
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+ 
+
+  </div>
+</div>

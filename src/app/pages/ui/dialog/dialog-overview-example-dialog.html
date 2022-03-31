@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Hi {{ userInfo }}</h1>
+
+{{txt}}
+
+<div mat-dialog-content *ngIf="hide === false">
+  <p>Time Out, System is login Out, Click on Continue to Continue Otherwise click on Cancel </p>
+  <!-- <mat-form-field>
+    <input matInput tabindex="1" [(ngModel)]="data.animal">
+  </mat-form-field> -->
+</div>
+<div mat-dialog-actions *ngIf="hide === false">
+  <!-- <button mat-button [mat-dialog-close]="data.animal" tabindex="2">Cancel</button>
+   -->
+  <!-- <button mat-button (click)="onNoClick()" tabindex="-1">Continue</button> -->
+
+  <button   mat-raised-button 
+  color="primary" (click)="onNoClick()" class="mat-elevation-z12 box-button" mat-dialog-close>Cancel</button> 
+</div>

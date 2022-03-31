@@ -1,0 +1,78 @@
+ 
+  <!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+   <p>{{retryMessage}}</p> 
+  </div>
+
+
+
+
+  <div style="margin-left: 20px; background-color: white !important" 
+  class="card-title-text"> <b> EXECUTE SCRIPT </b>    
+  </div>
+  <br>
+
+  <br>
+
+  <form [formGroup]="basicForm" [formGroup]="basicForm">
+ 
+
+
+    <div class = "form-group row" style="padding-bottom: 7px;">
+      
+     <label for="input-11" class="col-sm-2 col-form-label">Query<span style="color: red;"> (NO SELECT STATEMENT)</span></label>
+     <div class = "col-sm-6">
+       <textarea formControlName="script" class="form-control" [(ngModel)]="script"></textarea> 
+     
+     
+      </div>
+   
+    </div>
+    
+  
+ 
+    <br>
+   <div class = "form-group row"> 
+    <div class = "btn-group" style="margin: 0  50% 0 40%">
+   
+       <!-- <button   *ngIf="data.actionName == 'Add'"
+       mat-raised-button color="accent" 
+       [disabled]="!basicForm.valid">
+       <img src="assets/img/loader/loader.gif"/>
+       Save</button> -->
+   
+       
+            
+        <button id="btnUpdate" 
+        mat-raised-button color="accent" (click)="execute()"
+        >
+        <!-- <img *ngIf = "actionLoaderUpdate === true" src="assets/img/loader/loader.gif"/> -->
+        Execute</button>
+   
+        <!-- <button type="button" style="margin: 0 0 0 10px;" 
+        mat-raised-button color="primary" 
+        >Return</button> -->
+               
+        <mat-spinner *ngIf ="displayloader == true" 
+        strokeWidth="1" [diameter]="30" color="primary"></mat-spinner> 
+        </div>
+    </div>
+   
+  </form>
+ 
+
+ 

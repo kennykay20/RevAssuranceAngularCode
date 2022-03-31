@@ -1,0 +1,368 @@
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <!-- <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/> -->
+  <br>
+  <p>{{retryMessage}}</p>
+
+</div>
+
+
+<div fxLayout="column">
+  <div class="flex-p">
+
+    <div style="background-color: white !important" class="flex-p">
+
+      <div class="form-group row">
+        <div class="col-sm-3">
+
+          <button (click)="back()" mat-raised-button color="primary" class="mat-elevation-z12 box-button"
+            type="submit">Return</button>
+
+          <button id="btnSave" (click)="add()" mat-raised-button color="accent" class="mat-elevation-z12 box-button m-2"
+            type="submit">
+            <img *ngIf="actionLoaderSave === true" src="assets/img/loader/loader.gif" />
+            Save</button>
+
+          <button id="btnRemoveAssign" (click)="removeAll()" mat-raised-button color="primary"
+            class="mat-elevation-z12 box-button m-2" type="submit">
+
+            Remove All</button>
+          <mat-spinner *ngIf="displayloaderR === true" strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+
+        </div>
+        <div class="col-sm-2">
+
+          <select class="form-control m-2" [(ngModel)]="roleInfo" (change)='onOptionsSelected($event)'>
+            <option>Select Roles</option>
+            <option *ngFor="let a of roles" [value]="a.roleId">{{ a.roleName }}</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top: 5px !important;" class="displayOnLapTop">
+        <ul class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+          <li [class]="selectedCalss">
+            <a class="nav-link {{tab1}}" data-toggle="tab" (click)="swapTab(1)"><i class="icon-home">
+              </i> <span class="hidden-xs">
+                <b>Admin Menu</b>
+              </span></a>
+          </li>
+          <!-- class="nav-item cursorPointer" -->
+          <li [class]="selectedCalss2">
+            <a class="nav-link {{tab2}}" data-toggle="tab" (click)="swapTab(2)"><i class="icon-home"></i>
+              <span class="hidden-xs">
+                <b>Operation Menu</b>
+              </span></a>
+          </li>
+
+          <li [class]="selectedCalss3">
+            <a class="nav-link {{tab3}}" data-toggle="tab" (click)="swapTab(3)"><i class="icon-home"></i>
+              <span class="hidden-xs">
+                <b>Reports Menu</b>
+              </span></a>
+          </li>
+        </ul>
+
+        <div class="displayOnLapTop" *ngIf="tabVlues === 1">
+
+          <table style="background-color: white" class="table table-bordered table-sm table-hover tableStyle">
+            <thead>
+              <tr>
+                <th style="width: 20px">SNO</th>
+                <th style="width: 80px">Menu Name
+
+                  <span style="float: right">
+                    Select All. <mat-checkbox color="primary" [(ngModel)]="selectedAll" class="example-margin"
+                      (change)="selectAll()"></mat-checkbox>
+                  </span>
+
+                </th>
+                <th style="width: 40px; text-align: center;">Can View</th>
+                <th style="width: 40px; text-align: center;">Can Add</th>
+                <th style="width: 40px; text-align: center;">Can Edit</th>
+                <!-- <th style="width: 40px; text-align: center;">Can Delete</th> -->
+                <th style="width: 40px; text-align: center;">Can Auth.</th>
+                <th style="width: 40px; text-align: center;">Global View</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!--Search Start Here-->
+              <tr>
+                <td></td>
+                <td>
+                  <input style="width: 100%" (keyup)="updateFilter($event, 2)" autocomplete="off" class="form-control"
+                    type="text" placeholder="Search" />
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllCanView" class="example-margin"
+                    (change)="selectAllCanView()"></mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllCanAdd" class="example-margin"
+                    (change)="selectAllCanAdd()"></mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllcanEdit" class="example-margin"
+                    (change)="selectAllcanEdit()"></mat-checkbox>
+                </td>
+                <!-- <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllCanDelete" class="example-margin"
+                    (change)="selectAllcanDelete()"></mat-checkbox>
+                </td> -->
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllcanAuth" class="example-margin"
+                    (change)="selectAllcanAuth()"></mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllisGlobalSupervisor" class="example-margin"
+                    (change)="selectAllisGlobalSupervisor()"></mat-checkbox>
+                </td>
+              </tr>
+              <!--Search Ends here-->
+
+              <tr *ngFor="let row of rows; let h = index;">
+                <td> {{ h + 1 }}</td>
+                <td> {{ row?.menuName }}</td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canView" class="example-margin" (change)="selectView(row)">
+                  
+                  </mat-checkbox>
+
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canAdd" class="example-margin" (change)="select(row)">
+                  </mat-checkbox>
+
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canEdit" class="example-margin" (change)="select(row)">
+                  </mat-checkbox>
+
+                </td>
+                <!-- <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canDelete" class="example-margin"
+                    (change)="select(row)">
+                  </mat-checkbox>
+                </td> -->
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canAuth" class="example-margin" (change)="select(row)">
+                  </mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.isGlobalSupervisor" class="example-margin"
+                    (change)="select(row)">
+                  </mat-checkbox>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="displayOnLapTop" *ngIf="tabVlues === 2">
+          <table style="background-color: white" class="table table-bordered table-sm table-hover tableStyle">
+            <thead>
+              <tr>
+                <th style="width: 20px">SNO</th>
+                <th style="width: 80px">Menu Name
+
+                  <span style="float: right">
+                    Select All. <mat-checkbox color="primary" [(ngModel)]="selectedAll1" class="example-margin"
+                      (change)="selectAll1()"></mat-checkbox>
+                  </span>
+                  
+                </th>
+                <th style="width: 40px; text-align: center;">Can View</th>
+                <th style="width: 40px; text-align: center;">Can Add</th>
+                <th style="width: 40px; text-align: center;">Can Edit</th>
+                <!-- <th style="width: 40px; text-align: center;">Can Delete</th> -->
+                <th style="width: 40px; text-align: center;">Can Auth.</th>
+                <th style="width: 40px; text-align: center;">Global View</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!--Search Start Here-->
+              <tr>
+                <td></td>
+                <td>
+                  <input style="width: 100%" (keyup)="updateFilter1($event, 2)" autocomplete="off" class="form-control"
+                    type="text" placeholder="Search" />
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllCanView1" class="example-margin"
+                    (change)="selectAllCanView1()"></mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllCanAdd1" class="example-margin"
+                    (change)="selectAllCanAdd1()"></mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllcanEdit1" class="example-margin"
+                    (change)="selectAllcanEdit1()"></mat-checkbox>
+                </td>
+                <!-- <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllCanDelete1" class="example-margin"
+                    (change)="selectAllcanDelete1()"></mat-checkbox>
+                </td> -->
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllcanAuth1" class="example-margin"
+                    (change)="selectAllcanAuth1()"></mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllisGlobalSupervisor1" class="example-margin"
+                    (change)="selectAllisGlobalSupervisor1()"></mat-checkbox>
+                </td>
+              </tr>
+              <!--Search Ends here-->
+
+              <tr *ngFor="let row of rows1; let h = index;">
+                <td> {{ h + 1 }}</td>
+                <td> {{ row?.menuName }}</td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canView" class="example-margin" (change)="selectView1(row)">
+                  </mat-checkbox>
+
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canAdd" class="example-margin" (change)="select1(row)">
+                  </mat-checkbox>
+
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canEdit" class="example-margin" (change)="select1(row)">
+                  </mat-checkbox>
+
+                </td>
+                <!-- <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canDelete" class="example-margin"
+                    (change)="select(row)">
+                  </mat-checkbox>
+                </td> -->
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canAuth" class="example-margin" (change)="select1(row)">
+                  </mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.isGlobalSupervisor" class="example-margin"
+                    (change)="select1(row)">
+                  </mat-checkbox>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <div class="displayOnLapTop" *ngIf="tabVlues === 3">
+          <table style="background-color: white" class="table table-bordered table-sm table-hover tableStyle">
+            <thead>
+              <tr>
+                <th style="width: 20px">SNO</th>
+                <th style="width: 80px">Menu Name
+
+                  <span style="float: right">
+                    Select All. <mat-checkbox color="primary" [(ngModel)]="selectedAll2" class="example-margin"
+                      (change)="selectAll2()"></mat-checkbox>
+                  </span>
+
+                </th>
+                <th style="width: 40px; text-align: center;">Can View</th>
+                <th style="width: 40px; text-align: center;">Can Add</th>
+                <th style="width: 40px; text-align: center;">Can Edit</th>
+                <!-- <th style="width: 40px; text-align: center;">Can Delete</th> -->
+                <th style="width: 40px; text-align: center;">Can Auth.</th>
+                <th style="width: 40px; text-align: center;">Global View</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="rows2.length > 0">
+
+              <!--Search Start Here-->
+              <tr>
+                <td></td>
+                <td>
+                  <input style="width: 100%" (keyup)="updateFilter2($event, 2)" autocomplete="off" class="form-control"
+                    type="text" placeholder="Search" />
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllCanView2" class="example-margin"
+                    (change)="selectAllCanView2()"></mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllCanAdd2" class="example-margin"
+                    (change)="selectAllCanAdd2()"></mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllcanEdit2" class="example-margin"
+                    (change)="selectAllcanEdit2()"></mat-checkbox>
+                </td>
+                <!-- <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllCanDelete2" class="example-margin"
+                    (change)="selectAllcanDelete2()"></mat-checkbox>
+                </td> -->
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllcanAuth2" class="example-margin"
+                    (change)="selectAllcanAuth2()"></mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllisGlobalSupervisor2" class="example-margin"
+                    (change)="selectAllisGlobalSupervisor2()"></mat-checkbox>
+                </td>
+              </tr>
+              <!--Search Ends here-->
+
+              <tr *ngFor="let row of rows2; let h = index;">
+                <td> {{ h + 1 }}</td>
+                <td> {{ row?.menuName }}</td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canView" class="example-margin" (change)="selectView2(row)">
+                  </mat-checkbox>
+
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canAdd" class="example-margin" (change)="select2(row)">
+                  </mat-checkbox>
+
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canEdit" class="example-margin" (change)="select2(row)">
+                  </mat-checkbox>
+
+                </td>
+                <!-- <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canDelete" class="example-margin"
+                    (change)="select(row)">
+                  </mat-checkbox>
+                </td> -->
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canAuth" class="example-margin" (change)="select2(row)">
+                  </mat-checkbox>
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.isGlobalSupervisor" class="example-margin"
+                    (change)="select2(row)">
+                  </mat-checkbox>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+</div>

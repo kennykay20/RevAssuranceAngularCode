@@ -1,0 +1,148 @@
+<mat-sidenav-container  style="background-image: url('../assets/img/landing/LandingPage.jpg'); background-repeat: no-repeat;background-size: cover;">
+  
+    <div fxLayout="row" fxLayoutAlign="center center" class="h-100">
+  
+          <form  *ngIf="swap === false" [formGroup]="form" (ngSubmit)="onSubmit(form.value)" fxFlex="80" fxFlex.gt-sm="30" fxFlex.sm="60">
+  
+              <mat-card class="" >
+                  <div fxLayout="column" fxLayoutAlign="center center" class="bg-primary box-header">
+                      <button mat-fab color="accent" class="mat-elevation-z12" (click)="back(form.value);">
+                          <mat-icon>person_add</mat-icon>
+                      </button>
+                      <a mat-button routerLink="/login">Already have an account? Sign in!</a>
+                  </div>
+                  <mat-card-content >
+                      <mat-card fxLayout="column" fxLayoutAlign="center center" class="mat-elevation-z12 box-content-inner" style="width: 1000px !important">
+                          <span class="box-content-header">Register Member</span>  
+                        
+
+
+                          <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+                            <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                                  <mat-form-field class="full-width">
+                                    <input matInput placeholder="First Name" formControlName="first_name">
+                                    <mat-error *ngIf="form.controls.first_name.errors?.required">First  Name is required</mat-error>
+                                    
+                                  </mat-form-field>
+                            </div>
+                  
+                            <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                                  <mat-form-field class="full-width">
+                                    <input matInput placeholder="Last Name" formControlName="last_name">
+                                    <mat-error *ngIf="form.controls.last_name.errors?.required">Last Name is required</mat-error>
+                                
+                                      </mat-form-field>
+                            </div>
+                           
+                              
+                          </div>
+
+
+                          <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+                            <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                                  <mat-form-field class="full-width">
+                                    <input matInput placeholder="Meter Number" formControlName="meter_number">
+                                    <mat-error *ngIf="form.controls.meter_number.errors?.required">Meter Number is required</mat-error>
+                                    
+                                
+                                  </mat-form-field>
+
+                                  
+                            </div>
+                  
+                            <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                                  <mat-form-field class="full-width">
+                                    <mat-select placeholder="Select Property Type"
+                                    matInput
+                                    formControlName="property_type"
+                                    name="property_type">
+                                <mat-option>Select Property  Types</mat-option>
+                                    <mat-option *ngFor="let a of property_types" 
+                                    [value]="a"
+                                >{{ a }}</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.controls.property_type.errors?.required">Property Type is required</mat-error>
+                                      </mat-form-field>    
+                            </div>
+                           
+                              
+                          </div>
+
+                        <mat-form-field class="w-100">
+                            <input matInput placeholder="House Address" formControlName="house_address">
+                            <mat-error *ngIf="form.controls.house_address.errors?.required">House Address is required</mat-error>
+                        </mat-form-field>
+
+                     
+                          <mat-form-field class="w-100">
+                            <input matInput placeholder="Phone Number" formControlName="phone_number">
+                            <mat-error *ngIf="form.controls.phone_number.errors?.required">Phone number is required</mat-error>
+                            <mat-error *ngIf="form.controls.phone_number.hasError('minlength')">Phone Number Name isn't long enough, minimum of 11 characters</mat-error>
+                          </mat-form-field>
+                          <mat-form-field class="w-100">
+                              <input matInput placeholder="Email" formControlName="email">
+                              <mat-error *ngIf="form.controls.email.errors?.required">Email is required</mat-error>
+                              <mat-error *ngIf="form.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+                          </mat-form-field>
+                          <mat-form-field class="w-100">
+                              <input matInput placeholder="Password" formControlName="password" type="password" minlength="6">
+                              <mat-error *ngIf="form.controls.password.errors?.required">Password is required</mat-error>
+                              <mat-error *ngIf="form.controls.password.hasError('minlength')">Password isn't long enough, minimum of 6 characters</mat-error>
+                          </mat-form-field> 
+                          <mat-form-field class="w-100">
+                            <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password">
+                            <mat-error *ngIf="form.controls.confirmPassword.errors?.required">Confirm Password is required</mat-error>
+                            <mat-error *ngIf="form.controls.confirmPassword.hasError('mismatchedPasswords')">Passwords do not match</mat-error>
+                          </mat-form-field>
+                        
+                          <mat-checkbox color="primary" required formControlName="agree">I Agree to Term and Condition</mat-checkbox>
+                          
+                          <mat-chip color="" class="cursorPointer" (click)="goBackToSignup()" matTooltip="Click to Read Term And Condition">Term and Condition</mat-chip>                        
+
+                          <mat-progress-bar *ngIf="displayloader === true" mode="indeterminate"></mat-progress-bar>
+
+                          <button style="margin-top: 5px; width:200px"  
+                          [disabled]="!form.valid" mat-raised-button 
+                          color="primary" class="mat-elevation-z12 box-button" type="submit">{{btn}}</button>
+                      
+                      </mat-card>
+                     
+                    </mat-card-content>
+              </mat-card>
+              
+         </form>       
+    
+
+
+      
+              <mat-card class="" *ngIf="swap === true">
+                  <div fxLayout="column" fxLayoutAlign="center center" class="bg-primary box-header">
+                     
+
+                      <div fxLayout="column" fxLayoutAlign="center center" class="bg-primary box-header">
+                        <button matTooltip="Click to Go Back" mat-fab color="warn" class="mat-elevation-z12" (click)="goBackToSignup()">
+                            <mat-icon>reply</mat-icon>
+                        </button>
+                        <a mat-button > Term and Condition </a>
+                    </div>
+
+                  </div>
+                  <mat-card-content fxLayout="column" fxLayoutAlign="end center" class="box-content" style="width: 1000px !important">
+                      <mat-card fxLayout="column" fxLayoutAlign="center center" class="mat-elevation-z12 box-content-inner" style="width: 1000px !important">
+                         
+                        eeeeeeeeeeeeeeee
+                       
+                      </mat-card>
+                     
+                    </mat-card-content>
+              </mat-card>
+              
+       
+
+
+
+
+         
+    </div>
+  
+  </mat-sidenav-container>

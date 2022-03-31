@@ -1,0 +1,177 @@
+ 
+  <div class="preloader" *ngIf="loadPage == true">
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+  <br>
+  <p>{{retryMessage}}</p> 
+
+</div>
+
+
+<div  class="col-sm-12 row">
+  <div class="col-sm-2">
+      <button style="margin: 0 0 0 10px;" (click)="userAction('Decline')"  mat-raised-button color="accent" 
+      class="mat-elevation-z12 box-button" type="submit">Decline</button>
+      <mat-spinner *ngIf ="statusTrack == 'Decline'"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+  </div>
+
+  <div class="col-sm-3">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Item Per Page"
+          matInput
+          [(ngModel)] = "pageLmit">
+      <mat-option>Item Per Page</mat-option>
+          <mat-option *ngFor="let a of ItemsPerPage" 
+          [value]="a.itemPerPage"
+      >{{ a.itemPerPage }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-sm-3">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Search By"
+          matInput
+          [(ngModel)] = "columnId">
+      <mat-option>Search By</mat-option>
+          <mat-option *ngFor="let a of searchUserColumns"
+          [value]="a.id"
+      > {{ a.columnName }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-sm-3">
+    <mat-form-field class="full-width">
+      <input matInput
+      (keyup)="updateFilter($event)"
+          placeholder="Search" value="" required>
+  </mat-form-field>
+  </div>
+</div>
+
+
+  <div class="displayOnLapTop">
+    <ngx-datatable
+    class="material ml-0 mr-0"
+    [rows]="rows"
+    [columns]="columns"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [limit]="pageLmit"
+    [rowHeight]="'auto'">
+      <ngx-datatable-column name="S/No" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+      {{rows.indexOf(row) + 1}}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Select" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <mat-checkbox color="primary" class="example-margin" 
+         (change)="select(row)"></mat-checkbox>
+        
+    
+     
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Full Name" [flexGrow]="2">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row?.first_name }} {{ row?.last_name }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Phone Number" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row?.phone_number }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Email Address" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row?.email }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Meter Number" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row?.meter_number }}
+      </ng-template>
+    </ngx-datatable-column>
+     <ngx-datatable-column name="Date Created" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row?.created_at | date: 'd-MMM-y' }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Status" [flexGrow]="1">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <mat-chip mat-sm-chip class="activestatus" [selected]="row.status" *ngIf="row.status == 'Active'">
+          {{ row.status }}
+        </mat-chip>
+      
+         <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Active'">
+          {{ row.status }}
+        </mat-chip>
+      </ng-template>
+    </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+
+  <div class="displayOnMobile">
+    <table #dataTable>
+      <thead>
+      <tr>
+        <th>S/No.</th>
+        <th>Select</th>
+        <th>Full Name</th>
+        <th>Phone Number</th>
+        <th>Email Address</th>
+        <th>Meter Number</th>
+        <th>Date Created</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor ="let a of rowsMobile; let h = index;">
+        <td>{{ h + 1 }}</td>
+        <td>
+         
+          <mat-checkbox color="primary" class="example-margin" 
+          (change)="select(a)"></mat-checkbox>
+        </td>
+        <td> {{ a?.first_name }} {{ a?.last_name }}</td>
+        <td>{{a?.phone_number}}</td>
+        <td>{{a?.email}}</td>
+        <td>{{a?.meter_number}}</td>
+        <td> {{ a?.created_at | date: 'd-MMM-y' }}</td>
+        <td>
+    
+          <mat-chip mat-sm-chip class="activestatus" [selected]="a.status" *ngIf="a.status == 'Active'">
+            {{ a.status }}
+          </mat-chip>
+        
+           <mat-chip mat-sm-chip class="inactivestatus" *ngIf="a.status !== 'Active'">
+            {{ a.status }}
+          </mat-chip>
+        </td>
+      </tr>
+      
+      </tbody>
+    </table>
+    
+
+    
+<div  class="col-sm-12 row">
+  <div class="col-sm-2">
+    <button  (click)="prevPage()"  id="btn_prev" mat-raised-button color="primary">Prev</button>
+  </div>
+  <div class="col-sm-2">
+    <button  (click)="nextPage()"  id="btn_next" mat-raised-button color="accent">Next</button>
+
+  </div>
+  <div class="col-sm-2">
+    page: <span id="page"></span>
+  </div>
+</div>
+
+         
+         
+      
+  </div>
+ 
+
+

@@ -1,0 +1,162 @@
+
+
+<div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+</div>
+
+
+<div class="col-sm-12 row">
+    
+    
+    
+    <div class="col-sm-2"></div>
+
+    <div class="col-sm-3">
+      <select style="margin-top: 5px; width: 200px" class="form-control" 
+      [(ngModel)] = "pageLmit" (change)='onOptionsSelected($event)'>
+        <option>Item Per Page</option>
+        <option *ngFor="let a of ItemsPerPage"
+        [value]="a.itemPerPage">{{ a.itemPerPage }}</option>
+      </select>
+    </div>
+
+    <div class="col-sm-3 text-center">
+      <b>   AUDIT TRAIL HISTORY  </b>
+    </div>
+  </div>
+  <br>
+    <div class="displayOnLapTop">
+      <table  class="table table-bordered table-sm table-hover tableStyle" 
+              style="background-color: white; width: 1000px; margin: 0 5% 0 2%">
+        <thead>
+          <tr>
+            <th  style="width: 20px">S/NO</th>
+            <th  style="width: 180px">Full Name</th>
+            <th  style="width: 60px">Event Type</th>
+            <th  style="width: 100px">Event Date</th>
+            <th  style="width: 100px">Column Name</th>
+            <th  style="width: 240px">Original Value</th>
+            <th  style="width: 240px">New Value</th>
+          </tr>
+        </thead>
+        <tbody >
+          <!--Search Here-->
+          <tr>
+            <td> 
+              <!-- <input style ="width: 100%"  (keyup)="updateFilter($event, 1)"
+              autocomplete="off" class="form-control"
+               type="text" placeholder="Search" 
+                /> -->
+             </td>
+              <td> 
+                <input style ="width: 100%"  (keyup)="updateFilter($event, 'FullName')"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+              </td>
+              <td> 
+                  <input style ="width: 100%"  (keyup)="updateFilter($event, 'EventType')"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+            </td>
+            <td> 
+                <!-- <input style ="width: 100%"  (keyup)="updateFilter($event, 'EventType')"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  /> -->
+            </td>
+            <td> 
+              <input style ="width: 100%"  (keyup)="updateFilter($event, 'ColumnName')"
+              autocomplete="off" class="form-control"
+               type="text" placeholder="Search" 
+                />
+            </td>
+            <td> 
+              <input style ="width: 100%"  (keyup)="updateFilter($event, 'OriginalValue')"
+              autocomplete="off" class="form-control"
+               type="text" placeholder="Search" 
+                />
+            </td>
+            <td> 
+              <input style ="width: 100%"  (keyup)="updateFilter($event, 'NewValue')"
+              autocomplete="off" class="form-control"
+               type="text" placeholder="Search" 
+                />
+            </td>
+                 
+          </tr>
+        <!--Search End Here-->
+  
+          <tr *ngFor="let row of rows; let h = index;">
+            <td>  {{ h + 1 }}</td>
+            
+            <td class="pageFont"> {{ row?.userFullName }}</td>
+            <td class="pageFont">{{ row?.eventtype == "M" ? "Modified" : "Delete" }}</td>
+            <td class="pageFont">{{ row?.eventdateutc | date:'d-MMM-y' }}</td>
+            <td class="pageFont">{{ row?.columnName }}</td>
+            <td >  {{ row?.originalvalue | truncate }}  </td>
+            <td>  {{ row?.newvalue | truncate }}  </td>
+          </tr> 
+          
+        
+        </tbody>
+      </table>
+      
+      <br/>
+      <div class="row">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-1">
+          
+        </div>
+        <div class="col-sm-3">
+    
+          <div class="btn-group">
+            <button type="button" style="margin-right: 10px;" class="mat-elevation-z12 box-button" mat-raised-button color="primary"
+          (click)="close()">Return</button>
+
+            <button mat-raised-button color="primary" style="margin-left: 0%" (click)="prevPage()"
+              class="mat-elevation-z12 box-button" type="submit">
+              <mat-icon id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+            </button>
+            <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" class="mat-elevation-z12 box-button"
+              (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+          </div>
+    
+        </div>
+        <div class="col-sm-2">
+          <span style="font-size: 15px; margin-left: 25px; text-align: center !important; 
+             font-weight: 900; ">
+            Page: </span> &nbsp;
+          <span style="font-size: 15px; text-align: center !important; font-weight: 900;" id="page">{{ pageListVal }}</span>
+        </div>
+    
+      </div>
+    </div>
+
+    <br>
+    <div class="form-group row">
+      <div class="btn-group" style="margin: 0  50% 0 40%">
+
+        <!-- <button type="button" style="margin: 0 0 0 10px;" mat-raised-button color="primary"
+          (click)="close()">Return</button> -->
+
+        <mat-spinner *ngIf="displayloader == true" strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+      </div>
+    </div>
+
+
+
+    <script>
+      $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+      });
+    </script>

@@ -1,0 +1,79 @@
+<div class="preloaderLogin" *ngIf="loginSucc == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+</div>
+<!-- <div class="header" id="myHeader">
+<h2>My Header</h2>
+</div> -->
+<button  mat-raised-button color="accent" class="mat-elevation-z12 box-button"
+type="button" (click)="close()">{{ btnReturn }}</button>
+<mat-sidenav-container
+  style="background-image: url('../assets/img/landing/authentication-bg.png'); background-repeat: no-repeat;background-size: cover;"
+  class="">
+
+  <!-- <div style="background-image: url('../assets/img/login/formalImg - Copy (2).jpg'); background-repeat: no-repeat;"  fxLayout="row" fxLayoutAlign="center center" class="h-100"> -->
+
+  <div fxLayout="row" fxLayoutAlign="center center" class="h-100">
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" fxFlex="80" fxFlex.gt-sm="30" fxFlex.sm="60">
+
+      <mat-card class="p-0 mat-elevation-z24 box">
+        <div style="background-color: #525151 !important;" fxLayout="column" fxLayoutAlign="center center"
+          class="bg-primary box-header">
+          <!-- <button mat-fab color="accent" class="mat-elevation-z12" (click)="onSubmit(form.value);">
+                    <mat-icon>person</mat-icon>
+               </button> -->
+          <!-- <button (click)="backToLogin()" mat-raised-button color="primary" class="mat-elevation-z12 box-button"
+  type="submit">Return</button> -->
+
+            
+          <a style="margin: -60px 0 0 350px" mat-button (click)="backToLogin()" *ngIf="actionDiaplayName !== 'renew'">Click Here to Return</a>
+          <img src="assets/img/login/logo_animatex.gif" class="img-fluid" />
+          <span style="font-size: 18px; font-weight: 900; margin-top: 10px">REVASSURANCE LICENSE</span>
+        </div>
+        <mat-card-content fxLayout="column" fxLayoutAlign="end center" class="box-content">
+
+          <mat-card fxLayout="column" fxLayoutAlign="center center" class="mat-elevation-z12 box-content-inner">
+
+            <div class="form-group row">
+              <!-- <div class="col-sm-12">
+                <label style=" margin-left: -8px; margin-bottom: -10px" for="input-11"
+                  class="col-form-label">License</label>
+              </div> -->
+
+              <div class="col-sm-12">
+
+                <input type="text" class="form-control" autocomplete="off"
+                  style="width:100% !important; font-weight: 800" placeholder="Paste License here"
+                  formControlName="licenseKey" />
+              </div>
+
+            </div>
+          </mat-card>
+
+          <mat-progress-bar *ngIf="displayloader === true" mode="indeterminate"></mat-progress-bar>
+
+          <button [disabled]="!form.valid" mat-raised-button color="primary" class="mat-elevation-z12 box-button"
+            type="submit">{{ btnChangPwd }}</button>
+
+           
+
+
+        </mat-card-content>
+
+
+
+      </mat-card>
+
+    </form>
+
+  </div>
+
+</mat-sidenav-container>

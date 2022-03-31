@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>RevAssurance</title>
+  <base href="/">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+  <link rel="icon" type="image/x-icon" href="assets/img/icoimage2/favicon.jpg">
+  
+  <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+   -->
+  
+  <link href="assets/materialiconStyle.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script src="assets/themes/1.min.js"></script>
+  <script src="assets/themes/2.min.js"></script>
+  <script src="assets/themes/3.min.js"></script>
+  <script src="assets/themes/4.min.js"></script>
+  <script src="assets/themes/5.min.js"></script>
+  <script src="assets/themes/6.min.js"></script>
+  <script src="assets/themes/7.min.js"></script>
+  <script src="assets/themes/8.min.js"></script>
+  <script src="assets/themes/9.min.js"></script>
+  <script src="assets/themes/10.min.js"></script>
+  <script src="assets/themes/11.min.js"></script>
+  <script src="assets/themes/12.min.js"></script>
+  <script src="assets/themes/13.min.js"></script>
+  <script src="assets/themes/14.min.js"></script>
+  <script src="assets/themes/15.min.js"></script>
+  <script src="assets/themes/16.min.js"></script>
+  <script src="assets/themes/17.min.js"></script>
+  <script src="assets/themes/18.min.js"></script>
+  <script src="assets/themes/19.min.js"></script>
+  <script src="assets/themes/20.min.js"></script>
+  <script src="assets/themes/21.min.js"></script>
+  <script src="assets/themes/22.min.js"></script>
+  <script src="assets/themes/23.min.js"></script>
+
+  <!-- <script src="../node_modules/tinymce.min.js" referrerpolicy="origin
+  "></script> -->
+
+  <!-- this optional step -->
+  <!-- include libraries(jQuery, bootstrap) -->
+
+
+  <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> -->
+
+
+  <!-- this optional step -->
+
+  <!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+   -->
+
+  <style>
+  
+    .full-width {
+      width: 100% !important;
+    }
+
+    .allFieldRequired {
+      float: right;
+      color: black !important
+    }
+
+    .allFieldRequiredtxt {
+      color: red
+    }
+
+    .preloader {
+      align-items: center;
+      background: rgb(10, 9, 9);
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      left: 0;
+      position: fixed;
+      top: 50px;
+      transition: opacity 0.3s linear;
+      width: 100%;
+      z-index: 9999;
+      color: white;
+      opacity: 0.7;
+      flex-direction: column;
+    }
+
+    .preloaderLogin {
+      align-items: center;
+      background: rgb(10, 9, 9);
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      left: 0;
+      position: fixed;
+      top: 0;
+      transition: opacity 0.3s linear;
+      width: 100%;
+      z-index: 9999;
+      color: white;
+      opacity: 0.7;
+      flex-direction: column;
+    }
+
+    /**===== square5 =====*/
+    #square5 {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 50px;
+      width: 50px;
+      margin: -25px 0 0 -25px;
+    }
+
+    #square5 span {
+      width: 16px;
+      height: 16px;
+      background-color: #000;
+      display: inline-block;
+      -webkit-animation: square5 1.7s infinite ease-in-out both;
+      animation: square5 1.7s infinite ease-in-out both;
+    }
+
+    #square5 span:nth-child(1) {
+      left: 11px;
+      -webkit-animation-delay: 0.2s;
+      animation-delay: 0.2s;
+      background: #d62d20;
+    }
+
+    #square5 span:nth-child(2) {
+      left: 22px;
+      -webkit-animation-delay: 0.4s;
+      animation-delay: 0.4s;
+      background: #008744;
+    }
+
+    #square5 span:nth-child(3) {
+      left: 33px;
+      -webkit-animation-delay: 0.6s;
+      animation-delay: 0.6s;
+      background: #0057e7;
+    }
+
+    #square5 span:nth-child(4) {
+      left: 44px;
+      -webkit-animation-delay: 0.8s;
+      animation-delay: 0.8s;
+      background: #ffa700;
+    }
+
+    @keyframes square5 {
+      0% {
+        -webkit-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+        -webkit-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+      }
+
+      50% {
+        -webkit-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+        -webkit-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+      }
+
+      100% {
+        -webkit-transform: rotateX(180deg);
+        transform: rotateX(180deg);
+        -webkit-transform: rotateX(180deg);
+        transform: rotateX(180deg);
+      }
+    }
+
+    @-webkit-keyframes square5 {
+      0% {
+        -webkit-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+      }
+
+      50% {
+        -webkit-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+      }
+
+      100% {
+        -webkit-transform: rotateX(180deg);
+        transform: rotateX(180deg);
+      }
+    }
+
+    /** END of square5 */
+
+
+    .app.teal-light .bg-primary {
+      background: #6a6e6d !important;
+      color: white;
+      /* opacity: 0.7;  */
+    }
+
+    .form-control {
+
+      /* border-radius: 0% !important; */
+      font-family: sans-serif !important;
+
+    }
+
+    .width100 {
+      width: 100px !important
+    }
+ .width150 {
+      width: 150px !important
+    }
+
+    .imgLoader {
+      top: 0px;
+      width: 200px !important;
+    }
+
+
+    [type="search"] {
+      outline-offset: -2px;
+      -webkit-appearance: none;
+      color: red;
+      /* border-radius: 10px; */
+      text-align: center;
+      border-top: unset;
+      border-left: unset;
+      border-right: unset;
+      border-bottom: 1.5px solid #319535 !important;
+    }
+
+
+    /* input, button, select, optgroup, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+     width: 89px; 
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border: 1px solid #000;
+	   height: 28px; font-size: 12px
+     border-bottom: 1px solid green; 
+} */
+
+/* kenny update */
+    input:read-only {
+      background-color: #ffffff !important;
+      border-width: 0px 0px 0px;
+      border-color: #c0c0c0 !important;
+    }
+
+    input,
+    select {
+
+      border: 1px solid #000 !important;
+      /* height: 28px !important;
+      font-size: 12px !important;
+      font-family: sans-serif !important; */
+      height: 28px !important;
+      font-size: 12px !important;
+      font-family: sans-serif !important;
+    }
+
+    /* kenny update */
+    input:read-only {
+      background-color: #ffffff !important;
+      border-width: 0px 0px 0px;
+      border-color: #c0c0c0 !important;
+    }
+
+
+    input[readonly],
+    select[readonly] {
+      background-color: #fff !important;
+      border: 0.5px solid #000000 !important;
+    }
+
+    input,
+    select {
+      background-color: #fff !important;
+
+    }
+
+
+    .infoAcctdetails {
+      text-align: center;
+      background: #fff;
+      color: #7B7776 !important;
+      height: auto !important;
+      border: 0.5px solid #C0c0c0;
+      background-image: linear-gradient(#c0c0c0, black, #c0c0c0) !important;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none !important;
+      border: 1px solid red !important;
+      box-shadow: 0 0 10px #719ECE;
+    }
+
+
+    .activestatus {
+      background-color: #00695c !important;
+      color: white !important;
+      border: 1px solid green !important;
+      border-radius: 7px !important;
+      padding: 2px 4px 2px 5px !important;
+    }
+
+
+    .inactivestatus {
+      background-color: orange !important;
+      color: rgba(0, 0, 0, 0.87) !important;
+      border: 1px solid orange !important;
+      border-radius: 8px !important;
+      padding: 2px 4px 2px 4px !important;
+      color: black !important;
+    }
+
+    .rebck {
+      background-color: #840808 !important;
+    }
+
+
+    .divMat {
+      margin-bottom: 0px;
+      text-align: center;
+
+    }
+
+
+
+    .btn {
+      background-color: #00695c;
+      /* text-align: center; */
+      margin-top: 29px;
+      width: auto;
+
+    }
+
+
+    .titletxt {
+      font-size: 17px;
+      font-weight: 900;
+      color: black !important;
+
+    }
+
+    .swal2-popup .swal2-styled {
+      margin: .3125em;
+      padding: 0.625em 1em !important;
+      font-weight: 500;
+      box-shadow: none;
+    }
+
+    .ngx-datatable *,
+    .ngx-datatable *:before,
+    .ngx-datatable *:after {
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      font-size: 12px;
+      color: black;
+      font-family: inherit;
+    }
+
+    a:active {
+      color: orange !important;
+      ;
+    }
+
+
+
+    .mat-icon-button {
+      padding: 0;
+      min-width: 0;
+      width: 28px !important;
+      height: 40px;
+      flex-shrink: 0;
+      line-height: 40px;
+      border-radius: 50%;
+    }
+
+    .swal2-popup .swal2-styled.swal2-confirm {
+      border: 0;
+      border-radius: .25em;
+      background: initial;
+      background-color: #3085d6;
+      color: #fff;
+      font-size: 1.0625em;
+      width: auto !important;
+    }
+
+    .cursorPointer {
+      cursor: pointer;
+    }
+
+    textarea {
+      border: solid 1px;
+      height: 100px !important;
+      padding: 5px !important;
+    }
+
+    .cursorAngulTbl {
+      text-align: left;
+      padding: .9rem 1.2rem;
+      vertical-align: top;
+      border-top: 0;
+      color: rgba(0, 0, 0, 0.87);
+      -webkit-transition: width 0.3s ease;
+      transition: width 0.3s ease;
+      font-size: 14px;
+      font-weight: 400;
+      cursor: pointer !important;
+    }
+
+    textarea[readonly] {
+      background-color: white !important;
+    }
+
+    p {
+      color: #fff;
+    }
+
+
+
+
+    /* for label to move right */
+    .col-form-label {
+      text-align: right !important;
+      font-size: 11px !important;
+      color: black !important;
+      font-family: sans-serif !important;
+      font-weight: 700 !important;
+    }
+
+    /*Different Media Query for Form*/
+
+
+    /*kkkkkkkkkkkkkkkkk*/
+
+    .form-group {
+      margin-bottom: 0.1rem !important;
+    }
+
+    /* Styling the Action Link  */
+
+    .viewSpan {
+      color: green;
+      cursor: pointer;
+    }
+
+    .editSpan {
+      color: red;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .notPostedSpan {
+      color: red;
+      margin-left: 0px;
+      cursor: pointer;
+    }
+
+    
+    .ps__thumb-y{
+      background-color: red;
+      cursor: pointer;
+      width: 20px;
+    }
+
+    /*Material Dialog Style*/
+
+    .mat-dialog-container {
+      box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2),
+        0 24px 38px 3px rgba(0, 0, 0, .14),
+        0 9px 46px 8px rgba(0, 0, 0, .12) !important;
+      /* display: block !important;
+      padding: 24px !important;
+      border-radius: 2px !important;
+      box-sizing: border-box !important;
+      overflow: auto !important;
+      outline: 0 !important; */
+      /* width: 1400px !important;
+      height: 650px !important; */
+      /* margin-left: 100px !important; */
+      outline: 0 !important;
+      overflow: auto !important;
+    }
+
+
+    /* Header for Audit Trail*/
+
+    .infoAcctdetails {
+      text-align: center;
+      background: #fff;
+      color: #7B7776 !important;
+      height: auto !important;
+      border: 0.5px solid #C0c0c0;
+      background-image: linear-gradient(#c0c0c0, black, #c0c0c0) !important;
+
+
+    }
+
+
+    /* below is for new charge request */
+
+    .spanNewReq {
+      font-weight: 800;
+      color: #0D943D
+    }
+
+    .margingTop10 {
+      margin-top: 10px;
+    }
+
+    /* below is for Selected Tab */
+    .selected {
+      background: #f1efee !important;
+    }
+
+    .notselected {
+      background: #fff !important;
+    }
+
+    .tableStyle {
+      background-color: white;
+      font-size: 12px;
+      font-weight: 400
+    }
+
+    /* checkbox */
+    input[type=checkbox] {
+      transform: scale(1.5);
+    }
+
+    .sub-menu.show {
+      max-height: 50000px !important;
+      -webkit-transition: max-height 0.25s ease-in;
+      transition: max-height 0.25s ease-in;
+
+    }
+
+    /* checkbox {
+    border: 1px solid #000 !important;
+    height: 12px !important;
+    font-size: 12px !important;
+    font-family: sans-serif !important;
+} */
+
+    a:hover {
+      background-image: linear-gradient(#c0c0c0, black, #c0c0c0) !important;
+      color: white !important;
+    }
+
+    .app.red-light .active-link {
+      border-radius: 0;
+
+      background-image: linear-gradient(#c0c0c0, black, #c0c0c0) !important;
+      color: white !important;
+
+
+    }
+
+    /* to remove date input default value */
+    input[type="date"],
+    input[type="time"],
+    input[type="datetime-local"],
+    input[type="month"] {
+      -webkit-appearance: listbox;
+      color: transparent;
+    }
+
+    .redBorder {
+      border: 1px solid red !important;
+    }
+
+    .xstyle{
+        color: red;
+    }
+
+    input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+      border: 1px solid red !important;
+    }
+
+    .pageFont{
+      font-family: sans-serif;
+      font-size:14px;
+    }
+
+    input.ng-invalid, select.ng-invalid {
+      border: 1px solid red !important;
+    }
+
+    .txtRight {
+      text-align: right !important;
+    }
+
+    .txtCenter {
+      text-align: center !important;
+    }
+
+    .errorTdBckgrd {
+      background-color: #C70039;
+      color: white;
+    }
+
+
+
+    /* .menu-item .mat-button {
+    padding: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    width: 100%;
+    font-size: 15px !important;
+    font-weight: 400;
+} */
+
+    .mat-button .mat-button-wrapper>*,
+    .mat-fab .mat-button-wrapper>*,
+    .mat-icon-button .mat-button-wrapper>*,
+    .mat-mini-fab .mat-button-wrapper>*,
+    .mat-raised-button .mat-button-wrapper>* {
+      vertical-align: left !important;
+      font-size: 13.7px !important;
+      font-weight: 700;
+    }
+
+    .TempStlyle {
+      margin: 0 10% 0 10%;
+    }
+
+
+    .viewManmdate {
+      background-image: linear-gradient(#c62828, black, #c62828) !important;
+      margin-left: 20px !important;
+    }
+
+    /* / for posting alert / */
+
+.alertPostTrans {
+align-items: center;
+background: rgb(10, 9, 9);
+display: flex;
+height: 100vh;
+justify-content: center;
+left: 0;
+position: fixed;
+top: 50px;
+transition: opacity 0.3s linear;
+width: 100%;
+z-index: 9999;
+color: white;
+/* / opacity: 0.7; / */
+flex-direction: column;
+}
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+  visibility: visible; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #E52B18; /* Black background color */
+  color: #fff !important; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  left: 85%; /* Center the snackbar */
+  top: 5%;
+  /* bottom: 30px;  */
+  /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+
+
+div.fadeMe {
+    opacity: 0.9;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+  </style>
+
+
+</head>
+
+<body>
+  <app-root></app-root>
+
+  
+</body>
+
+</html>

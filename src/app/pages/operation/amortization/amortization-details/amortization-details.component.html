@@ -1,0 +1,429 @@
+ <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+  </div> 
+
+<div style="margin-top: -30px">
+
+    <div style="border: none solid black;margin-top: 10px">
+        <div class="form-group">
+            <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+                <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">INSTRUMENT DETAILS </label>
+            </div>
+        </div>
+        <div style="border: 1px solid #c0c0c0;">
+
+            <div style="margin-top: 10px" class="form-group row">
+
+                <label for="input-11" class="col-sm-1 col-form-label ">Schedule Id</label>
+                <div class="col-sm-2">
+                    <input readonly autocomplete="off" [(ngModel)]="basicForm.scheduleId" class="form-control"
+                        type="text" placeholder="" />
+                </div>
+
+
+                <label for="input-11" class="col-sm-1 col-form-label">instrument Type</label>
+                <div class="col-sm-2">
+
+                    <select class="form-control" 
+                        [(ngModel)]="basicForm.instrumentType"
+                        [ngClass]="{'redBorder':
+                            basicForm.instrumentType == null  }" >
+                        <option value="">Type Of Instrument</option>
+                        <option *ngFor="let a of admService" [value]="a.serviceId">{{ a.serviceDescription }}</option>
+                    </select>
+
+                </div>
+
+                <!--cr incom-->
+                <label for="input-11" class="col-sm-1 col-form-label">Total Amount </label>
+                <div class="col-sm-2">
+
+                    <input 
+                    class="form-control txtRight" 
+                    [(ngModel)]="basicForm.totalAmount" type="text"
+                    (change)="formatAmt($event)"
+                    [ngClass]="{'redBorder':
+                            basicForm.totalAmount == null  }"  />
+
+                </div>
+                <!--cr income-->
+                <label for="input-11" class="col-sm-1 col-form-label">Effective Date</label>
+
+                <div class="col-sm-1">
+                    <input class="form-control" readonly style = "width: 100px"
+                    [(ngModel)]="basicForm.effectiveDate" type="text"
+                    [ngClass]="{'redBorder':
+                            basicForm.effectiveDate == null  }" />
+                </div>
+                <!-- <div class="col-sm-1">
+                    <input style="border: none !important;" class="form-control cursorPointer" type="date" value=""
+                        [(ngModel)]="basicForm.effectiveDate" (change)="effDate($event)" />
+                </div> -->
+
+                <div class="col-md-1 col-sm-1" style="text-align:right;justify-content:right">
+                    <input matInput 
+                        [matDatepicker]="myEffectiveDate" 
+                        placeholder=""
+                        
+                        #refEffectiveDate
+                        (dateChange)="effDate1(refEffectiveDate.value)"
+                        style="width:0px"
+                    >
+                    <mat-datepicker-toggle [for]="myEffectiveDate" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #myEffectiveDate [startAt]="startDateVal"></mat-datepicker>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <label for="input-11" class="col-sm-1 col-form-label ">Term</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" 
+                    [(ngModel)]="basicForm.term" class="form-control" type="text"
+                    placeholder="" (change)="endDate()"
+                    [ngClass]="{'redBorder':
+                            basicForm.term == null  }" />
+                </div>
+
+
+                <label for="input-11" class="col-sm-1 col-form-label">Time Basis</label>
+                <div class="col-sm-2">
+                    <select class="form-control" (change)='onOptionsSelected($event)'
+                        [(ngModel)]="basicForm.termPeriod"
+                        [ngClass]="{'redBorder':
+                            basicForm.termPeriod == null  }" >
+                        <option value="">Period</option>
+                        <option *ngFor="let a of period" [value]="a">{{ a }}</option>
+                    </select>
+
+                </div>
+
+                <!--cr incom-->
+                <label for="input-11" class="col-sm-1 col-form-label">Expiry Date </label>
+
+                <div class="col-sm-2">
+                    <input class="form-control" readonly
+                    [(ngModel)]="basicForm.expiryDate"
+                    [ngClass]="{'redBorder': basicForm.expiryDate == null  }" 
+                    type="text" />
+                </div>
+                <!--cr income-->
+                <label for="input-11" class="col-sm-1 col-form-label">Currency</label>
+                <div class="col-sm-2">
+                    <select 
+                        class="form-control" 
+                        [(ngModel)]="basicForm.currencyCode"
+                        [ngClass]="{'redBorder':basicForm.currencyCode == null  }">
+                        <option value="">Acct Currency</option>
+                        <option *ngFor="let a of currencies" [value]="a.isoCode">{{ a.isoCode }}</option>
+                    </select>
+                </div>
+
+
+            </div>
+            <div class="form-group row">
+
+                <label for="input-11" class="col-sm-1 col-form-label ">No of Inst.</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" [(ngModel)]="basicForm.noInstalmt" class="form-control" type="text"
+                        placeholder="" readonly />
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Instal Amt</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" [(ngModel)]="basicForm.instlmtAmount" class="form-control txtRight" type="text"
+                        placeholder="" readonly />
+                </div>
+
+                <!--Cr income-->
+                <label for="input-11" class="col-sm-1 col-form-label ">Inst. Processed</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" [(ngModel)]="basicForm.instlmtProcessed" class="form-control" type="text"
+                        placeholder="" readonly />
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">First Inst. Date</label>
+
+                <div class="col-sm-2">
+                    <input class="form-control" readonly
+                    [(ngModel)]="basicForm.firstInstlmtDate" type="text" />
+                </div>
+                
+            </div>
+
+            <div class="form-group row">
+                <label for="input-11" class="col-sm-1 col-form-label">Next Inst. Date </label>
+
+                <div class="col-sm-2">
+                    <input class="form-control" readonly style="width: 100px;"
+                     [(ngModel)]="basicForm.nextInstlmtDate" type="text" />
+                </div>
+           
+                <!--Cr income-->
+                <label for="input-11" class="col-sm-1 col-form-label">Final Inst. Date</label>
+
+                <div class="col-sm-2">
+                    <input class="form-control" readonly 
+                    [(ngModel)]="basicForm.finalInstlmtDate" type="text" />
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Instl. Remaining</label>
+                <div class="col-sm-2">
+                    <input [(ngModel)]="basicForm.instlmtRem" autocomplete="off" class="form-control" type="text"
+                        placeholder="" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="input-11" class="col-sm-1 col-form-label">Proc. Dept</label>
+                <div class="col-sm-5">
+                    <select class="form-control" [(ngModel)]="basicForm.processingDept">
+                        <option>Select Department</option>
+                        <option *ngFor="let a of departments" [value]="a.deptId">{{ a.deptname }}</option>
+                    </select>
+
+                </div>
+            </div>
+
+
+            <div class="col-sm-12 infoAcctdetails info" style="background-color:#444;color:#fff; text-align:center;">
+                <label class="control-label lbl" style="margin-left: 10px; color: white" for="tagsinput-2">DEBIT ACCT
+                    DETAILS </label>
+                <label class="control-label lbl" style="margin-left: 500px; color: white" for="tagsinput-2">CREDIT ACCT
+                    DETAILS </label>
+            </div>
+            <div style="margin-top: 10px;" class="form-group row">
+
+                <label for="input-11" class="col-sm-1 col-form-label ">Acct Type</label>
+                <div class="col-sm-2">
+
+                    <select class="form-control" 
+                        [(ngModel)]="basicForm.drAcctType"
+                        (change)="validateDrAcct2()"
+                        [ngClass]="{'redBorder':
+                            basicForm.drAcctType == null  }">
+                        <option>Acct Type</option>
+                        <option *ngFor="let a of acttypes" 
+                        [value]="a.accountTypeCode">{{ a.accountTypeCode }}</option>
+                    </select>
+
+
+                  
+
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Acct No</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" [(ngModel)]="basicForm.drAcctNo"
+                    [ngClass]="{'redBorder':
+                    basicForm.drAcctNo == null  }" class="form-control" type="text"
+                        placeholder="" (change)="validateDrAcct($event)" />
+                </div>
+
+                <!--Cr income-->
+                <label for="input-11" class="col-sm-1 col-form-label ">Acct Type</label>
+                <div class="col-sm-2">
+                    <select class="form-control" [(ngModel)]="basicForm.crAcctType"
+                    (change)="validateCrAcct2($event)"
+                    [ngClass]="{'redBorder':
+                    basicForm.crAcctType == null  }">
+                        <option>Acct Type</option>
+                        <option *ngFor="let a of acttypes" 
+                        [value]="a.accountTypeCode">{{ a.accountTypeCode }}</option>
+                    </select>
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Acct No</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" [(ngModel)]="basicForm.crAcctNo"
+                    [ngClass]="{'redBorder':
+                    basicForm.crAcctNo == null  }" class="form-control" type="text"
+                        placeholder="" (change)="validateCrAcct($event)"/>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for="input-11" class="col-sm-1 col-form-label ">Currency</label>
+                <div class="col-sm-2">
+                    <select class="form-control" [(ngModel)]="basicForm.dracctCcy"
+                    [ngClass]="{'redBorder':
+                    basicForm.dracctCcy == null  }">
+                        <option value="">Acct Type</option>
+                        <option *ngFor="let a of currencies" [value]="a.isoCode">{{ a.isoCode }}</option>
+                    </select>
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" [(ngModel)]="basicForm.dracctStatus" class="form-control" type="text"
+                        placeholder="" readonly />
+                </div>
+
+                <!--Cr income-->
+                <label for="input-11" class="col-sm-1 col-form-label ">Currency</label>
+                <div class="col-sm-2">
+                    <select class="form-control" 
+                        [(ngModel)]="basicForm.cracctCcy"
+                        [ngClass]="{'redBorder':
+                            basicForm.cracctCcy == null  }">
+                        <option>Acct Type</option>
+                        <option *ngFor="let a of currencies" 
+                        [value]="a.isoCode">{{ a.isoCode }}</option>
+                    </select>
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" [(ngModel)]="basicForm.cracctStatus" class="form-control" type="text"
+                        placeholder="" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <label for="input-11" class="col-sm-1 col-form-label ">Acct Name</label>
+                <div class="col-sm-5">
+                    <input autocomplete="off" [(ngModel)]="basicForm.dracctName" class="form-control" type="text"
+                        placeholder="" readonly />
+                </div>
+                <!--Cr income-->
+                <label for="input-11" class="col-sm-1 col-form-label">Acct Name</label>
+                <div class="col-sm-5">
+                    <input autocomplete="off" [(ngModel)]="basicForm.cracctName" class="form-control" type="text"
+                        placeholder="" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <label for="input-11" class="col-sm-1 col-form-label ">Balance</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" 
+                        [(ngModel)]="basicForm.dracctBal" class="form-control txtRight width150" 
+                        type="text" disabled
+                        placeholder=""
+                        style="text-align:right"
+                        (change)="formatAmt1($event)" />
+                </div>
+               
+                <label for="input-11" class="col-sm-1 col-form-label">TC</label>
+                <div class="col-sm-2">
+
+                    <select class="form-control" [(ngModel)]="basicForm.drAcctTC">
+                        <option>Transaction Code</option>
+                        <option *ngFor="let a of TC" [value]="a">{{ a }}</option>
+                    </select>
+                </div>
+
+                <!--Cr income-->
+                <label for="input-11" class="col-sm-1 col-form-label ">Balance</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" [(ngModel)]="basicForm.cracctBal" class="form-control txtRight width150" type="text" disabled
+                        placeholder="" (change)="formatAmt2($event)" />
+                </div>
+                
+                <label for="input-11" class="col-sm-1 col-form-label">TC</label>
+                <div class="col-sm-2">
+                    <select class="form-control" [(ngModel)]="basicForm.crAcctTC">
+                        <option>Transaction Code</option>
+                        <option *ngFor="let a of TC" [value]="a">{{ a }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <label for="input-11" class="col-sm-1 col-form-label ">Dr Acct Narr</label>
+                <div class="col-sm-5">
+                    <input autocomplete="off" [(ngModel)]="basicForm.drAcctNarration" class="form-control" type="text"
+                        placeholder="" />
+                </div>
+                <!--Cr income-->
+                <label for="input-11" class="col-sm-1 col-form-label">Cr Acct Narr</label>
+                <div class="col-sm-5">
+                    <input autocomplete="off" [(ngModel)]="basicForm.crAcctNarration" class="form-control" type="text"
+                        placeholder="" />
+                </div>
+
+
+
+            </div>
+
+            <div *ngIf="data.actionName !== 'Add'" class="form-group">
+                <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+                    <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+                </div>
+            </div>
+            <div *ngIf="data.actionName !== 'Add'">
+                <div style="margin-top: 10px" class="form-group row">
+
+                    <label for="input-11" class="col-sm-2 col-form-label">Created By</label>
+                    <div class="col-sm-2">
+                        <input autocomplete="off" [(ngModel)]="basicForm.createdBy" class="form-control" type="text"
+                            placeholder="" readonly />
+
+                    </div>
+                    <label for="input-11" class="col-sm-1 col-form-label">Date Created</label>
+                    <div class="col-sm-2">
+                        <input autocomplete="off" [(ngModel)]="basicForm.dateCreated" class="form-control" type="text"
+                            placeholder="" readonly />
+                    </div>
+                    <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+                    <div class="col-sm-2">
+
+                    
+                        <input autocomplete="off" [(ngModel)]="basicForm.status" class="form-control" type="text"
+                            placeholder="" readonly />
+                    </div>
+                    <div class="col-md-1 m-2" *ngIf="data.actionName == 'Edit'" >
+                        <button type="button"  
+                        mat-raised-button color="primary" (click)="auditList()"
+                        >Audit Trail</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <br>
+        <!-- Instrument Details End here -->
+
+        <!--Add Panel End here-->
+        <div class="form-group row">
+            <div class="btn-group" style="margin: 0  50% 0 40%">
+
+
+
+                <button id="btnSave" *ngIf="data.actionName == 'Add'" mat-raised-button color="accent"
+                    (click)="add(basicForm)">
+                    <img *ngIf="actionLoaderSave === true" src="assets/img/loader/loader.gif" />
+                    Save</button>
+
+                <button id="btnUpdate" *ngIf="data.actionName == 'Edit'" mat-raised-button color="accent"
+                    (click)="update(basicForm)">
+                    <img *ngIf="actionLoaderUpdate === true" src="assets/img/loader/loader.gif" />
+                    Update</button>
+
+                    
+
+                       <button id="btnUpdate" *ngIf="data.actionName == 'Authorize'" mat-raised-button color="accent"
+                    (click)="approve()">
+                    <!-- <img *ngIf="actionLoaderUpdate === true" src="assets/img/loader/loader.gif" /> -->
+                      APPROVE AMORTIZATION</button>
+
+                       <button id="btnRejectAuthAmor" *ngIf="data.actionName == 'Authorize'" style="margin: 0 0 0 10px;" 
+                            (click)="openRejectionReason()" mat-raised-button color="primary"
+                                class="mat-elevation-z12 box-button" type="submit">
+                                REJECT AMORTIZATION
+                        </button>
+
+                <button type="button" style="margin: 0 0 0 10px;" mat-raised-button color="primary"
+                    (click)="close()">Return</button>
+
+                <mat-spinner *ngIf="displayloader == true" strokeWidth="1" [diameter]="30" color="primary">
+                </mat-spinner>
+            </div>
+        </div>
+
+    </div>
+</div>

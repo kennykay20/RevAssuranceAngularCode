@@ -1,0 +1,74 @@
+
+
+
+
+<div class="preloaderLogin" *ngIf="loginSucc == true">
+   
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+  <br>
+  <p>{{ retryMessage }}</p> 
+
+</div>
+
+<mat-sidenav-container style="background-image: url('assets/img/landing/LandingPage.jpg'); background-repeat: no-repeat;background-size: cover;" class="">
+
+      <div   fxLayout="row" fxLayoutAlign="center center" class="h-100">
+
+     <form [formGroup]="form" fxFlex="80" fxFlex.gt-sm="30" fxFlex.sm="60">
+      
+          <mat-card class="p-0 mat-elevation-z24 box">
+              <div fxLayout="column" fxLayoutAlign="center center" class="bg-primary box-header">
+              
+                  <a mat-button routerLink="/register">Verify Email</a>
+              </div>
+              <mat-card-content fxLayout="column" fxLayoutAlign="end center" class="box-content">
+                  <mat-card fxLayout="column" fxLayoutAlign="center center" class="mat-elevation-z12 box-content-inner">
+                 
+                    <button  *ngIf="showbtn == true" style="background-color: green" mat-fab color="accent" class="mat-elevation-z12">
+                      <mat-icon style="color: white">done</mat-icon>
+                  </button>
+
+                  <button  *ngIf="showbtn == false" 
+                  style="background-color: red" mat-fab color="accent" 
+                  class="mat-elevation-z12">
+                    <mat-icon style="color: white">cancel</mat-icon>
+                </button>
+
+
+                  <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                   </div>
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                   
+                    </div>
+                  </div>
+
+                  <span> {{msg}} </span> 
+                   
+
+                  <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                   </div>
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+                   
+                    </div>
+                  </div>
+
+                  
+                  </mat-card>
+                  <button 
+                  
+                  *ngIf="showbtn == true"
+                   mat-raised-button color="primary" 
+                   class="mat-elevation-z12 box-button" 
+                   (click)="gotoLogin()"
+                   type="submit">Continue</button>
+           
+              </mat-card-content>
+          </mat-card>
+          
+      </form>    
+
+</div>
+
+</mat-sidenav-container> 

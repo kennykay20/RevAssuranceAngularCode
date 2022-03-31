@@ -1,0 +1,66 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+  <!-- <div class="col-sm-2">
+      <div id="square5">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+      </div> 
+      
+     
+  </div> -->
+
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+
+</div>
+
+
+
+<form [formGroup]="basicForm" [formGroup]="basicForm" (ngSubmit)="add(basicForm.value)">
+<mat-card>
+<mat-card-header fxLayoutAlign="left"> 
+                
+</mat-card-header>
+<div class="card-title-text"> <b> Role Details </b>   <label class="allFieldRequired"> <label class="allFieldRequiredtxt">Note:</label> All fields marked * are required</label></div>
+<br><br>
+<mat-card-content class="centerDiv">
+<div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex="100" fxFlex.gt-xs="5" class="pr-1">  
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+          <mat-form-field class="full-width">
+                  <input matInput name="name" formControlName="name"
+                      placeholder="Role Name" value="" required>
+              </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+                         
+        <button  *ngIf="displayloader != true" matTooltip = "Create a New Role"
+        mat-raised-button color="primary" 
+        [disabled]="basicForm.invalid">Create</button>
+        {{lblProcess}}
+      <mat-spinner *ngIf ="displayloader == true" 
+               strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+              
+    
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+                         
+        <button  matTooltip = "Return" matTooltip = "Click to Return"
+                 mat-raised-button color="accent" 
+                 (click)="return()">Return</button>
+     
+              
+    
+    </div>
+  </div>
+
+    
+
+ 
+  </mat-card-content>
+</mat-card>
+</form>

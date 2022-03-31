@@ -1,0 +1,217 @@
+
+ <div class="preloader" *ngIf="loadPage == true">
+  <!-- <div class="col-sm-2">
+      <div id="square5">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+      </div> 
+  </div> -->
+
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+  <br>
+  <p>{{retryMessage}}</p> 
+
+</div>
+
+
+<div fxLayout="column">
+  <div class="flex-p">
+    
+    <div style="background-color: white !important" class="flex-p"><div
+       style="margin-left: 20px; background-color: white !important" class="card-title-text"> <b> 
+        All Payments History </b>    
+    </div>
+
+
+<div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex="100" fxFlex.gt-xs="5" class="pr-1">
+  </div>
+
+  <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Item Per Page"
+          matInput
+          [(ngModel)] = "pageLmit">
+      <mat-option>Item Per Page</mat-option>
+          <mat-option *ngFor="let a of ItemsPerPage" 
+          [value]="a.itemPerPage"
+      >{{ a.itemPerPage }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+  <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Search By"
+          matInput
+          [(ngModel)] = "columnId">
+      <mat-option>Search By</mat-option>
+          <mat-option *ngFor="let a of searchUserColumns"
+          [value]="a.id"
+      > {{ a.columnName }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+    <div fxFlex="100" fxFlex.gt-xs="60" class="pr-1">
+
+       
+      <mat-form-field class="full-width">
+        <input matInput
+        (keyup)="updateFilter($event)"
+            placeholder="Search" value="" required>
+    </mat-form-field>
+
+
+    </div>
+    <div class="col-sm-1">
+      <img src="assets/img/excel.png" class="cursorPointer" style="height: 50px" title="Export to Excel" (click) ="openExportExcel('Excel')"/>
+     </div>
+   
+</div>
+
+
+<div class="displayOnLapTop">
+  <ngx-datatable
+class="material ml-0 mr-0"
+[rows]="rows"
+[columns]="columns"
+[columnMode]="'force'"
+[headerHeight]="50"
+[footerHeight]="50"
+[limit]="pageLmit"
+[rowHeight]="'auto'">
+  <ngx-datatable-column name="S/No" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+  {{rows.indexOf(row) + 1}}
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column name="Type" [flexGrow]="2">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.type }} 
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column name="Name" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.name }}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Trans. Ref." [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.eazybillz_reference }}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Description" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.description }}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Amount(₦)" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.amount | number : '.2'}}
+  </ng-template>
+</ngx-datatable-column>
+ <ngx-datatable-column name="Trans Date" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.created_at | date: 'medium' }}
+  
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Status" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    <mat-chip mat-sm-chip class="activestatus">
+     Success
+    </mat-chip>
+  
+  </ng-template>
+</ngx-datatable-column>
+</ngx-datatable>
+  
+</div>
+
+<div class="displayOnMobile">
+	<div  class="col-sm-12" *ngIf="rows.length > 0">
+  <table #dataTable>
+    <thead>
+    <tr>
+      <th>S/No.</th>
+      <th>Payment Type</th>
+      <th>Resident Name</th>
+      <th>Trans. Ref.</th>
+      <th>Description</th>
+      <th>Amount(₦)</th>
+      <th>Date Created</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+     <tr *ngFor ="let row of rowsMobile; let h = index;">
+      <td>{{ h + 1 }}</td>
+      <td>  {{ row?.type }} </td>
+      <td>  {{ row?.name }} </td>
+      <td> {{ row?.eazybillz_reference }} </td>
+      <td> {{ row?.description }} </td>
+      <td>{{ row?.amount | number : '.2' }}</td>
+      <td> {{ row?.created_at | date: 'medium' }}</td>
+      <td>   
+        <mat-chip mat-sm-chip class="activestatus">
+        Success
+       </mat-chip>
+       </td>
+    </tr> 
+    
+    </tbody>
+  </table>
+</div>
+
+<br>
+<div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex="100" fxFlex.gt-xs="5" class="pr-1">
+         
+        
+
+  </div>
+
+
+  <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+
+      <div class="btn-group">
+          <button mat-raised-button color="primary"
+          style = "margin-left: 0%" (click)="prevPage()"
+            class="mat-elevation-z12 box-button" type="submit"><mat-icon  id="btn_prev">keyboard_arrow_left</mat-icon>Prev.</button> 
+            <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+            class="mat-elevation-z12 box-button" (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+      </div> 
+
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+
+       
+    
+
+
+    </div>
+
+
+  
+  
+  </div>
+<div  class="col-sm-12 row" style = "text-align: center">
+
+<span style = "font-size: 15px; text-align: center !important; margin-left: 65%; font-weight: 900; ">Page: </span> <span style="font-size: 15px; text-align: center !important; font-weight: 900;" id="page"></span>
+
+</div>      
+
+</div>
+        
+    </div>
+  
+  </div>
+
+
+</div>

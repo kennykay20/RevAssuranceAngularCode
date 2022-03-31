@@ -1,0 +1,164 @@
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <p>{{retryMessage}}</p>
+</div>
+
+<div class="form-group row">
+  <div class="col-sm-2">
+    <div class="btn-group">
+
+            <button id="btnSearchEnq" style="margin: 0 0 0 0px;" 
+            (click)="approve()" mat-raised-button color="accent"
+                  class="mat-elevation-z12 box-button" type="submit">
+                  APPROVE AMORTIZATION
+            </button>
+
+      <button id="btnRejectAuthAmor" style="margin: 0 0 0 10px;" 
+      (click)="openRejectionReason()" mat-raised-button color="primary"
+        class="mat-elevation-z12 box-button" type="submit">
+        REJECT AMORTIZATION
+      </button>
+  
+    </div>
+  </div>
+
+
+</div>
+
+<ul style="margin-top: 10px" class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+  <li [class]="selectedCalss">
+    <a class="nav-link {{tab1}}" data-toggle="tab"><i class="icon-home">
+
+      </i> <span class="hidden-xs">
+        <b> AMORTIZATION LIST  <span style="font-size: 15px; font-weight: 800; margin-left: 50px"></span></b>
+      </span></a>
+  </li>
+</ul>
+<!--Tabb 1-->
+
+<div class="displayOnLapTop">
+  <table style="background-color: white; overflow-y: scroll;"
+         class="table table-bordered table-sm table-hover tableStyle">
+    <thead>
+ 
+      <tr>
+        <th>S/NO</th>
+        <th style="width: 120px">ACTION</th>
+        <th style="width: 20px">SEL.</th>
+        <th style="width: 120px">DR ACCT NO</th>
+        <th style="width: 100px">DR ACCT TYPE</th>
+        <th style="width: 150px">CR ACCT NO</th>
+        <th style="width: 90px">CR ACCT TYPE</th>
+        <th style="width: 90px">CCY</th>
+        <th style="width: 90px">EFFECTIVE DATE</th>
+        <th style="width: 90px">NEXT INST. DATE</th>
+        <th style="width: 90px">TOTAL AMOUNT</th>
+        <th style="width: 150px">USER</th>
+        <th style="width: 90px">STATUS</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="rows.length > 0">
+      <!--Search Here-->
+      
+      <tr>
+        <td></td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 0)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <mat-checkbox color="primary"  [(ngModel)]="selectedAllTrans" 
+          class="example-margin" 
+         (change)="selectAll()"></mat-checkbox> 
+        </td>
+ 
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 1)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 2)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 3)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 4)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter1($event, 5)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 6)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter1($event, 7)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 8)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter1($event, 9)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter1($event, 10)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        
+
+      </tr>
+      <!--Search End Here-->
+      <tr *ngFor="let row of rows; let h = index;">
+        <td>
+          {{ h + 1}}
+        </td>
+        <td style="text-align: center;">
+          <span matTooltip="View  {{ row?.drAcctNo }} Details" class="viewSpan" (click)="action('View', row)">
+            View
+          </span>
+
+           <span *ngIf = "row?.status != 'Active'" Active matTooltip="Approve  {{ row?.drAcctNo }} Details" class="editSpan" (click)="action('Authorize', row)">
+            Approve
+          </span>
+        
+        </td>
+        <td> 
+             <mat-checkbox color="primary"  
+                        [(ngModel)]="row.select"  
+                        class="example-margin"
+                         *ngIf = "row?.status != 'Active'">
+             </mat-checkbox>
+        </td>
+        <td> {{ row?.drAcctNo }}</td>
+        <td style="text-align: center"> {{ row?.drAcctType }}</td>
+        <td> {{ row?.crAcctNo }} </td>
+        <td style="text-align: center"> {{ row?.crAcctType }}</td>
+        <td style="text-align: center"> {{ row?.currencyCode }} </td>
+
+        <td> {{ row?.effectiveDate | date: 'd-MMM-y' }}</td>
+        <td> {{ row?.nextInstlmtDate | date: 'd-MMM-y' }}</td>
+        <td style="text-align: right"> {{ row?.totalAmount | number : '.2' }} </td>
+        <td> {{ row?.userName }}</td>
+        <td>
+
+          {{ row?.status }}
+        </td>
+      
+      </tr>
+
+    </tbody>
+  </table>
+
+</div>

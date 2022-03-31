@@ -1,0 +1,70 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+
+</div>
+
+
+
+<form [formGroup]="basicForm" [formGroup]="basicForm" (ngSubmit)="add(basicForm.value)">
+<mat-card>
+<mat-card-header fxLayoutAlign="left"> 
+       
+</mat-card-header>
+<div class="card-title-text"> <b> 
+  Approve Waiver for {{record?.first_name}}  {{record?.last_name}} 
+   | Email: {{record?.email}}  | Phone:  {{record?.phone_number}}  
+  </b>   
+  <label class="allFieldRequired"> <label class="allFieldRequiredtxt">Note:</label> All fields marked * are required</label></div>
+<br><br>
+<mat-card-content class="centerDiv">
+
+<div class="col-sm-12 row">
+  <div class = "col-sm-3">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Select fine  Type "
+      matInput
+      formControlName="finetype"
+      (change)="getDes($event)"
+      name="finetype"
+      [(ngModel)]= "fineDes">
+  <mat-option>Select fine  Type</mat-option>
+      <mat-option *ngFor="let a of FineList" 
+      [value]="a"
+  >{{ a.name }}</mat-option>
+  </mat-select>
+       </mat-form-field> 
+  </div>
+
+  <div class = "col-sm-3">
+    <mat-form-field class="full-width">
+      <input matInput name="description" formControlName="description" readonly
+          placeholder="Description" value="" required [(ngModel)]= "fineDesSubmit">
+  </mat-form-field>
+  </div>
+  <div class = "col-sm-2">
+    <button  *ngIf="displayloader != true"
+    mat-raised-button color="primary" 
+    [disabled]="basicForm.invalid">Add Fine</button>
+    Approve
+    <mat-progress-bar *ngIf="displayloader === true" mode="indeterminate">  </mat-progress-bar>
+  </div>
+  <div class = "col-sm-2">
+
+    <button  *ngIf="displayloader != true"
+    mat-raised-button color="warn" 
+    [disabled]="basicForm.invalid">Decline</button>
+    
+    <mat-progress-bar *ngIf="displayloader === true" mode="indeterminate">  </mat-progress-bar>
+  </div>
+
+  <div class = "col-sm-2">
+    <button (click)="back()" style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+    class="mat-elevation-z12 box-button" type="submit"> < Back</button>
+
+  </div>
+</div>
+  </mat-card-content>
+</mat-card>
+</form>

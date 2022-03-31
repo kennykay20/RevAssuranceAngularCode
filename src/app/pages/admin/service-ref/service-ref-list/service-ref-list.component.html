@@ -1,0 +1,96 @@
+ 
+  <!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+   <p>{{retryMessage}}</p> 
+  </div>
+
+
+  <div style="text-align: center; font-size: larger; background-color: white !important" class="card-title-text"> <b>
+    SERVICE REFERENCE </b>
+  </div>
+  <br>
+
+<div class="displayOnLapTop">
+  
+  <div class="row">
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-2">
+      <select style="margin-left: -40px; margin-top: 0px" class='form-control' [(ngModel)]="pageLmit"
+      (change)='onOptionsSelected($event)'>
+      <option class='option'  *ngFor='let option of ItemsPerPage' 
+      [value]="option.itemPerPage">{{option.itemPerPage}}</option>
+    </select>
+    </div>
+  </div>
+  <br>
+
+  <table style="background-color: white; width: 900px; margin: 0 1% 0 6%" 
+    class="table table-bordered table-sm table-hover tableStyle">
+    <thead>
+      <tr>
+        <th  style="width: 20px">S/NO</th>
+        <th  style="width: 100px">ACTION </th>
+        <th  style="width: 250px">SERVICE NAME</th>
+        <th  style="width: 300px">REFERENCE FORMAT</th>
+        
+      </tr>
+    </thead>
+    <tbody *ngIf ="rows.length > 0">
+      <tr *ngFor="let row of rows; let h = index;">
+        <td>  {{ h + 1 }}</td>
+        <td>  
+          <span class="viewSpan" (click)="action('View', row)">View</span>  
+          <span (click)="action('Edit', row)" class = "editSpan">Edit</span>
+        </td>
+        <td> {{ row?.serviceDescription }}</td>
+        <td> {{ row?.referenceFormat }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row">
+    <div class="col-sm-1">
+    </div>
+
+    <div class="col-sm-2">
+
+      <div class="btn-group">
+        <button mat-raised-button color="primary" style="margin-left: 0%" (click)="prevPage()"
+          class="mat-elevation-z12 box-button m-3" type="submit">
+          <mat-icon id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+        </button>
+        <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" class="mat-elevation-z12 box-button m-3"
+          (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+      </div>
+
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-2 m-3">
+      <span style="font-size: 15px; text-align: center !important; 
+         font-weight: 900; ">
+        Page: </span>
+      <span style="font-size: 15px; text-align: center !important; font-weight: 900;" id="page"></span>
+
+    </div>
+
+  </div>
+</div>
+  
+
+
+  

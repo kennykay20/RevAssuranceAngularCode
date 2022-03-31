@@ -1,0 +1,84 @@
+.user-name {
+  padding: 0 12px;
+  font-weight: 400;
+}
+
+.user-content {
+  padding: 10px;
+}
+
+.user-content .user-img {
+  position: relative;
+}
+
+.user-content .user-img img {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+}
+
+.user-content .user-img img.blocked {
+  opacity: 0.5;
+}
+
+.user-content .user-img .mat-icon {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  font-size: 96px;
+  height: 96px;
+  width: 96px;
+}
+
+.user-content .mat-slide-toggle {
+  margin-top: 15px;
+}
+
+.user-content .user-details span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-content .user-details .mat-icon {
+  padding: 2px 10px;
+}
+
+.user-content .user-details.blocked {
+  opacity: 0.5;
+}
+
+.user-search {
+  width: 0;
+  overflow: hidden;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.user-search .mat-form-field {
+  width: 100% !important;
+  text-align: center !important;
+  height: 36px;
+}
+
+.user-search .mat-form-field-infix {
+  padding: 5px;
+}
+
+.user-search .mat-input-element {
+  text-align: center;
+}
+
+.user-search.show {
+  width: 100%;
+  overflow: visible;
+}
+
+.user-spinner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+/*# sourceMappingURL=users.component.css.map */

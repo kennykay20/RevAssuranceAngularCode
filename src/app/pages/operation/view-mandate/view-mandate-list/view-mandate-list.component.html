@@ -1,0 +1,33 @@
+ 
+ <br> <br>
+ 
+ <div class = "form-group row"> 
+
+    <div class = "col-sm-2"></div>
+
+    <label for="input-11" class="col-sm-1 col-form-label ">Acct Type</label>
+    <div class = "col-sm-2">
+       <select  class="form-control"  
+          [(ngModel)]="instrumentForm.acctType"
+          [ngClass]="{'redBorder': instrumentForm.acctType === null  }">
+              <option value=''>Acct Type</option>
+          <option *ngFor="let a of acttypes"
+          [value]="a?.accountTypeCode">{{ a?.accountTypeCode }}</option>
+        </select> 
+    </div>
+    <label for="input-11" class="col-form-label ">Acct No</label>
+    <div class = "col-sm-2">
+       <input  class="form-control" type="text"
+                        [(ngModel)]="instrumentForm.acctNo"
+                        [ngClass]="{'redBorder':
+                          instrumentForm.acctNo === null }"/> 
+    </div>
+    <div class = "col-sm-2">
+      <button id="btnMandate" 
+      style="margin: 0 0 0 0px;" (click)="getMandate()"  
+      mat-raised-button color="accent" 
+      class="mat-elevation-z12 box-button" type="submit">
+      <img *ngIf = "actionLoaderUpdate === true" src="assets/img/loader/loader.gif"/>VIEW 
+    </button>
+    </div>
+  </div>

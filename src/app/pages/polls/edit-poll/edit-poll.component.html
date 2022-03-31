@@ -1,0 +1,202 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+  <!-- <div class="col-sm-2">
+      <div id="square5">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+      </div> 
+      
+     
+  </div> -->
+
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+
+</div>
+
+
+
+<form [formGroup]="basicForm" [formGroup]="basicForm" (ngSubmit)="edit(basicForm.value)">
+<mat-card>
+<mat-card-header fxLayoutAlign="left"> 
+                
+</mat-card-header>
+<div class="card-title-text"> <b> Edit Poll</b>   <label class="allFieldRequired"> <label class="allFieldRequiredtxt">Note:</label> All fields marked * are required</label></div>
+<br><br>
+<mat-card-content class="centerDiv">
+  <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+   
+      <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+  
+      </div>
+      <div fxFlex="100" fxFlex.gt-xs="66" class="pr-1">
+           
+                <textarea style="border: solid 1px" class="form-control" matInput name="question" 
+                formControlName="question" required
+                placeholder="Enter Poll Question">
+                </textarea> 
+      </div>
+      <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+  
+      </div>
+        
+    </div>
+
+    <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+      <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+      
+    </div>
+  
+  
+  
+        <div fxFlex="100" fxFlex.gt-xs="66" class="pr-1">
+             
+
+              <mat-form-field class="example-full-width">
+                <mat-label>Choose Expire Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="expiry_date" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker></mat-datepicker>
+              </mat-form-field>
+        </div>
+    
+  
+        <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+      
+      </div>
+          
+      </div>
+   
+   
+      <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+          <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+         
+        </div>
+            <div fxFlex="100" fxFlex.gt-xs="66" class="pr-1">
+              <mat-form-field class="full-width">
+                  <input matInput name="optionA" formControlName="optionA" required
+                          placeholder="Enter option A">
+          </mat-form-field>
+
+       
+            </div>
+        
+      
+            <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+          
+          </div>
+              
+          </div>
+   
+   
+          <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+              <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+             
+            </div>
+                <div fxFlex="100" fxFlex.gt-xs="66" class="pr-1">
+                  <mat-form-field class="full-width">
+                      <input matInput name="optionB" formControlName="optionB" required
+                              placeholder="Enter option B">
+              </mat-form-field>
+                </div>
+            
+          
+                <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+              
+              </div>
+                  
+              </div>
+   
+   
+              <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+                  <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+                 
+                </div>
+                    <div fxFlex="100" fxFlex.gt-xs="66" class="pr-1">
+                      <mat-form-field class="full-width">
+                          <input matInput name="optionC" formControlName="optionC" required
+                                  placeholder="Enter option C">
+                  </mat-form-field>
+                    </div>
+                
+              
+                    <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+                  
+                  </div>
+                      
+                  </div>
+   
+                  <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+                      <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+                     
+                    </div>
+                        <div fxFlex="100" fxFlex.gt-xs="66" class="pr-1">
+                          <mat-form-field class="full-width">
+                              <input matInput name="optionD" formControlName="optionD" required
+                                      placeholder="Enter option D">
+                      </mat-form-field>
+                        </div>
+                        <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+                      
+                      </div>
+                          
+                      </div>
+                      <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+                        <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+                       
+                      </div>
+                          <div fxFlex="100" fxFlex.gt-xs="66" class="pr-1">
+                            <mat-form-field class="full-width">
+                                <input matInput name="optionE" formControlName="optionE" required
+                                        placeholder="Enter option E">
+                        </mat-form-field>
+                          </div>
+                          <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+                        
+                        </div>
+                            
+                        </div>
+
+
+
+      <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+   
+      <div fxFlex="100" fxFlex.gt-xs="100" class="pr-1">
+  
+      </div>
+  </div>
+    <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+      <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+  
+      </div>
+          <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+                         
+              <button matTooltip="Click to Update Vote"  *ngIf="displayloader != true"
+              mat-raised-button color="primary" 
+              [disabled]="basicForm.invalid">Update</button>
+
+              <mat-spinner *ngIf="displayloader === true"  
+              strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+
+             
+
+          </div>
+          <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+            <button matTooltip="Click to Return"  
+            mat-raised-button color="accent" 
+              (click)="return()">Return</button>
+          </div>
+        </div>
+
+
+  </mat-card-content>
+</mat-card>
+</form>

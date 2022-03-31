@@ -1,0 +1,110 @@
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <!-- <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/> -->
+  <br>
+  <p>{{retryMessage}}</p>
+
+</div>
+
+
+<div fxLayout="column">
+  <div class="flex-p">
+
+    <div style="background-color: white !important" class="flex-p">
+
+      <div class="form-group row">
+        <div class="col-sm-3">
+
+          <button (click)="back()" mat-raised-button color="primary" class="mat-elevation-z12 box-button"
+            type="submit">Return</button>
+
+          <button id="btnSave" (click)="add()" mat-raised-button color="accent" class="mat-elevation-z12 box-button m-2"
+            type="submit">
+            <img *ngIf="actionLoaderSave === true" src="assets/img/loader/loader.gif" />
+            Save</button>
+
+          <button id="btnRemoveAssign" (click)="removeAll()" mat-raised-button color="primary"
+            class="mat-elevation-z12 box-button m-2" type="submit">
+            Remove All</button>
+          <mat-spinner *ngIf="displayloaderR === true" strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+
+        </div>
+        
+        <div class="col-sm-2">
+
+          <select class="form-control m-2" [(ngModel)]="roleInfo" (change)='onOptionsSelected($event)'>
+            <option>Select Roles</option>
+            <option *ngFor="let a of roles" [value]="a.roleId">{{ a.roleName }}</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top: 5px !important;" class="displayOnLapTop">
+        
+
+        <div class="displayOnLapTop" *ngIf="tabVlues === 1">
+
+          <table style="background-color: white; width: 40%; margin-left: 20%" class="table table-bordered table-sm table-hover tableStyle">
+            <thead>
+
+                 <tr>
+                      <!-- <th style = "text-align: center" colspan="4"> <b>DASHBOARD MENUS</b></th> -->
+                      <th style = "text-align: center" colspan="4"> <b>DASHBOARD ASSIGN</b></th>
+                </tr>
+              <tr>
+                 
+                <th style="width: 20px">S/NO</th>
+                <th style="width: 80px">Display Name </th>
+                <th style="width: 40px; text-align: center;">Can View</th>
+               
+              </tr>
+            </thead>
+            <tbody>
+
+              <!--Search Start Here-->
+              <tr>
+                <td></td>
+                <td>
+                  <input style="width: 100%" (keyup)="updateFilter($event, 2)" autocomplete="off" class="form-control"
+                    type="text" placeholder="Search" />
+                </td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="selectedAllCanView" class="example-margin"
+                    (change)="selectAllCanView()"></mat-checkbox>
+                </td>
+            
+              </tr>
+              <!--Search Ends here-->
+
+              <tr *ngFor="let row of rows; let h = index;">
+                <td class="pageFont"> {{ h + 1 }}</td>
+                <td class="pageFont"> {{ row?.dashboardMenuName }}</td>
+                <td style="text-align: center;">
+                  <mat-checkbox color="primary" [(ngModel)]="row.canView" class="example-margin" (change)="select(row)">
+                  </mat-checkbox>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+     
+
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+</div>

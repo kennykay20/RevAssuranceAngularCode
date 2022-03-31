@@ -1,0 +1,159 @@
+<!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <p>{{retryMessage}}</p>
+</div>
+
+
+
+
+<div style="text-align: center; font-size: larger; background-color: white !important" class="card-title-text"> <b>
+    TEMPLATE SETUP </b>
+</div>
+<br>  
+
+<div style="display: none;" class="col-sm-12 row">
+
+  <div class="col-sm-3">
+    <select class="form-control" [(ngModel)]="pageLmit">
+      <option>Item Per Page</option>
+      <option *ngFor="let a of ItemsPerPage" [value]="a.itemPerPage">{{ a.itemPerPage }}</option>
+    </select>
+
+
+
+  </div>
+  <div class="col-sm-3">
+
+    <select class="form-control" [(ngModel)]="columnId">
+      <option>Search By</option>
+      <option *ngFor="let a of searchUserColumns" [value]="a.id">{{ a.columnName }}</option>
+    </select>
+
+
+  </div>
+  <div class="col-sm-6">
+    <input (keyup)="updateFilter($event, '')" autocomplete="off" class="form-control" type="text" placeholder="Search" />
+
+  </div>
+</div>
+
+<div class="displayOnLapTop">
+  <div class="row">
+    <div class="col-sm-1">
+
+    </div>
+    <div class="col-sm-1" style="padding-bottom: 10px;">
+      <button style="margin: 0 0 0 20px;" (click)="action('Add','')" mat-raised-button color="accent"
+        class="mat-elevation-z12 box-button" type="submit">Add New</button>
+      <mat-spinner *ngIf="statusTrack == 'Decline'" strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+  
+    </div>
+    <div class="col-sm-1"></div>
+    <div  class="col-sm-2">
+        <select style="margin: 5px" class='form-control' [(ngModel)]="pageLmit"
+                (change)='onOptionsSelected($event)'>
+                <option class='option'  *ngFor='let option of ItemsPerPage' 
+                [value]="option.itemPerPage">{{option.itemPerPage}}</option>
+        </select>
+    </div>
+  </div>
+  <br>
+  <table style="background-color: white; width: 800px; margin: 0 10% 0 10%" 
+    class="table table-bordered table-sm table-hover tableStyle">
+    <thead>
+      <tr>
+        <th  style="width: 20px">S/NO</th>
+        <th  style="width: 70px">ACTION</th>
+        <th  style="width: 100px">TEMPLATE CODE</th>
+        <th  style="width: 150px">TEMPLATE NAME</th>
+        <th  style="width: 150px">SERVICE</th>
+        <th  style="width: 5px">STATUS</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td></td>
+        <td></td>
+        <td> <input style="width: 100%" (keyup)="updateFilter($event, 1)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter($event, 2)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter($event, 3)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          
+        </td>
+
+      </tr>
+     
+
+      <tr *ngFor="let row of rows; let h = index;">
+        <td> {{ h + 1 }}</td>
+        <td style="text-align: center;">
+          <span *ngIf="row.status" matTooltip="View  {{ row?.loginId }} Details" class="viewSpan"
+            (click)="action('View', row)">View</span>
+          <span *ngIf="row.status" matTooltip="Edit  {{ row?.loginId }} Details" (click)="action('Edit', row)"
+            class="editSpan">Edit</span>
+        </td>
+        <td> {{ row?.templateCode }}</td>
+        <td> {{ row?.templateName }}</td>
+        <td>{{ row?.serviceDescription }}</td>
+        <td>
+          <mat-chip mat-sm-chip class="activestatus" [selected]="row.status" *ngIf="row.status == 'Active'">
+            {{ row.status }}
+          </mat-chip>
+
+          <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Active'">
+            {{ row.status }}
+          </mat-chip>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row">
+    <div class="col-sm-4">
+    </div>
+
+    <div class="col-sm-2">
+
+      <div class="btn-group">
+        <button mat-raised-button color="primary" style="margin-left: 0%" (click)="prevPage()"
+          class="mat-elevation-z12 box-button" type="submit">
+          <mat-icon id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+        </button>
+        <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" class="mat-elevation-z12 box-button"
+          (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+      </div>
+
+    </div>
+    &nbsp;&nbsp;
+    <div class="col-sm-2">
+      <span style="font-size: 15px; text-align: center !important; 
+         font-weight: 900; ">
+        Page: </span>
+      <span style="font-size: 15px; text-align: center !important; font-weight: 900;" id="page"></span>
+
+    </div>
+
+  </div>
+</div>

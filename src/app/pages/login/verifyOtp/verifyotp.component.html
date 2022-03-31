@@ -1,0 +1,51 @@
+<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>What's your favorite animal?</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Favorite Animal</mat-label>
+    <input matInput [(ngModel)]="data.animal">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+</div> -->
+
+
+
+
+<form [formGroup]="formVeriftOtp" (ngSubmit)="veriFyOtp(formVeriftOtp.value)" class="container">
+  <mat-card class="tp-card">
+    <mat-card-header>
+       <div mat-card-avatar class = "tp-header-image"></div>
+       <mat-card-title style="margin-left: 80px;">ENTER VERIFICATION CODE</mat-card-title>
+       
+    </mat-card-header>
+    <mat-card-content>
+      <div class="form-group row">
+          
+        <div class="col-sm-12" >
+            <input type="text"  maxlength="6" class="form-control"
+                style="width: 30% !important; text-align: center; margin: 0 auto; font-weight: 800" placeholder="000000"
+                formControlName="password" />
+
+        </div>
+
+      </div>
+    </mat-card-content>
+
+    <mat-progress-bar *ngIf="displayloader === true" mode="indeterminate"></mat-progress-bar>
+    <mat-card-actions>
+
+
+      <div style="margin-left: 90px;">
+        <button (click)="closeDialog()" type="button" mat-raised-button color="accent">RETURN</button>
+        <!-- <button class="btn btn-primary" (click)="testPin()" type="button" mat-button>{{ btnResend }}</button> -->
+        <button [disabled]="!formVeriftOtp.valid" mat-raised-button color="primary"
+          class="" type="submit">{{ btnlogtxt }}</button> 
+      </div>
+          
+    </mat-card-actions>
+  </mat-card>             
+ 
+</form>

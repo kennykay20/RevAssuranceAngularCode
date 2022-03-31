@@ -1,0 +1,45 @@
+
+
+<span> <b> PRINT TEMPLATE </b> </span>
+
+<div mat-dialog-actions>
+  <div class="col-sm-9 TempStlyle">
+              
+    <editor  [init]="{
+      height: 500,
+      menubar: true,
+      enabled: false,
+      plugins: [
+      'advlist autolink lists link image charmap print preview anchor',
+      'searchreplace visualblocks code fullscreen',
+      'insertdatetime media table paste code help wordcount'
+      ],
+      toolbar:
+      'undo redo | formatselect | bold italic backcolor | \
+      alignleft aligncenter alignright alignjustify | \
+      bullist numlist outdent indent | removeformat | help print'
+      }" [(ngModel)]="data.data"  readonly>
+    </editor>
+
+ </div>
+ 
+</div>
+<br><br>
+<div class="col-sm-6">
+    <div class = "btn-group">
+            <!-- <button   mat-raised-button 
+                    color="accent" (click)="submit()" 
+                    class="mat-elevation-z12 box-button" 
+                    mat-dialog-close>Ok
+          </button>  -->
+          <button  style="margin-left: 10px"   mat-raised-button 
+                  color="primary" (click)="cancel()" class="mat-elevation-z12 box-button" 
+                  mat-dialog-close>Close</button>
+      </div> 
+
+      <!-- <button  style="margin-left: 10px"   mat-raised-button 
+            color="primary" (click)="get()" class="mat-elevation-z12 box-button" 
+            mat-dialog-close>Get</button> -->
+</div> 
+
+      

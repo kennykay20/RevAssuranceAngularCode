@@ -1,0 +1,114 @@
+<!-- <mat-toolbar color="primary" [fxLayoutAlign]="(settings.menuType != 'mini') ? 'space-between center' : 'center center'"
+    class="sidenav-header">
+    <a style="margin-left: 5%; font-weight: 700" color="accent" class="small-logo"> <img
+            src="assets/img/users/logo-icon.png" style="height: 40px" /> RevAssurance </a>
+
+</mat-toolbar>
+
+<div fxLayout="column" fxLayoutAlign="center center" class="" [class.show]="settings.sidenavUserBlock">
+
+
+    <img src="assets/img/login/Zenith.png" class="img-fluid" />
+
+</div>
+<input type="text" class="form-control" placeholder="Search Menu" (keyup)="keyPress($event)" />
+
+
+<div style="font-size: 12px !important; background-color: #C70039; color: white" id="sidenav-menu-outer"
+    class="sidenav-menu-outer" perfectScrollbar [class.user-block-show]="settings.sidenavUserBlock">
+  
+    <span *ngIf="!menuItems">Loading....</span>
+
+    <app-vertical-menu [menuItems]="menuItems" [menuParentId]="0" [parentData]=data></app-vertical-menu>
+
+    <a style="font-size: 15px !important; background-color: #C70039; color: white" mat-menu-item (click)="logOut()"
+        class="cursorPointer">
+        <mat-icon style="color: white">directions_run</mat-icon>
+        <span>LOG OUT</span>
+    </a>
+</div>
+
+
+
+//////////////////////////////// -->
+
+
+<mat-toolbar color="primary" [fxLayoutAlign]="(settings.menuType != 'mini') ? 'space-between center' : 'center center'" class="sidenav-header">
+    <a style="margin-left: 10%"  color="accent" class="small-logo"><img
+            src="assets/img/users/logo-icon.png" style="height: 40px" />  RevAssurance  </a>
+</mat-toolbar>
+
+<div  fxLayout="column" fxLayoutAlign="center center" class="" [class.show]="settings.sidenavUserBlock"> 
+    <img src="assets/img/login/Zenith.png" style="height: 120px;"  class="img-fluid" />
+</div>
+
+<div style="font-size: 12px !important; background-color: #C70039; color: white" id="sidenav-menu-outer" class="sidenav-menu-outer" 
+        perfectScrollbar [class.user-block-show]="settings.sidenavUserBlock">    
+    <span *ngIf="!menuItems">loading....</span>
+    <div class="page-sidebar-search-wrapper nav sidebar-nav" style="margin-top: 10px">
+        <div class="page-sidebar-search" style="padding: 6px; z-index: 1;">
+            <div 
+                class="form-group dropdown" 
+                style="background-color: #fff !important; border-radius: 0px; padding: 1px; ">
+                <i class="fa fa-search color" 
+                    style="position: absolute; margin-top: 10px; margin-left: 12px;">
+                </i>
+    
+                <img src="assets/img/loader/loader.gif" *ngIf="isLoading"
+                     style="width: 20px; height: 20px; position: absolute; margin-top: 6px; float: left; margin-left: 180px;" />
+    
+                <input 
+                    type="text" class="form-control"
+                    [(ngModel)]="menuName" 
+                    (keyup)="search()" 
+                    placeholder="Search Menu"
+                    style="padding-left: 30px !important;
+                        width: 233px;
+                        height: 35px; 
+                        border-radius: 25px; background: white !important;
+                        border: 0px solid grey"
+                /> 
+                    
+                <div *ngFor="let search of searchMenu">
+                    <div class="search">
+                        <li *ngIf="search !== null  && search.menuId > -1" >
+                            <a class="searchResult" 
+                                [routerLink]="[search.routerLink]"
+                                style="text-align: left; color:black "
+                            >
+                                       <!-- <i class="fa fa-{{search.icon}}" style="font-size: 11px;"></i> -->
+                                <mat-icon class="menu-icon">{{search.icon}}</mat-icon>
+                                {{ search.menuName}}
+                            </a>
+                        </li>
+                        <li *ngIf="search.menuId === -1">
+                            <a class="searchResult"  
+                                       style="text-align: left; color:black ">
+                                {{ search.menuName}}
+                            </a>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div style="margin-top: 10px;">
+        <br><br/>
+        <a style="font-size: 14px !important; background-color: #C70039; color: white" mat-menu-item (click)="dashboard()"
+            class="cursorPointer">
+            <mat-icon style="color: white; font-size: 18px">dashboard</mat-icon>
+            <span>DASHBOARD</span>
+        </a>
+
+        <app-vertical-menu [menuItems]="menuItems" [menuParentId]="0"></app-vertical-menu> 
+
+        <a style="font-size: 14px !important; background-color: #C70039; color: white" mat-menu-item (click)="logOut()"
+            class="cursorPointer">
+            <mat-icon style="color: white; font-size: 18px">directions_run</mat-icon>
+            <span>LOG OUT</span>
+        </a>
+    </div>
+  
+</div>

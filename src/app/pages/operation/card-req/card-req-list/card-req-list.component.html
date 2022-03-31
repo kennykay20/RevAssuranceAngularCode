@@ -1,0 +1,527 @@
+ 
+  <!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+   <p>{{retryMessage}}</p> 
+  </div>
+
+
+  
+   <ul class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+    <li [class]="selectedCalss">
+        <a  class="nav-link {{tab1}}" data-toggle="tab" (click) ="swapTab(1)"><i class="icon-home">
+
+        </i> <span class="hidden-xs">
+          <b>CARDS REQUESTS</b>
+          </span></a>
+    </li>
+    <!-- class="nav-item cursorPointer" -->
+    <li [class]="selectedCalss2">
+        <a class="nav-link {{tab2}}" data-toggle="tab" (click) ="swapTab(2)"><i class="icon-home"></i> 
+          <span class="hidden-xs">
+            <b>CARDS REQUESTS HISTORY</b> 
+          </span></a>
+    </li>
+     <!-- <li  [class]="selectedCalss3">
+    
+        <a  class="nav-linK" data-toggle="tab" (click)="action('Add','')"><i class="icon-home"></i> 
+          <span class="hidden-xs spanNewReq">
+            <b> <mat-icon>playlist_add</mat-icon>  NEW REQUEST</b> 
+          </span></a>
+  </li>  -->
+ 
+</ul> 
+
+  <br>
+
+  <!--Tabb 1-->
+
+    <div class="displayOnLapTop" *ngIf="tabVlues === 1">
+
+      <div class="col-sm-12 row">
+
+        <div class="col-sm-2">
+
+          <div class="btn-group">
+            <button id="btnProcess" style="margin: 0 0 0 0px;" (click)="processTrans()"  mat-raised-button color="accent" 
+            class="mat-elevation-z12 box-button" type="submit">
+            <img *ngIf = "actionLoaderUpdate === true" src="assets/img/loader/loader.gif"/>Process Trans</button>
+            
+            <button id="btnDismiss" style="margin: 0 0 0 20px;" (click)="dismissTrans()"  mat-raised-button color="primary" 
+            class="mat-elevation-z12 box-button" type="submit">
+            <img *ngIf = "actionLoaderDismiss === true" src="assets/img/loader/loader.gif"/>Dismiss Trans</button>
+       
+          </div>
+        </div>
+        <div class="col-sm-1">
+    
+        </div>
+        <div class="col-sm-2">
+          <select style="margin-left: 0px" class='form-control' [(ngModel)]="pageLmit"
+            (change)='onOptionsSelected($event)'>
+          <option class='option'  *ngFor='let option of ItemsPerPage' 
+          [value]="option.itemPerPage">{{option.itemPerPage}}</option>
+        </select>
+        
+        </div>
+        <div class="col-sm-3">
+          <mat-radio-group  (change)='radio($event)'>
+            <mat-radio-button value="All">UnProcessed</mat-radio-button>
+            <mat-radio-button value="Processed">Processed</mat-radio-button>
+        </mat-radio-group>
+        </div>
+  </div>
+      <br>
+
+      <div class="col-sm-12 row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-1">
+         
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+      </div>
+     <table style="background-color: white" class="table table-bordered table-sm table-hover tableStyle">
+      <thead>
+        <tr>
+          <th style="width: 20px">S/NO</th>
+          <th style="width: 80px">ACTION</th>
+          <th style="width: 20px">
+            SEL.
+          </th>
+          <th style="width: 90px">TRANS DATE</th>
+          <th style="width: 90px">RECORD DATE</th>
+          <th>SERIAL NO</th>
+          <th style="width: 90px">ACCT NO</th>
+          <th style="width: 80px">ACCT TYPE</th>
+          <th style="width: 300px">ACCT NAME</th>
+          <th style="width: 20px">STATUS</th>
+          <th>REF NO</th>
+          <th  style="width: 50px">CCY</th>
+          <th>DATE CREATED</th>
+          
+        </tr>
+      </thead>
+      <tbody *ngIf="rowsLengthCheck == true">
+        <!--Search Here-->
+        <tr>
+          <td> 
+            <input style ="width: 100%"  (keyup)="updateFilter($event, 1)"
+            autocomplete="off" class="form-control"
+             type="text" placeholder="Search" 
+              />
+           </td>
+            <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 2)"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+            </td>
+            <td> 
+                   <mat-checkbox color="primary"  [(ngModel)]="selectedAllTrans" 
+                    class="example-margin" 
+                   (change)="selectAll()"></mat-checkbox> 
+
+
+             </td>
+              <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 4)"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+              </td>
+              <td> 
+                <input style ="width: 100%"  (keyup)="updateFilter($event, 5)"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+               </td>
+                <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 6)"
+                    autocomplete="off" class="form-control"
+                     type="text" placeholder="Search" 
+                      />
+                </td>
+                <td> 
+                  <input style ="width: 100%"  (keyup)="updateFilter($event, 7)"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+                 </td>
+                  <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 8)"
+                      autocomplete="off" class="form-control"
+                       type="text" placeholder="Search" 
+                        />
+                  </td>
+                  <td> 
+                    <input style ="width: 100%"  (keyup)="updateFilter($event, 9)"
+                    autocomplete="off" class="form-control"
+                     type="text" placeholder="Search" 
+                      />
+                   </td>
+                    <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 10)"
+                        autocomplete="off" class="form-control"
+                         type="text" placeholder="Search" 
+                          />
+                    </td>
+                    <td> 
+                      <input style ="width: 100%"  (keyup)="updateFilter($event, 11)"
+                      autocomplete="off" class="form-control"
+                       type="text" placeholder="Search" 
+                        />
+                     </td>
+                      <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 12)"
+                          autocomplete="off" class="form-control"
+                           type="text" placeholder="Search" 
+                            />
+                      </td>
+                      <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 13)"
+                        autocomplete="off" class="form-control"
+                         type="text" placeholder="Search" 
+                          />
+                    </td>
+        </tr>
+      <!--Search End Here-->
+
+        <tr *ngFor="let row of rows; let h = index;">
+          <td>  {{ h + 1 }}</td>
+          <td style="text-align: center;">  
+            <span  matTooltip="View  {{ row?.acctNo }} Details" class="viewSpan" 
+            (click)="action('View', row)">View</span>  
+            <span  matTooltip="Edit  {{ row?.acctNo }} Details" 
+            (click)= "action('Edit', row)" class = "editSpan">Edit</span>
+          </td>
+          <td>  
+            
+            <!-- <mat-checkbox style="background-color: gray" 
+                          color="primary" *ngIf="row.select === true"  
+                          [(ngModel)]="row.select" class="example-margin" 
+                          (change)="select(row)" disabled>
+            </mat-checkbox>
+
+            <mat-checkbox color="primary" *ngIf="row.select === false" 
+             [(ngModel)]="row.select"  [(ngModel)]="row.select" class="example-margin" 
+            (change)="select(row)"  ></mat-checkbox> -->
+
+
+            <mat-checkbox 
+                  color="primary" *ngIf="row?.select === true"  
+                  [(ngModel)]="row.select" class="example-margin" 
+                  (change)="select(row)"
+                  [disabled]="rows == null">
+            </mat-checkbox>
+
+            <mat-checkbox color="primary" *ngIf="row?.select === false" 
+                  [(ngModel)]="row.select"  [(ngModel)]="row.select" class="example-margin" 
+                  (change)="select(row)"  >
+            </mat-checkbox>
+
+
+
+          </td>
+          <td> {{ row?.transactionDate | date: 'd-MMM-y' }}</td>
+          <td>  {{ row?.recordDate | date: 'd-MMM-y' }}</td>
+          <td> {{ row?.serialNo }}</td>
+          <td> {{ row?.acctNo }}</td>
+          <td style="text-align: center">   {{ row?.acctType }}</td>
+          <td>  {{ row?.acctName }}</td>
+          <td>
+             <mat-chip mat-sm-chip class="activestatus" 
+             [selected]="row.status" *ngIf="row?.status == 'Active'">
+            {{ row?.serviceStatus }} 
+          </mat-chip>
+        
+           <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row?.status !== 'Active'">
+            {{ row?.serviceStatus }}
+          </mat-chip></td>
+          <td>  {{ row?.referenceNo }}</td>
+          <td>     {{ row?.ccyCode }}</td>
+          <td>{{ row?.datecreated | date: 'medium' }}</td>
+        </tr>
+       
+      </tbody>
+    </table>
+    
+    <div  class="row" >
+      <div class="col-sm-4">
+
+      </div>
+
+      <div class="col-sm-2">
+
+          <div class="btn-group">
+              <button mat-raised-button color="primary"
+              style = "margin-left: 0%" (click)="prevPage()"
+                class="mat-elevation-z12 box-button" type="submit">
+                <mat-icon  id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+              </button> 
+                <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+                class="mat-elevation-z12 box-button" (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+          </div> 
+    
+        </div>
+        <div class="col-sm-2">
+          <span style = "font-size: 15px; text-align: center !important; 
+           font-weight: 900; ">
+          Page: </span> 
+          <span style="font-size: 15px; text-align: center !important; font-weight: 900;"
+           id="page"></span>
+    
+        </div>
+
+      </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+      <!--Tabb 2-->
+      <div class="displayOnLapTop" *ngIf="tabVlues === 2">
+        <div class="form-group row">
+          
+          <label for="input-11" class="col-sm-1 col-form-label">Trans Date:</label>
+          <div class="col-sm-1">
+            <input class="form-control" readonly style="width: 100px" type="text" [(ngModel)]="cardRequest.transactionDate" />
+          </div>
+          <div class="col-sm-1">
+            <input id="transactionDate" style="border: none !important;" class="form-control cursorPointer" type="date" value=""
+            (change)="fromDate($event)"/>
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Account Name</label>
+          <div class="col-sm-2">
+            <input class="form-control" id="acctName" [(ngModel)]="cardRequest.acctName"   type="text" />
+          </div>
+          
+          <label for="input-11" class="col-sm-1 col-form-label">Acct Type</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="acctType" [(ngModel)]="cardRequest.acctType">
+              <option selected disabled value="">Acct Type</option>
+              <option *ngFor="let a of acttypes"
+              [value]="a?.accountTypeCode">{{ a?.accountTypeCode }}</option>
+            </select>
+          </div>
+        
+          <label for="input-11" class="col-sm-1 col-form-label">Acct No</label>
+          <div class="col-sm-2">
+            <input class="form-control"  type="text" [(ngModel)]="cardRequest.acctNo" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Currency</label>
+          <div class="col-sm-2">
+            <select class="form-control" [(ngModel)]="cardRequest.ccyCode">
+              <option disabled selected value="">Currency Code</option>
+              <option *ngFor="let a of currencies" [value]="a.isoCode">{{ a.isoCode }}</option>
+            </select>
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Reference No</label>
+          <div class="col-sm-2">
+            <input class="form-control"  type="text" [(ngModel)]="cardRequest.referenceNo" />
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Serial No</label>
+          <div class="col-sm-2">
+            <input class="form-control"  type="text" [(ngModel)]="cardRequest.serialNo" />
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Card No</label>
+          <div class="col-sm-2">
+            <input class="form-control"  type="text" [(ngModel)]="cardRequest.cardNo" />
+          </div>
+
+          
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Department</label>
+          <div class = "col-sm-2">
+              <select class="form-control"  
+              [(ngModel)]="cardRequest.processingDeptId"
+              [ngClass]="{'redBorder':
+              cardRequest.processingDeptId === null  }" >
+                  <option selected disabled value="">Select Department</option>
+                  <option *ngFor="let a of departments"
+                  [value]="a.deptId">{{ a.deptname }}</option>
+                </select>
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Branch</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="branchNo" [(ngModel)]="cardRequest.branchNo">
+              <option>Branch Type</option>
+              <option *ngFor="let b of branches"
+              [value]="b.branchNo">{{ b.branchName }}</option>
+            </select>
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label ">Item Per Page</label>
+          <div class="col-sm-2">
+            <select style="margin-left: 0px" class='form-control' [(ngModel)]="pageLmit"
+              (change)='onOptionsSelected($event)'>
+              <option class='option'  *ngFor='let option of ItemsPerPage' 
+              [value]="option.itemPerPage">{{option.itemPerPage}}</option>
+            </select>
+          </div>
+
+          <div class="col-sm-5">
+            <div class="btn-group">
+              <button id="btnSearchEnq" style="margin: 0 0 0 0px;" (click)="search()"  mat-raised-button color="accent"
+                class="mat-elevation-z12 box-button" type="submit">
+                SEARCH
+              </button>  |
+              &nbsp;
+              <button id="btnClear" mat-raised-button color="primary" (click)="clearItem()" style="margin: 0 0 0 0px;"
+                class="btn btn-danger" type="button">
+                CLEAR
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 row">
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-1">
+           
+          </div>
+          <div class="col-sm-1">
+  
+          </div>
+          <div class="col-sm-1">
+  
+          </div>
+          <div class="col-sm-1">
+  
+          </div>
+        </div>
+        <table style="background-color: white" class="table table-bordered table-sm table-hover tableStyle">
+          <thead>
+            <tr>
+              <th style="width: 20px">SNO</th>
+              <th style="width: 120px">ACTION</th>
+              <!-- <th style="width: 20px">
+                SEL.
+              </th> -->
+              <th style="width: 90px">TRANS DATE</th>
+              <th style="width: 90px">ACCT NO</th>
+              <th style="width: 80px">ACCT TYPE</th>
+              <th style="width: 300px">ACCT NAME</th>
+              <th style="width: 80px">SERIAL NO</th>
+              <th  style="width: 50px">CCY</th>
+              <th style="width: 80px">REFERENCE NO</th>
+              <th style="width: 20px">STATUS</th>
+              <th style="width: 80px">CARD NO</th>
+              <th>DEPARTMENT</th>
+              <th>BRANCH</th>
+              <th>USER</th>
+            </tr>
+          </thead>
+          <tbody >
+           
+          <!--Search End Here-->
+    
+            <tr *ngFor="let row of rowSearch; let h = index;">
+              <td>  {{ h + 1 }}</td>
+              <td>  
+                <span *ngIf="row.instrumentStatus && tabVlues === 2" 
+                      matTooltip="View  {{ row?.acctNo }} Details" class="viewSpan" 
+                (click)="action('View', row)">View</span>  
+                
+                
+                <span *ngIf="row.instrumentStatus && tabVlues === 2" matTooltip="Print  {{ row?.acctNo }} Details" 
+                (click)="print(row)" class = "editSpan">Print</span>
+
+                <span *ngIf="row.instrumentStatus && tabVlues === 3" matTooltip="Re Print  {{ row?.acctNo }} Details" 
+                (click)="action('Reprint', row)" class = "editSpan">Re-Print</span>
+
+                <span *ngIf="row.instrumentStatus && tabVlues === 3" matTooltip="Amend  {{ row?.acctNo }} Details" 
+                (click)="action('Ammend', row)" class = "viewSpan">Amend</span>
+                
+              </td>
+              
+              <td> {{ row?.transactionDate | date: 'd-MMM-y' }}</td>
+              <td>  {{ row?.acctNo }}</td>
+              <td style="text-align: center"> {{ row?.acctType }}</td>
+              <td> {{ row?.acctName }}</td>
+              <td >   {{ row?.serialNo  }}</td>
+              <td>  {{ row?.instrumentCcy }}</td>
+              <td> {{ row?.referenceNo }}</td>
+              
+            <td>
+                  <mat-chip mat-sm-chip class="activestatus" 
+                          *ngIf="row.status == 'Posted'">
+                          {{ row?.status }} 
+                  </mat-chip>
+                  <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Posted'">
+                      {{ row?.status }}
+                </mat-chip> 
+            </td>
+            <td> {{ row?.cardNo }}</td>
+              <td>  {{ row?.userProcessingDept }}</td>
+              <td> {{ row?.originBranch }}</td>
+              <td>  {{ row?.userName }}</td>
+            </tr>     
+          </tbody>
+        </table>
+      
+        <div  class="row" >
+          <div class="col-sm-4">
+    
+          </div>
+    
+          <div class="col-sm-2">
+    
+              <div class="btn-group">
+                  <button mat-raised-button color="primary"
+                  style = "margin-left: 0%" (click)="prevPage()"
+                    class="mat-elevation-z12 box-button" type="submit">
+                    <mat-icon  id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+                  </button> 
+                    <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+                    class="mat-elevation-z12 box-button" (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+              </div> 
+        
+          </div>
+          <div class="col-sm-2">
+              <span style = "font-size: 15px; text-align: center !important; 
+              font-weight: 900; ">
+              Page: </span> 
+              <span style="font-size: 15px; text-align: center !important; font-weight: 900;"
+              id="page"></span>
+        
+          </div>
+    
+        </div>
+      </div>
+
+        <!--Tabb 3-->
+
+

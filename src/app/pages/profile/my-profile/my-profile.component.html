@@ -1,0 +1,108 @@
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+  <!-- <div class="col-sm-2">
+      <div id="square5">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+      </div> 
+      
+     
+  </div> -->
+
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+
+</div>
+        
+ <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+  <mat-card>
+      <mat-card-header fxLayoutAlign="left"> 
+                      
+      </mat-card-header>
+      <div class="card-title-text"> <b>  <mat-icon>person</mat-icon> My Profile Details </b>   <label class="allFieldRequired"> <label class="allFieldRequiredtxt">Note:</label> All fields marked * are required</label></div>
+      <br><br>
+      <mat-card-content class="centerDiv">
+     <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+          <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="First Name" formControlName="first_name">
+              <mat-error *ngIf="form.controls.first_name.errors?.required">First  Name is required</mat-error>
+              
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Last Name" formControlName="last_name">
+              <mat-error *ngIf="form.controls.last_name.errors?.required">Last Name is required</mat-error>
+          
+                </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1" required>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Meter Number" formControlName="meter_number">
+              <mat-error *ngIf="form.controls.meter_number.errors?.required">Meter Number is required</mat-error>
+              
+          
+            </mat-form-field>
+            </div>
+            
+        </div>
+        <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+          <div fxFlex="100" fxFlex.gt-xs="12" class="pr-1">
+               
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Phone Number" formControlName="phone_number">
+              <mat-error *ngIf="form.controls.phone_number.errors?.required">Phone number is required</mat-error>
+              <mat-error *ngIf="form.controls.phone_number.hasError('minlength')">Phone Number Name isn't long enough, minimum of 11 characters</mat-error>
+            </mat-form-field>
+                
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-xs="20" class="pr-1">
+              
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Email" formControlName="email">
+              <mat-error *ngIf="form.controls.email.errors?.required">Email is required</mat-error>
+              <mat-error *ngIf="form.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+          </mat-form-field>
+                    
+          </div>
+         
+          <div fxFlex="100" fxFlex.gt-xs="68" class="pr-1">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="House Address" formControlName="house_address">
+              <mat-error *ngIf="form.controls.house_address.errors?.required">House Address is required</mat-error>
+          </mat-form-field>
+        </div>
+        </div>
+
+      
+
+         
+
+    
+        
+
+
+
+
+          <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+                <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+                               
+                 
+                  <button *ngIf ="displayloader != true"  style="margin-top: 5px;" 
+                          [disabled]="!form.valid" mat-raised-button color="primary"
+                          class="mat-elevation-z12 box-button" type="submit">Update</button>
+              
+                    <mat-spinner *ngIf ="displayloader == true" 
+                    strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+                </div>
+              </div>
+
+       
+        </mat-card-content>
+  </mat-card>
+</form>
+

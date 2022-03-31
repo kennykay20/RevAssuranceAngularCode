@@ -1,0 +1,157 @@
+<div class="preloader" *ngIf="loadPage == true">
+  <!-- <div class="col-sm-2">
+      <div id="square5">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+      </div> 
+      
+     
+  </div> -->
+
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+
+</div>
+
+<div class="displayOnLapTop">
+  <ngx-datatable
+  class="material ml-0 mr-0"
+  [rows]="rows"
+  [columnMode]="'flex'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [limit]="pageLmit"
+  [rowHeight]="'auto'">
+    <ngx-datatable-column name="S/No" [flexGrow]="1">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+    {{rows.indexOf(row) + 1}}
+    </ng-template>
+  </ngx-datatable-column>
+  
+  <ngx-datatable-column name="Description" [flexGrow]="2">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row?.Description }}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Amount(₦)" [flexGrow]="2">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row?.amount | number}}.00
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Month" [flexGrow]="2">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row?.created_at | date: 'd-MMM-y' }}
+    </ng-template>
+  </ngx-datatable-column>
+  
+
+  </ngx-datatable>
+  
+</div>
+
+
+
+<div fxLayout="row wrap" class="divMat">
+  <!--Check Out-->
+
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+ 
+
+</div>
+
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+     
+          <div class="w-100 h-100p divMat">
+             
+            <mat-progress-bar *ngIf="displayloader === true" mode="indeterminate"></mat-progress-bar>
+
+        <button mat-raised-button  color="primary" (click)="addToCart()"
+        class="mat-elevation-z12 box-button btn" type="submit"> 
+        <mat-icon class="icon-sm">add_shopping_cart</mat-icon>
+        {{ btnAction }}</button>  
+
+        <button mat-raised-button color="accent" (click)="back()"
+        class="mat-elevation-z12 box-button btn" type="submit"> 
+        <mat-icon class="icon-sm">keyboard_arrow_left</mat-icon>  
+        Back</button> 
+          </div>
+     
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+ 
+
+  </div>
+</div>
+
+
+<div class="displayOnMobile">
+	<div  class="col-sm-12" *ngIf="rows.length > 0">
+  <table #dataTable>
+    <thead>
+    <tr>
+      <th>S/No.</th>
+      <th>Payment Type</th>
+      <th>Resident Name</th>
+      <th>Trans. Ref.</th>
+      <th>Description</th>
+      <th>Amount(₦)</th>
+      <th>Date Created</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+     <tr *ngFor ="let row of rowsMobile; let h = index;">
+      <td>{{ h + 1 }}</td>
+      <td> {{ row?.Description }} </td>
+      <td> {{ row?.amount | number}} </td>
+      <td>   <mat-chip color="accent" selected="true" class="info-chip">
+        {{ row?.status }}
+    </mat-chip> </td>
+      <td> {{ row?.created_at | date: 'd-MMM-y' }} </td>
+     
+    </tr> 
+    
+    </tbody>
+  </table>
+</div>
+
+<br>
+<div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex="100" fxFlex.gt-xs="5" class="pr-1">
+         
+        
+
+  </div>
+
+
+  <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+
+      <div class="btn-group">
+          <button mat-raised-button color="primary"
+          style = "margin-left: 0%" (click)="prevPage()"
+            class="mat-elevation-z12 box-button" type="submit"><mat-icon  id="btn_prev">keyboard_arrow_left</mat-icon>Prev.</button> 
+            <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+            class="mat-elevation-z12 box-button" (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+      </div> 
+
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+
+       
+    
+
+
+    </div>
+
+
+  
+  
+  </div>
+<div  class="col-sm-12 row" style = "text-align: center">
+
+<span style = "font-size: 15px; text-align: center !important; margin-left: 65%; font-weight: 900; ">Page: </span> <span style="font-size: 15px; text-align: center !important; font-weight: 900;" id="page"></span>
+
+</div>      
+
+</div>

@@ -1,0 +1,194 @@
+<div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+        <div id="square5">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+
+    </div>
+</div>
+
+<form [formGroup]="basicForm" [formGroup]="basicForm">
+
+    <div style="border: none solid black;">
+
+        <div class="card-title-text"> <b>  DOCUMENT CHARGE DETAILS
+
+            </b><label class="allFieldRequired"> <label class="allFieldRequiredtxt">{{requiredFieldMsg}}</label></label>
+        </div>
+        <hr>
+
+        <div style="border: 1px solid rgb(177, 160, 160); padding: 10px;">
+            <div class="form-group row">
+
+                <label for="input-11" class="col-sm-2 col-form-label">Service</label>
+                <div class="col-sm-3">
+                    <!-- <select class="form-control" formControlName="serviceId" >
+            <option *ngFor="let service of services" 
+            [value]="service.serviceId">{{service.serviceDescription}}</option>
+        </select>  -->
+
+                    <input readonly autocomplete="off" class="form-control" type="text" placeholder=""
+                        value="Document Retrieval" />
+                </div>
+
+
+                <label for="input-11" class="col-sm-2 col-form-label">Description</label>
+                <div class="col-sm-4">
+                    <input autocomplete="off" class="form-control" type="text" placeholder=""
+                        formControlName="description" />
+
+                </div>
+
+                
+            </div>
+
+            <div class="form-group row">
+                <label for="input-11" class="col-sm-2 col-form-label">Period Start</label>
+                <div class="col-sm-3">
+                    <input type="textx" autocomplete="off" class="form-control" placeholder=""
+                        formControlName="periodStart" (keypress)="keyPress($event)" />
+
+                </div>
+                <label for="input-11" class="col-sm-2 col-form-label">Period End</label>
+                <div class="col-sm-4">
+                    <input autocomplete="off" class="form-control" type="text" placeholder=""
+                        formControlName="periodEnd" (keypress)="keyPress($event)" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                
+                <label for="input-11" class="col-sm-2 col-form-label">Amount</label>
+                <div class="col-sm-3">
+                    <!-- <input autocomplete="off" class="form-control" type="text" (change)="formatToCurrency($event)"
+  placeholder=""  formControlName="chgAmount" /> -->
+                    <input autocomplete="off" style="text-align: right;" class="form-control" type="text" (keypress)="keyPress($event)"
+                        placeholder="" formControlName="chgAmount" (change)="convert3($event)" />
+
+                </div>
+
+                <label for="input-11" class="col-sm-2 col-form-label">Chg Matrix</label>
+                <div class="col-sm-4">
+                    <!-- <input autocomplete="off" class="form-control" type="text" placeholder=""
+                        formControlName="chgMetrix" /> -->
+
+                    <select class="form-control" formControlName="chgMetrix">
+                        <option *ngFor="let a of chargeMetrix" [value]="a">
+                            {{ a }}
+                        </option>
+                    </select>
+                </div>
+
+                
+
+                
+
+            </div>
+
+            <div class="form-group row">
+                
+                <label for="input-11" class="col-sm-2 col-form-label">Ccy Code</label>
+                <div class="col-sm-3">
+                    <select class="form-control" formControlName="ccyCode">
+                        <option value="">Select Currency</option>
+                        <option *ngFor="let c of currencies" [value]="c.isoCode">{{c.isoCode}}</option>
+                    </select>
+                </div>
+                
+                <label for="input-11" class="col-sm-2 col-form-label">Chg Basis</label>
+                <div class="col-sm-4">
+                    <!-- <input autocomplete="off" class="form-control" type="text" placeholder=""
+                        formControlName="chgBasis" /> -->
+
+                    <select class="form-control" formControlName="chgBasis">
+                        <option *ngFor="let a of chargeBasis" [value]="a.value">
+                            {{ a.name }}
+                        </option>
+                    </select>
+
+
+                </div>
+                
+            </div>
+
+        </div>
+
+        <div *ngIf="data.actionName !== 'Add'" style="padding-top: 3px;">
+
+            <div class="form-group">
+                <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+                    <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+                </div>
+            </div>
+            <div style="border: 1px solid rgb(177, 160, 160); padding: 10px;">
+                <div class="form-group row">
+
+                    <label for="input-11" class="col-sm-2 col-form-label">Created By</label>
+                    <div class="col-sm-2">
+                        <input [(ngModel)]="createdBy" autocomplete="off" class="form-control" type="text"
+                            placeholder="" name="createdBy" formControlName="createdBy" readonly />
+
+                    </div>
+                    <label for="input-11" class="col-sm-2 col-form-label">Date Created</label>
+                    <div class="col-sm-3">
+                        <input autocomplete="off" class="form-control" type="text" placeholder="" name="dateCreated"
+                            formControlName="dateCreated" readonly />
+                    </div>
+                    <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" formControlName="status">
+                            <option *ngFor="let a of this._GeneralService.Statuses" [value]="a.status">{{a.status}}
+                            </option>
+                        </select>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <br>
+        <div class="form-group row">
+            <div class="btn-group" style="margin: 0  50% 0 40%">
+
+                <!-- <button   *ngIf="data.actionName == 'Add'"
+    mat-raised-button color="accent" 
+    [disabled]="!basicForm.valid">
+    <img src="assets/img/loader/loader.gif"/>
+    Save</button> -->
+
+                <button id="btnSave" *ngIf="data.actionName == 'Add'" mat-raised-button color="accent"
+                    (click)="add(basicForm.value)" [disabled]="!basicForm.valid">
+                    <img *ngIf="actionLoaderSave === true" src="assets/img/loader/loader.gif" />
+                    Save</button>
+
+                <button id="btnUpdate" *ngIf="data.actionName == 'Edit'" mat-raised-button color="accent"
+                    (click)="update(basicForm.value)">
+                    <img *ngIf="actionLoaderUpdate === true" src="assets/img/loader/loader.gif" />
+                    Update</button>
+
+                <button type="button" style="margin: 0 10px 0 10px;" mat-raised-button color="primary"
+                    (click)="close()">Return</button>
+                
+                <button type="button" *ngIf="data.actionName == 'Edit'" mat-raised-button color="accent" (click)="auditList()"
+                    >Audit Trail</button>
+
+                <mat-spinner *ngIf="displayloader == true" strokeWidth="1" [diameter]="30" color="primary">
+                </mat-spinner>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+</form>

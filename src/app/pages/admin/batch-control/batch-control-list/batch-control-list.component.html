@@ -1,0 +1,210 @@
+ 
+  <!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+   <p>{{retryMessage}}</p> 
+  </div>
+
+
+
+
+  <div style="text-align: center; font-size: larger; background-color: white !important" class="card-title-text"> <b> BATCH CONTROL </b>    
+  </div>
+  <br>
+
+  <br>
+  <div class="col-sm-12 row ">
+  
+  
+    
+    <table style="background-color: white" class="table table-bordered table-sm table-hover tableStyle">
+      <thead>
+        <tr>
+          <th style="width: 20px;">SNO</th>
+          <th style="width: 20px;">ACTION</th>
+          <th style="width: 20px;"> BATCH NO</th>
+          <th style="width: 40px;">CCY</th>
+          <th style="width: 40px;">POSTED TRANS COUNT</th>
+          <th style="width: 40px;">RECORD COUNT</th>
+          <!-- <th>SERVICE NAME</th> -->
+          <!-- <th>TOTAL DR COUNT</th>
+          <th>TOTAL CR COUNT</th>
+          <th>TOTAL DR</th>
+          <th>TOTAL CR</th>
+          <th>DIFFERENCE</th>
+          <th>LOADED BY</th>
+          <th>DEPT</th>
+          <th>IS BALANCED</th>
+          <th>VERIFIED BY</th>
+          <th>APPROVED BY</th>
+          <th>STATUS</th>
+          <th>FILENAME</th>
+          <th>DATE CREATED</th>
+          <th>DATE VERIFIED</th>
+          <th>DATE APPROVED</th>
+          <th>PROCESSING DEPT</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <!--Search Here-->
+        <tr>
+          <td></td>
+          <td></td>
+              <td> <input (keyup)="updateFilter($event, 1)"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+              </td>
+              <td> 
+                <input (keyup)="updateFilter($event, 2)"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+               </td>
+                <td> <input (keyup)="updateFilter($event, 3)"
+                    autocomplete="off" class="form-control"
+                     type="text" placeholder="Search" 
+                      />
+                </td>
+                 <td> 
+                  <input (keyup)="updateFilter($event, 4)"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+                 </td> 
+                 <!-- <td> 
+                  <input style="width: max-content;"  (keyup)="updateFilter($event, 5)"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+                 </td>
+                 <td> <input style="width: max-content;" (keyup)="updateFilter($event, 1)"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+              </td>
+              <td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+            </td>
+            <td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+              autocomplete="off" class="form-control"
+               type="text" placeholder="Search" 
+                />
+          </td>
+          <td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+            autocomplete="off" class="form-control"
+             type="text" placeholder="Search" 
+              />
+        </td>
+        <td> <input style="width: max-content;" (keyup)="updateFilter($event, 1)"
+          autocomplete="off" class="form-control"
+           type="text" placeholder="Search" 
+            />
+      </td>
+      <td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+        autocomplete="off" class="form-control"
+         type="text" placeholder="Search" 
+          />
+    </td>
+    <td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+      autocomplete="off" class="form-control"
+       type="text" placeholder="Search" 
+        />
+  </td>
+  <td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+    autocomplete="off" class="form-control"
+     type="text" placeholder="Search" 
+      />
+</td>
+<td> <input style="width: max-content;" (keyup)="updateFilter($event, 1)"
+  autocomplete="off" class="form-control"
+   type="text" placeholder="Search" 
+    />
+</td>
+<td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+  autocomplete="off" class="form-control"
+   type="text" placeholder="Search" 
+    />
+</td>
+<td> <input style="width: max-content;" (keyup)="updateFilter($event, 1)"
+  autocomplete="off" class="form-control"
+   type="text" placeholder="Search" 
+    />
+</td>
+<td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+  autocomplete="off" class="form-control"
+   type="text" placeholder="Search" 
+    />
+</td>
+<td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+  autocomplete="off" class="form-control"
+   type="text" placeholder="Search" 
+    />
+</td>
+<td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+  autocomplete="off" class="form-control"
+   type="text" placeholder="Search" 
+    />
+</td>
+<td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+  autocomplete="off" class="form-control"
+   type="text" placeholder="Search" 
+    />
+</td>
+<td> <input style="width: max-content;"  (keyup)="updateFilter($event, 1)"
+  autocomplete="off" class="form-control"
+   type="text" placeholder="Search" 
+    />
+</td> -->
+                  
+        </tr>
+      <!--Search End Here-->
+  
+        <tr *ngFor="let row of rows; let h = index;">
+          <td>  {{ h + 1 }}</td>
+          <td style="text-align: center;">  
+            <span *ngIf="row.status" matTooltip="View  {{ row?.loginId }} Details" class="viewSpan" 
+            (click)= "action('View', row)">View</span>
+          </td>
+          <td >{{ row?.batchNo }}</td>
+          <td>{{ row?.ccyCode }}</td>     
+          <td>{{ row?.postedTransCount }}</td>
+          <td>{{ row?.recordCount}}</td>
+          <!-- <td>{{ row?.serviceId }}</td> -->
+          <!-- <td>{{ row?.totalDrCount }}</td>
+          <td>{{ row?.totalCrCount}}</td>
+          <td>{{ row?.totalDr }}</td>
+          <td>{{ row?.totalCr }}</td>
+          <td>{{ row?.tDifference }}</td>
+          <td>{{ row?.loadedBy }}</td>
+          <td>{{ row?.dept }}</td>
+          <td>{{ row?.isBalanced }}</td>
+          <td>{{ row?.verifiedBy }}</td>
+          <td>{{ row?.approvedBy }}</td>
+          <td>{{ row?.status }}</td>
+          <td>{{ row?.filename }}</td>
+          <td>{{ row?.dateCreated | date: 'd-MMM-y' }}</td>
+          <td>{{ row?.dateVerified | date: 'd-MMM-y'}}</td>
+          <td>{{ row?.dateApproved | date: 'd-MMM-y'}}</td>
+          <td>{{ row?.processingDept }}</td>
+         -->
+        </tr>
+       
+      </tbody>
+    </table>
+    </div>

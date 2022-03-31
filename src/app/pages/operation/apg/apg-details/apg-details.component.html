@@ -1,0 +1,4790 @@
+<!-- Initiate Process Form  -->
+<style>
+  /* new design set by kenny 22/03/2022*/
+  .label_adjust {
+      margin-left: -80px;
+  }
+  .label_adjust_sic {
+      margin-left: -71px;
+  }
+  .label_adjust_status {
+      margin-left: -106px;
+  }
+  .label_adjust_refno {
+      margin-left: 107px;
+  }
+  .input_adjust {
+      width: 200px;
+  }
+  .input_adjust_sic {
+      width: 136px;
+  }
+  .input_adjust_branch {
+      width: 163px;
+  }
+  .input_adjust_rsm{
+      width: 140px;
+  }
+  .select_adjust {
+      padding: 4px;
+  }
+  .label_adjust_dept{
+      margin-left: 18px;
+  }
+  .divDatePickerStyle {
+    text-align:right;
+    justify-content:right;
+    margin-top:-6px
+  }
+  
+</style>
+
+<div style="margin-top: -40px" class="row">
+  <div class="col-sm-12">
+    <span
+      class="btn"
+      style="
+        background-color: white;
+        color: black;
+        font-size: 18px;
+        font-weight: 800;
+      "
+    >
+      {{ serviceName | uppercase }} REQUEST FORM
+    </span>
+  </div>
+</div>
+<div *ngIf="!showIni" style="width: 800px; margin: 0 20% 0 20%">
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+      <div id="square5">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!--Instrument account details Initial Trans start here-->
+  <div class="form-group">
+    <div
+      class="col-sm-12 infoAcctdetails"
+      style="background-color: #444; color: #fff; text-align: center"
+    >
+      <label class="control-label lbl" style="color: #fff" for="tagsinput-2"
+        >INSTRUMENT ACCOUNT DETAILS</label
+      >
+    </div>
+  </div>
+  <div
+    style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important"
+  >
+    <div style="margin-top: 10px" class="form-group row">
+      <label for="input-11" class="col-sm-2 col-form-label">Acct Type</label>
+      <div class="col-sm-2">
+        <select
+          class="form-control"
+          [(ngModel)]="instrumentForm.acctType"
+          [ngClass]="{
+            redBorder:
+              instrumentForm.acctType === '' &&
+              (serviceId === 11 ||
+                serviceId == 14 ||
+                serviceId == 18 ||
+                serviceId == 19 ||
+                serviceId == 20)
+          }"
+          (change)="onChangeAcctType(instrumentForm.acctType)"
+
+         
+        >
+          <option value="">Select Type</option>
+          <option *ngFor="let a of acttypes" [value]="a?.accountTypeCode">
+            {{ a?.accountTypeCode }}
+          </option>
+        </select>
+      </div>
+      <label for="input-11" class="col-sm-2 col-form-label">Acct No</label>
+      <div class="col-sm-5">
+        
+         <input autocomplete="off" 
+                            class="form-control" 
+                            type="text" 
+                            placeholder=""
+                            [(ngModel)]="instrumentForm.acctNo"
+                            [ngClass]="{
+                                  redBorder:
+                                    instrumentForm.acctNo === '' &&
+                                    (serviceId === 11 ||
+                                      serviceId == 14 ||
+                                      serviceId == 18 ||
+                                      serviceId == 19 ||
+                                      serviceId == 20)
+                                }"
+                            (change)="checkLength(instrumentForm.acctNo, instrumentForm.acctType, instrumentForm.ccyCode) "
+                            (keypress)="acctFormatType(instrumentForm.acctNo, instrumentForm.acctType)"
+                             maxlength="{{ maxLength }}"
+                            />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="input-11" class="col-sm-2 col-form-label">Currency</label>
+      <div class="col-sm-2">
+        <select
+          class="form-control"
+          [(ngModel)]="instrumentForm.ccyCode"
+          [ngClass]="{
+            redBorder:
+              instrumentForm.ccyCode === '' &&
+              (serviceId === 11 ||
+                serviceId == 14 ||
+                serviceId == 18 ||
+                serviceId == 19 ||
+                serviceId == 20)
+          }"
+          (change)="checkAccountNo(instrumentForm.acctNo)"
+        >
+          <option value=''>Ccy Type</option>
+          <option *ngFor="let a of currencies" [value]="a.isoCode">
+            {{ a.isoCode }}
+          </option>
+        </select>
+      </div>
+
+      <label for="input-11" class="col-sm-2 col-form-label">Amount</label>
+      <div class="col-sm-5">
+        <input
+          autocomplete="off"
+          class="form-control txtRight"
+          type="text"
+          placeholder=""
+          [(ngModel)]="instrumentForm.amount"
+          [ngClass]="{
+            redBorder:
+              instrumentForm.amount === '' &&
+              (serviceId === 11 ||
+                serviceId == 14 ||
+                serviceId == 18 ||
+                serviceId == 19 ||
+                serviceId == 20)
+          }"
+          (change)="inputFormat($event)"
+          (keypress)="keyPress($event)"
+        />
+      </div>
+    </div>
+
+    <div style="margin-top: 10px" class="form-group row">
+      <label for="input-11" class="col-sm-2 col-form-label">Temp. Type</label>
+      <div class="col-sm-9">
+        <select
+          class="form-control"
+          disabled
+          [(ngModel)]="instrumentForm.serviceId"
+        >
+          <option>Temp. Type</option>
+          <option *ngFor="let a of templateTypes" [value]="a.serviceId">
+            {{ a.templateName }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!--Instrument account details Initial Trans End here-->
+  <!--Charge Initial Trans start here-->
+  <div *ngFor="let chg of chargeFormList; let h = index">
+    <div class="form-group">
+      <div
+        class="col-sm-12 infoAcctdetails"
+        style="background-color: #444; color: #fff; text-align: center"
+      >
+        <label class="control-label lbl" style="color: #fff" for="tagsinput-2"
+          >CHARGE ACCOUNT {{ h + 1 }}</label
+        >
+      </div>
+    </div>
+    <div
+      style="
+        border: 1px solid #c0c0c0 !important;
+        padding-right: 10px !important;
+      "
+    >
+      <div style="margin-top: 10px" class="form-group row">
+        <label for="input-11" class="col-sm-2 col-form-label">Acct Type</label>
+        <div class="col-sm-2">
+          <select
+            class="form-control"
+            [(ngModel)]="chg.chgAcctType"
+            [ngClass]="{
+              redBorder:
+                (chg.chgAcctType === null || chg.chgAcctType === '') &&
+                (serviceId === 11 ||
+                  serviceId == 14 ||
+                  serviceId == 18 ||
+                  serviceId == 19)
+            }"
+          >
+            <option value=''>Acct Type</option>
+            <option *ngFor="let a of acttypes" [value]="a?.accountTypeCode">
+              {{ a?.accountTypeCode }}
+            </option>
+          </select>
+        </div>
+        <label for="input-11" class="col-sm-2 col-form-label">Acct No</label>
+        <div class="col-sm-5">
+          <input
+            autocomplete="off"
+            class="form-control"
+            type="text"
+            placeholder=""
+            [(ngModel)]="chg.chgAcctNo"
+            [ngClass]="{
+              redBorder:
+                (chg.chgAcctNo === null || chg.chgAcctNo === '') &&
+                (serviceId === 11 ||
+                  serviceId == 14 ||
+                  serviceId == 18 ||
+                  serviceId == 19)
+            }"
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="input-11" class="col-sm-2 col-form-label">Currency</label>
+        <div class="col-sm-2">
+          <select
+            class="form-control"
+            [(ngModel)]="chg.chgAcctCcy"
+            [ngClass]="{
+              redBorder:
+                (chg.chgAcctCcy === null || chg.chgAcctCcy === '') &&
+                (serviceId === 11 ||
+                  serviceId == 14 ||
+                  serviceId == 18 ||
+                  serviceId == 19)
+            }"
+          >
+            <option value="">Ccy Type</option>
+            <option *ngFor="let a of currencies" [value]="a.isoCode">
+              {{ a.isoCode }}
+            </option>
+          </select>
+        </div>
+        <label for="input-11" class="col-sm-2 col-form-label"
+          >Charge Code</label
+        >
+        <div class="col-sm-2">
+          <input
+            autocomplete="off"
+            class="form-control"
+            type="text"
+            placeholder=""
+            [(ngModel)]="chg.chargeCode"
+            [ngClass]="{
+              redBorder:
+                chg.chargeCode === null &&
+                (serviceId === 11 ||
+                  serviceId == 14 ||
+                  serviceId == 18 ||
+                  serviceId == 19)
+            }"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Charge Initial Trans end here-->
+  <br />
+  <div class="row form-group">
+    <div class="col-sm-2">
+      <button
+        id="btnDismiss"
+        style="margin: 0 0 0 20px"
+        (click)="swapView()"
+        mat-raised-button
+        color="primary"
+        class="mat-elevation-z12 box-button"
+        type="submit"
+      >
+        <img
+          *ngIf="actionLoaderDismiss === true"
+          src="assets/img/loader/loader.gif"
+        />CANCEL
+      </button>
+    </div>
+    <div class="col-sm-2">
+      <button
+        id="btnInitiate"
+        style="margin: 0 0 0 0px"
+        (click)="initiate()"
+        mat-raised-button
+        color="accent"
+        class="mat-elevation-z12 box-button"
+        type="submit"
+      >
+        <img
+          *ngIf="actionbtnInitiate === true"
+          src="assets/img/loader/loader.gif"
+        />
+        VALIDATE
+      </button>
+    </div>
+    <div class="col-sm-2">
+      <button
+        id="btnDismiss"
+        style="margin: 0 0 0 0px"
+        (click)="clearIni()"
+        mat-raised-button
+        color="primary"
+        class="mat-elevation-z12 box-button"
+        type="submit"
+      >
+        <img
+          *ngIf="actionLoaderDismiss === true"
+          src="assets/img/loader/loader.gif"
+        />CLEAR
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Initiate Process Form End here -->
+<!--Main Form Reques Below-->
+
+<div *ngIf="showIni">
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+      <div id="square5">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: -40px" class="row">
+    <div class="col-sm-12">
+      <span
+        class="btn"
+        (click)="swapView()"
+        style="
+          background-color: white;
+          color: red;
+          border-color: coral;
+          font-size: 16px;
+          font-weight: 800;
+          float: right !important;
+        "
+        >Initiate</span
+      >
+    </div>
+  </div>
+
+  <ul class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+    <li [class]="selectedCalss">
+      <a class="nav-link {{ tab1 }}" data-toggle="tab" (click)="swapTab(1)"
+        ><i class="icon-home"> </i>
+        <span class="hidden-xs">
+          <b>INSTRUMENT DETAIL</b>
+        </span></a
+      >
+    </li>
+    <li [class]="selectedCalss2">
+      <a class="nav-link {{ tab2 }}" data-toggle="tab" (click)="swapTab(2)"
+        ><i class="icon-home"> </i>
+        <span class="hidden-xs">
+          <b>COLLATERAL DETAIL</b>
+        </span></a
+      >
+    </li>
+    <li [class]="selectedCalss4">
+      <a class="nav-link {{ tab4 }}" data-toggle="tab" (click)="swapTab(4)"
+        ><i class="icon-home"> </i>
+        <span class="hidden-xs">
+          <b>CHARGE DETAIL</b>
+        </span></a
+      >
+    </li>
+    <li [class]="selectedCalss5">
+      <a class="nav-link {{ tab5 }}" data-toggle="tab" (click)="swapTab(5)"
+        ><i class="icon-home"></i>
+        <span class="hidden-xs">
+          <b>CONTINGENT DETAIL</b>
+        </span></a
+      >
+    </li>
+  </ul>
+
+  <!--Instrument Details-->
+  <div class="displayOnLapTop" *ngIf="tabVlues === 1">
+    <div style="border: none solid black">
+      <div class="card-title-text">
+        <b></b
+        ><label class="allFieldRequired">
+          <label class="allFieldRequiredtxt"></label
+        ></label>
+      </div>
+      <br />
+
+      <div class="form-group">
+        <div
+          class="col-sm-12 infoAcctdetails"
+          style="background-color: #444; color: #fff; text-align: center"
+        >
+          <label class="control-label lbl" style="color: #fff" for="tagsinput-2"
+            >ACCOUNT DETAILS</label
+          >
+        </div>
+      </div>
+
+      <div
+        style="
+          border: 1px solid #c0c0c0 !important;
+          padding-right: 10px !important;
+        "
+      >
+        <div style="margin-top: 10px" class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Acct Type</label
+          >
+          <div class="col-sm-1">
+            <select
+              class="form-control select_adjust"
+              [(ngModel)]="instrumentForm.acctType"
+              (change)="onChangeAcctType(instrumentForm.acctType)"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.acctType === '' &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            >
+              <option value=''>Acct Type</option>
+              <option *ngFor="let a of acttypes" [value]="a?.accountTypeCode">
+                {{ a?.accountTypeCode }}
+              </option>
+            </select>
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Acct No</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.acctNo"
+              id="acctNo"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.acctNo === '' &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+              (change)="validateAcct($event)"
+              (keypress)="acctFormatType(instrumentForm.acctNo, instrumentForm.acctType)"               
+              maxlength="{{ maxLength }}"
+            />
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label "
+            >Acct.Name</label
+          >
+          <div class="col-sm-6">
+            <input
+              disabled
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.acctName"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.acctName === '' &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            />
+          </div>
+          
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Currency</label>
+          <div class="col-sm-1">
+            <select
+              class="form-control select_adjust"
+              [(ngModel)]="instrumentForm.ccyCode"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.ccyCode === '' &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            >
+              <option value=''>Currency Type</option>
+              <option *ngFor="let a of currencies" [value]="a.isoCode">
+                {{ a.isoCode }}
+              </option>
+            </select>
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Balance</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              style="text-align:right"
+              [(ngModel)]="instrumentForm.availBal"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.availBal === null &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+              disabled
+            />
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Branch</label>
+          <div class="col-sm-2">
+            <input
+              disabled
+              class="form-control input_adjust_branch"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.branchName"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.branchName === null &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label label_adjust_dept"
+            >Proc.Dept</label
+          >
+          <div class="col-sm-2">
+            <select
+              class="form-control"
+              [(ngModel)]="instrumentForm.processingDeptId"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.processingDeptId === null &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            >
+              <option>Select Department</option>
+              <option *ngFor="let a of departments" [value]="a.deptId">
+                {{ a.deptname }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Proc.Rsm</label
+          >
+          <div class="col-sm-2">
+            <select
+              class="form-control input_adjust_rsm"
+              [(ngModel)]="instrumentForm.rsmId"
+           
+            >
+              <option>Select RSM</option>
+              <option *ngFor="let a of users" [value]="a?.rsmId">
+                {{ a.fullName }}
+              </option>
+            </select>
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label label_adjust_sic">SIC</label>
+          <div class="col-sm-3" >
+            <select
+              class="form-control input_adjust_sic"
+              style="margin-left:-10px"
+              [(ngModel)]="instrumentForm.acctSic"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.acctSic === '' &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            >
+              <option value=''>Select Acct Sector</option>
+              <option *ngFor="let a of sectors" [value]="a?.sicCode">
+                {{ a.sectorName }}
+              </option>
+            </select>
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label label_adjust_status">Status</label>
+          <div class="col-sm-1">
+            <input
+              disabled
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.acctStatus"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.acctStatus === null &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+              disabled
+            />
+          </div>
+          <label
+            *ngIf="data.actionName !== 'Add'"
+            for="input-11"
+            class="col-sm-1 col-form-label label_adjust_refno"
+            >Ref No</label
+          >
+          <div class="col-sm-2">
+            <input
+              class="form-control"
+              style="font-weight: 800"
+              *ngIf="data.actionName !== 'Add'"
+              [(ngModel)]="instrumentForm.referenceNo"
+              type="text"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+
+      <!--Account Details End here-->
+
+      <div class="form-group">
+        <div
+          class="col-sm-12 infoAcctdetails"
+          style="background-color: #444; color: #fff; text-align: center"
+        >
+          <label class="control-label lbl" style="color: #fff" for="tagsinput-2"
+            >OTHER INSTRUMENT DETAILS</label
+          >
+        </div>
+      </div>
+    
+      <div
+        style="
+          border: 1px solid #c0c0c0 !important;
+          padding-right: 10px !important;
+        "
+      >
+        <div style="margin-top: 10px" class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Effective Date</label
+          >
+          <div class="col-sm-1 col-md-1">
+            <input
+              class="form-control"
+              style="width: 100px;"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.effectiveDate === null &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+              [(ngModel)]="instrumentForm.effectiveDate"
+              type="text"
+              readonly
+            />
+            
+          </div>
+          
+          <!-- <div class="col-sm-1">
+            <input
+              id="effectiveDate"
+              style="border: none !important"
+              class="form-control cursorPointer"
+              type="date"
+              value=""
+              (change)="changeEffectdate1($event)"
+            />
+          </div> -->
+          <div class="col-md-1 col-sm-1 divDatePickerStyle" >
+            <input matInput 
+                [matDatepicker]="myEffectiveDate" 
+                placeholder=""
+                
+                #refEffectiveDate
+                (dateChange)="colEffectiveDateChange(refEffectiveDate.value)"
+                style="width:0px"
+            >
+            <mat-datepicker-toggle [for]="myEffectiveDate" matSuffix></mat-datepicker-toggle>
+            <mat-datepicker #myEffectiveDate [startAt]="startDateVal"></mat-datepicker>
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Tenor</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.tenor"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.tenor === null &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+              (change)="tenor($event)"
+              (keypress)="keyPress($event)"
+            />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Period</label>
+          <div class="col-sm-2">
+            <select
+              class="form-control"
+              (change)="onOptionsSelected($event)"
+              [(ngModel)]="instrumentForm.tenorPeriod"
+            >
+              <option value=''>Select Period</option>
+              <option
+                *ngFor="let a of period"
+                [ngClass]="{
+                  redBorder:
+                    instrumentForm.tenorPeriod === null &&
+                    (serviceId === 11 ||
+                      serviceId == 14 ||
+                      serviceId == 18 ||
+                      serviceId == 19)
+                }"
+                [value]="a"
+              >
+                {{ a }}
+              </option>
+            </select>
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Expiry Date</label
+          >
+
+          <div class="col-sm-2">
+            <input
+              class="form-control"
+              style="width: 100px"
+              disabled
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.expiryDate === null &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+              [(ngModel)]="instrumentForm.expiryDate"
+              type="text"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.expiryDate === null &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            />
+          </div>
+          <!-- <div class = "col-sm-1"> 
+                         <input id="effectiveDate" style = "border: none !important;"
+                            class="form-control cursorPointer" 
+                            type="date" 
+                            value=""
+                            [(ngModel)]="instrumentForm.expiryDate" 
+                            (change)="changeExpiryDate1($event)"/> 
+    
+                        
+              
+                        
+                  </div> -->
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Currency</label>
+          <div class="col-sm-2">
+            <!-- <input  autocomplete="off" class="form-control" type="text" placeholder=""
+                      [(ngModel)]="instrumentForm.instrumentCcy"
+                      [ngClass]="{'redBorder':
+                      instrumentForm.instrumentCcy === null &&   (serviceId === 11 || serviceId == 14 || serviceId == 18 || serviceId == 19) }"/> -->
+            <select
+              class="form-control"
+              [(ngModel)]="instrumentForm.instrumentCcy"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.instrumentCcy === '' &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            >
+              <option value=''>Currency Type</option>
+              <option *ngFor="let a of currencies" [value]="a.isoCode">
+                {{ a.isoCode }}
+              </option>
+            </select>
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Amount</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control txtRight"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.amount"
+              disabled
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.amount === '' &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            />
+            <!-- (change)="trigerAfterAmt($event)" -->
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Contract No</label
+          >
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.contractNo"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.contractNo === '' &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Contract Date</label
+          >
+
+          <div class="col-sm-1">
+            <input
+              class="form-control width100"
+              readonly
+              [(ngModel)]="instrumentForm.contractDate"
+              type="text"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.contractDate === null &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            />
+          </div>
+          <!-- <div class="col-sm-1">
+            <input
+              id="contractDate"
+              style="border: none !important"
+              class="form-control cursorPointer"
+              type="date"
+              value=""
+              [(ngModel)]="instrumentForm.contractDate"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.contractDate === null &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+              
+              (change)="changeContractDate1($event)"
+            />
+          </div> -->
+
+          <div class="col-md-1 col-sm-1 divDatePickerStyle">
+            <input matInput 
+                [matDatepicker]="myContractDate" 
+                placeholder=""
+                
+                #refContractDate
+                (dateChange)="changeContractDate1(refContractDate.value)"
+                style="width:0px"
+            >
+            <mat-datepicker-toggle [for]="myContractDate" matSuffix></mat-datepicker-toggle>
+            <mat-datepicker #myContractDate [startAt]="startDateVal"></mat-datepicker>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Beneficiary</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.beneficiary"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.beneficiary === '' &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Purpose</label>
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.purpose"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.purpose === null &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div
+          class="col-sm-12 infoAcctdetails"
+          style="background-color: #444; color: #fff; text-align: center"
+        >
+          <label class="control-label lbl" style="color: #fff" for="tagsinput-2"
+            >ADDRESS DETAILS</label
+          >
+        </div>
+      </div>
+      <div
+        style="
+          border: 1px solid #c0c0c0 !important;
+          padding-right: 10px !important;
+        "
+      >
+        <div style="margin-top: 10px" class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Name</label>
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.adresseeName"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.adresseeName === '' &&
+                  (serviceId === 11 ||
+                    serviceId == 14 ||
+                    serviceId == 18 ||
+                    serviceId == 19)
+              }"
+            />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Address Line 1</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.addressLine1"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.addressLine1 === '' &&
+                  (serviceId === 19 ||
+                    serviceId == 14 ||
+                    serviceId == 18
+                  )
+              }"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Address Line 2</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.addressLine2"
+              [ngClass]="{
+                redBorder:
+                  instrumentForm.addressLine2 === '' &&
+                  (serviceId === 19 ||
+                    serviceId == 14 ||
+                    serviceId == 18 
+                  )
+              }"
+            />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Address Line 3</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.addressLine3"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Address Line 4</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.addressLine4"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div
+          class="col-sm-12 infoAcctdetails"
+          style="background-color: #444; color: #fff; text-align: center"
+        >
+          <label class="control-label lbl" style="color: #fff" for="tagsinput-2"
+            >TEMPLATE DETAILS</label
+          >
+        </div>
+      </div>
+      <div
+        style="
+          border: 1px solid #c0c0c0 !important;
+          padding-right: 10px !important;
+        "
+      >
+        <div style="margin-top: 10px" class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Temp.Type</label
+          >
+          <div class="col-sm-5">
+            <select
+              class="form-control"
+              disabled
+              [(ngModel)]="instrumentForm.serviceId"
+            >
+              <option>Temp. Type</option>
+              <option *ngFor="let a of templateTypes" [value]="a.serviceId">
+                {{ a.templateName }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- Instrument Details End here -->
+      <div *ngIf="data.actionName !== 'Add'">
+        <div class="form-group">
+          <div
+            class="col-sm-12 infoAcctdetails"
+            style="background-color: #444; color: #fff; text-align: center"
+          >
+            <label
+              class="control-label lbl"
+              style="color: #fff"
+              for="tagsinput-2"
+              >AUDIT TRAIL</label
+            >
+          </div>
+        </div>
+
+        <div
+          style="
+            border: 1px solid #c0c0c0 !important;
+            padding-right: 10px !important;
+          "
+        >
+          <div style="margin-top: 10px" class="form-group row">
+            <label for="input-11" class="col-sm-1 col-form-label"
+              >Created By</label
+            >
+            <div class="col-sm-2">
+              <input
+                autocomplete="off"
+                [(ngModel)]="allActionUser.createdBy"
+                class="form-control"
+                type="text"
+                readonly
+              />
+            </div>
+            <label for="input-11" class="col-sm-1 col-form-label"
+              >Date Created</label
+            >
+            <div class="col-sm-2">
+              <input
+                autocomplete="off"
+                class="form-control"
+                type="text"
+                [(ngModel)]="instrumentForm.dateCreated"
+                readonly
+              />
+            </div>
+            <label for="input-11" class="col-sm-1 col-form-label"
+              >Service Status</label
+            >
+            <div class="col-sm-2">
+              <input
+                autocomplete="off"
+                class="form-control"
+                type="text"
+                [(ngModel)]="instrumentForm.instrumentStatus"
+                readonly
+              />
+            </div>
+            <label for="input-11" class="col-sm-1 col-form-label"
+              >Trans. Status</label
+            >
+            <div class="col-sm-2">
+              <input
+                autocomplete="off"
+                class="form-control"
+                type="text"
+                [(ngModel)]="instrumentForm.status"
+                readonly
+              />
+            </div>
+          </div>
+
+          <!--Dismis and Reject Component below-->
+
+          <app-rej-dismiss></app-rej-dismiss>
+        </div>
+      </div>
+
+      <!--Add Panel End here-->
+    </div>
+
+
+  </div>
+  <!--Instrument Details End Here-->
+  <!--Collaterat Details-->
+  <div class="displayOnLapTop" *ngIf="tabVlues === 2">
+    <div style="border: none solid black">
+      <br />
+
+      <div class="form-group">
+        <div
+          class="col-sm-12 infoAcctdetails"
+          style="background-color: #444; color: #fff; text-align: center"
+        >
+          <label class="control-label lbl" style="color: #fff" for="tagsinput-2"
+            >COLLATERAL DETAILS</label
+          >
+        </div>
+      </div>
+
+      
+
+      <div
+        style="
+          border: 1px solid #c0c0c0 !important;
+          padding-right: 10px !important;
+        "
+      >
+        
+        <!-- <div class="form-group row" style="margin-top: 10px">
+          <div class="col-sm-1"></div>
+          <div
+            *ngFor="let a of CollateralTypes; let h = index"
+            class="form-group row"
+            style="display: flex;"
+          >
+            <label style="width: auto; margin-left: 30px">{{
+              a.collateralName
+            }}</label>
+            <div class="">
+              <mat-checkbox
+                color="primary"
+                class="example-margin"
+                (change)="colSelected(a)"
+              >
+              </mat-checkbox>
+            </div>
+          </div>
+        </div> -->
+        
+        <div class="form-group row">
+            <div class="col-md-1"></div>
+            <div *ngFor="let a of CollateralTypes; let h = index" class="" style="display:flex;">
+              <label style ="width: auto; margin-left: 30px"> {{ a.collateralName}}</label>
+              <div style="width: auto">
+                <mat-checkbox style = "margin-left: 10px" color="primary" 
+                    class="example-margin"
+                    (change)="colSelected(a)"
+                    
+                    >
+                </mat-checkbox>
+              </div>
+            </div>
+        </div>
+        <hr />
+
+        <div *ngFor="let CollateralForm of CollateralForm">
+          <!--Cash Collateral Start here-->
+          <div
+            *ngIf="
+              CollateralForm.collateralName === 'CASH' &&
+              CollateralForm.selected === true
+            "
+          >
+            <h6 class="selectCollateral">
+              {{ CollateralForm.collateralName | uppercase }} {{ info }}
+            </h6>
+
+            <div style="margin-top: 10px" class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Type</label
+              >
+              <div class="col-sm-2">
+                <select
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.acctType"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctType == '' &&
+                      ( CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'CASH')
+                  }"
+                >
+                  <option value=''>Acct Type</option>
+                  <option
+                    *ngFor="let a of acttypes"
+                    [value]="a.accountTypeCode"
+                  >
+                    {{ a.accountTypeCode }}
+                  </option>
+                </select>
+              </div>
+
+              <label
+                for="input-11"
+                class="col-sm-1 col-form-label margin-left40"
+                >Acct No </label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="CollateralForm.acctNo"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctNo == '' &&
+                      ( CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                        CollateralForm.collateralName === 'CASH')
+                  }"
+                  (change)="collateralValidation(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Avail Bal</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  
+                  [(ngModel)]="CollateralForm.availBal"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.availBal == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Ccy</label
+              >
+              <div class="col-sm-2">
+                <select
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.acctCCy"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctCCy == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                >
+                  <option value=''>Ccy Type</option>
+                  <option *ngFor="let a of currencies" [value]="a.isoCode">
+                    {{ a.isoCode }}
+                  </option>
+                </select>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Status</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="CollateralForm.acctStatus"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctStatus == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  disabled
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Name</label
+              >
+              <div class="col-sm-5">
+                <input
+                  disabled
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.acctName"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctName == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Place Hold?</label
+              >
+              <div class="col-sm-1">
+                <mat-checkbox
+                  color="primary"
+                  *ngIf="action.actionName === 'Add'"
+                  [(ngModel)]="CollateralForm.placeHoldBoolean"
+                  class="example-margin"
+                >
+                </mat-checkbox>
+
+                <mat-checkbox
+                  color="primary"
+                  *ngIf="action.actionName !== 'Add'"
+                  [(ngModel)]="CollateralForm.placeHoldBoolean"
+                  class="example-margin"
+                  (change)="updateHold(CollateralForm)"
+                >
+                </mat-checkbox>
+              </div>
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 125px; margin-left: -68px"
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.holdId"
+                  disabled
+                />
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Lien Amount</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.lienAmount"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.lienAmount == null &&
+                      ( CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'OTHERS' ||
+                        CollateralForm.collateralName === 'CASH')
+                  }"
+                  (change)="formatLientAmount(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Effective Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.effectiveDate == null &&
+                      ( CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'CASH' ||
+                      CollateralForm.collateralName === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="CollateralForm.effectiveDate"
+                  disabled
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colEffectiveDate1($event, CollateralForm)"
+                />
+              </div> -->
+              <div class="col-md-1 col-sm-1 divDatePickerStyle" >
+                <input matInput 
+                    [matDatepicker]="myColEffectiveDate" 
+                    placeholder=""
+                    
+                    #colEffectiveDate
+                    (dateChange)="colEffectiveGetDate(colEffectiveDate.value, CollateralForm)"
+                    style="width:0px"
+                >
+                <mat-datepicker-toggle [for]="myColEffectiveDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myColEffectiveDate [startAt]="startDateVal"></mat-datepicker>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Expiry Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.expiryDate == null &&
+                      (CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'CASH' ||
+                      CollateralForm.collateralName === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="CollateralForm.expiryDate"
+                  readonly
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colExpiryDate1($event, CollateralForm)"
+                />
+              </div> -->
+
+              <!-- <div class="col-md-1 col-sm-1 divDatePickerStyle" >
+                <input matInput 
+                    [matDatepicker]="myColExpiryDate" 
+                    placeholder=""
+                    
+                    #colExpiryDate
+                    (dateChange)="colExpiryGetDate(colExpiryDate.value, CollateralForm)"
+                    style="width:0px;"
+                >
+                <mat-datepicker-toggle [for]="myColExpiryDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myColExpiryDate [startAt]="startDateVal"></mat-datepicker>
+              </div> -->
+            </div>
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Mortgage No</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.collMortgageNo"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.collMortgageNo == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Valuer</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.valuer"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.valuer == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >verified By</label
+              >
+              <div class="col-sm-5">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.verifiedBy"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.verifiedBy == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Verificat. Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.verificationDate"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.verificationDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  disabled
+                />
+              </div>
+              <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colVerificationDate1($event, CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Market Value</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.marketValue"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.marketValue == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  (change)="colMarketValAmount(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Forced Sale Val
+              </label>
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.forcedSaleValue"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.forcedSaleValue == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  (change)="colforceSaleValAmount(CollateralForm)"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Location</label
+              >
+              <div class="col-sm-5">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.location"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.location == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label
+                *ngIf="collTypeselect === 'OTHERS'"
+                for="input-11"
+                class="col-sm-1 col-form-label"
+                >Description</label
+              >
+              <div class="col-sm-5" *ngIf="collTypeselect === 'OTHERS'">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.collDescription"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.collDescription == null &&
+                      collTypeselect === 'OTHERS'
+                  }"
+                />
+              </div>
+            </div>
+          </div>
+          <!--Cash Collateral End here-->
+          <!--LEGAL MORTGAGE Collateral Start here-->
+          <div
+            *ngIf="
+              CollateralForm.collateralName === 'LEGAL MORTGAGE' &&
+              CollateralForm.selected === true
+            "
+          >
+            <br />
+            <hr />
+            <h6 class="selectCollateral">
+              {{ CollateralForm.collateralName | uppercase }} {{ info }}
+            </h6>
+
+            <div style="margin-top: 10px" class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Type</label
+              >
+              <div class="col-sm-2">
+                <select
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.acctType"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctType == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                >
+                  <option value=''>Acct Type</option>
+                  <option
+                    *ngFor="let a of acttypes"
+                    [value]="a.accountTypeCode"
+                  >
+                    {{ a.accountTypeCode }}
+                  </option>
+                </select>
+              </div>
+
+              <label
+                for="input-11"
+                class="col-sm-1 col-form-label margin-left40"
+                >Acct No</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="CollateralForm.acctNo"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctNo == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  (change)="collateralValidation(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Avail Bal</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.availBal"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.availBal == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Ccy</label
+              >
+              <div class="col-sm-2">
+                <select
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.acctCCy"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctCCy == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                >
+                  <option value=''>Ccy Type</option>
+                  <option *ngFor="let a of currencies" [value]="a.isoCode">
+                    {{ a.isoCode }}
+                  </option>
+                </select>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Status</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="CollateralForm.acctStatus"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctStatus == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  disabled
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Name</label
+              >
+              <div class="col-sm-5">
+                <input
+                  disabled
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.acctName"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctName == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Place Hold?</label
+              >
+              <div class="col-sm-1">
+                <mat-checkbox
+                  color="primary"
+                  *ngIf="action.actionName === 'Add'"
+                  [(ngModel)]="CollateralForm.placeHoldBoolean"
+                  class="example-margin"
+                >
+                </mat-checkbox>
+
+                <mat-checkbox
+                  color="primary"
+                  *ngIf="action.actionName !== 'Add'"
+                  [(ngModel)]="CollateralForm.placeHoldBoolean"
+                  class="example-margin"
+                  (change)="updateHold(CollateralForm)"
+                >
+                </mat-checkbox>
+              </div>
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 125px; margin-left: -68px"
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.holdId"
+                  disabled
+                />
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Lien Amount</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.lienAmount"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.lienAmount == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  (change)="formatLientAmount(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Effective Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.effectiveDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="CollateralForm.effectiveDate"
+                  disabled
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colEffectiveDate1($event, CollateralForm)"
+                />
+              </div> -->
+              <div class="col-md-1 col-sm-1" style="text-align:right;justify-content:right">
+                <input matInput 
+                    [matDatepicker]="myColEffectiveDate" 
+                    placeholder=""
+                    
+                    #colEffectiveDate
+                    (dateChange)="colEffectiveGetDate(colEffectiveDate.value, CollateralForm)"
+                    style="width:0px"
+                >
+                <mat-datepicker-toggle [for]="myColEffectiveDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myColEffectiveDate [startAt]="startDateVal"></mat-datepicker>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Expiry Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.expiryDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="CollateralForm.expiryDate"
+                  readonly
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colExpiryDate1($event, CollateralForm)"
+                />
+              </div> -->
+              <div class="col-md-1 col-sm-1" style="text-align:right;justify-content:right">
+                <input matInput 
+                    [matDatepicker]="myColExpiryDate" 
+                    placeholder=""
+                    
+                    #colExpiryDate
+                    (dateChange)="colExpiryGetDate(colExpiryDate.value, CollateralForm)"
+                    style="width:0px;"
+                >
+                <mat-datepicker-toggle [for]="myColExpiryDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myColExpiryDate [startAt]="startDateVal"></mat-datepicker>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Mortgage No</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.collMortgageNo"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.collMortgageNo == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Valuer</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.valuer"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.valuer == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >verified By</label
+              >
+              <div class="col-sm-5">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.verifiedBy"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.verifiedBy == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Verificat. Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.verificationDate"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.verificationDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  disabled
+                />
+              </div>
+              <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colVerificationDate1($event, CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Market Value</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.marketValue"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.marketValue == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  (change)="colMarketValAmount(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Forced Sale Val
+              </label>
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.forcedSaleValue"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.forcedSaleValue == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  (change)="colforceSaleValAmount(CollateralForm)"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Location</label
+              >
+              <div class="col-sm-5">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.location"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.location == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label
+                *ngIf="collTypeselect === 'OTHERS'"
+                for="input-11"
+                class="col-sm-1 col-form-label"
+                >Description</label
+              >
+              <div class="col-sm-5" *ngIf="collTypeselect === 'OTHERS'">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.collDescription"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.collDescription == null &&
+                      collTypeselect === 'OTHERS'
+                  }"
+                />
+              </div>
+            </div>
+          </div>
+          <!--LEGAL MORTGAGE Collateral End here-->
+
+          <!--DEBENTURE MORTGAGE Collateral Start here-->
+          <div
+            *ngIf="
+              CollateralForm.collateralName === 'DEBENTURE MORTGAGE' &&
+              CollateralForm.selected === true
+            "
+          >
+            <br />
+            <hr />
+            <h6 class="selectCollateral">
+              {{ CollateralForm.collateralName | uppercase }} {{ info }}
+            </h6>
+
+            <div style="margin-top: 10px" class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Type</label
+              >
+              <div class="col-sm-2">
+                <select
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.acctType"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctType == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                >
+                  <option value=''>Acct Type</option>
+                  <option
+                    *ngFor="let a of acttypes"
+                    [value]="a.accountTypeCode"
+                  >
+                    {{ a.accountTypeCode }}
+                  </option>
+                </select>
+              </div>
+
+              <label
+                for="input-11"
+                class="col-sm-1 col-form-label margin-left40"
+                >Acct No</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="CollateralForm.acctNo"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctNo == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  (change)="collateralValidation(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Avail Bal</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.availBal"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.availBal == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Ccy</label
+              >
+              <div class="col-sm-2">
+                <select
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.acctCCy"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctCCy == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                >
+                  <option value=''>Ccy Type</option>
+                  <option *ngFor="let a of currencies" [value]="a.isoCode">
+                    {{ a.isoCode }}
+                  </option>
+                </select>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Status</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="CollateralForm.acctStatus"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctStatus == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  disabled
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Name</label
+              >
+              <div class="col-sm-5">
+                <input
+                  disabled
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.acctName"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctName == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Place Hold?</label
+              >
+              <div class="col-sm-1">
+                <mat-checkbox
+                  color="primary"
+                  *ngIf="action.actionName === 'Add'"
+                  [(ngModel)]="CollateralForm.placeHoldBoolean"
+                  class="example-margin"
+                >
+                </mat-checkbox>
+
+                <mat-checkbox
+                  color="primary"
+                  *ngIf="action.actionName !== 'Add'"
+                  [(ngModel)]="CollateralForm.placeHoldBoolean"
+                  class="example-margin"
+                  (change)="updateHold(CollateralForm)"
+                >
+                </mat-checkbox>
+              </div>
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 125px; margin-left: -68px"
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.holdId"
+                  disabled
+                />
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Lien Amount</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.lienAmount"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.lienAmount == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  (change)="formatLientAmount(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Effective Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.effectiveDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="CollateralForm.effectiveDate"
+                  disabled
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colEffectiveDate1($event, CollateralForm)"
+                />
+              </div> -->
+              <div class="col-md-1 col-sm-1" style="text-align:right;justify-content:right">
+                <input matInput 
+                    [matDatepicker]="myColEffectiveDate" 
+                    placeholder=""
+                    
+                    #colEffectiveDate
+                    (dateChange)="colEffectiveGetDate(colEffectiveDate.value, CollateralForm)"
+                    style="width:0px"
+                >
+                <mat-datepicker-toggle [for]="myColEffectiveDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myColEffectiveDate [startAt]="startDateVal"></mat-datepicker>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Expiry Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.expiryDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="CollateralForm.expiryDate"
+                  readonly
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colExpiryDate1($event, CollateralForm)"
+                />
+              </div> -->
+              <div class="col-md-1 col-sm-1" style="text-align:right;justify-content:right">
+                <input matInput 
+                    [matDatepicker]="myColExpiryDate" 
+                    placeholder=""
+                    
+                    #colExpiryDate
+                    (dateChange)="colExpiryGetDate(colExpiryDate.value, CollateralForm)"
+                    style="width:0px;"
+                >
+                <mat-datepicker-toggle [for]="myColExpiryDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myColExpiryDate [startAt]="startDateVal"></mat-datepicker>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Mortgage No</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.collMortgageNo"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.collMortgageNo == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Valuer</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.valuer"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.valuer == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >verified By</label
+              >
+              <div class="col-sm-5">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.verifiedBy"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.verifiedBy == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Verificat. Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.verificationDate"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.verificationDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  disabled
+                />
+              </div>
+              <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colVerificationDate1($event, CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Market Value</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.marketValue"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.marketValue == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  (change)="colMarketValAmount(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Forced Sale Val
+              </label>
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.forcedSaleValue"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.forcedSaleValue == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  (change)="colforceSaleValAmount(CollateralForm)"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Location</label
+              >
+              <div class="col-sm-5">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.location"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.location == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label
+                *ngIf="collTypeselect === 'OTHERS'"
+                for="input-11"
+                class="col-sm-1 col-form-label"
+                >Description</label
+              >
+              <div class="col-sm-5" *ngIf="collTypeselect === 'OTHERS'">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.collDescription"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.collDescription == null &&
+                      collTypeselect === 'OTHERS'
+                  }"
+                />
+              </div>
+            </div>
+          </div>
+          <!--DEBENTURE MORTGAGE Collateral End here-->
+
+          <!--OTHERS Collateral Start here-->
+          <div
+            *ngIf="
+              CollateralForm.collateralName === 'OTHERS' &&
+              CollateralForm.selected === true
+            "
+          >
+            <br />
+            <hr />
+            <h6 class="selectCollateral">
+              {{ CollateralForm.collateralName | uppercase }} {{ info }}
+            </h6>
+
+            <div style="margin-top: 10px" class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Type</label
+              >
+              <div class="col-sm-2">
+                <select
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.acctType"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctType == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                >
+                  <option value=''>Acct Type</option>
+                  <option
+                    *ngFor="let a of acttypes"
+                    [value]="a.accountTypeCode"
+                  >
+                    {{ a.accountTypeCode }}
+                  </option>
+                </select>
+              </div>
+
+              <label
+                for="input-11"
+                class="col-sm-1 col-form-label margin-left40"
+                >Acct No</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="CollateralForm.acctNo"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctNo == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  (change)="collateralValidation(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Avail Bal</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.availBal"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.availBal == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Ccy</label
+              >
+              <div class="col-sm-2">
+                <select
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.acctCCy"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctCCy == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                >
+                  <option value=''>Ccy Type</option>
+                  <option *ngFor="let a of currencies" [value]="a.isoCode">
+                    {{ a.isoCode }}
+                  </option>
+                </select>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Status</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="CollateralForm.acctStatus"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctStatus == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  disabled
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Name</label
+              >
+              <div class="col-sm-5">
+                <input
+                  disabled
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.acctName"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctName == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Place Hold?</label
+              >
+              <div class="col-sm-1">
+                <mat-checkbox
+                  color="primary"
+                  *ngIf="action.actionName === 'Add'"
+                  [(ngModel)]="CollateralForm.placeHoldBoolean"
+                  class="example-margin"
+                >
+                </mat-checkbox>
+
+                <mat-checkbox
+                  color="primary"
+                  *ngIf="action.actionName !== 'Add'"
+                  [(ngModel)]="CollateralForm.placeHoldBoolean"
+                  class="example-margin"
+                  (change)="updateHold(CollateralForm)"
+                >
+                </mat-checkbox>
+              </div>
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 125px; margin-left: -68px"
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.holdId"
+                  disabled
+                />
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Lien Amount</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.lienAmount"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.lienAmount == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  (change)="formatLientAmount(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Effective Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.effectiveDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="CollateralForm.effectiveDate"
+                  disabled
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colEffectiveDate1($event, CollateralForm)"
+                />
+              </div> -->
+              <div class="col-md-1 col-sm-1" style="text-align:right;justify-content:right">
+                <input matInput 
+                    [matDatepicker]="myColEffectiveDate" 
+                    placeholder=""
+                    
+                    #colEffectiveDate
+                    (dateChange)="colEffectiveGetDate(colEffectiveDate.value, CollateralForm)"
+                    style="width:0px"
+                >
+                <mat-datepicker-toggle [for]="myColEffectiveDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myColEffectiveDate [startAt]="startDateVal"></mat-datepicker>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Expiry Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.expiryDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="CollateralForm.expiryDate"
+                  readonly
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colExpiryDate1($event, CollateralForm)"
+                />
+              </div> -->
+              <div class="col-md-1 col-sm-1" style="text-align:right;justify-content:right">
+                <input matInput 
+                    [matDatepicker]="myColExpiryDate" 
+                    placeholder=""
+                    
+                    #colExpiryDate
+                    (dateChange)="colExpiryGetDate(colExpiryDate.value, CollateralForm)"
+                    style="width:0px;"
+                >
+                <mat-datepicker-toggle [for]="myColExpiryDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myColExpiryDate [startAt]="startDateVal"></mat-datepicker>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Mortgage No</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.collMortgageNo"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.collMortgageNo == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Valuer</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.valuer"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.valuer == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >verified By</label
+              >
+              <div class="col-sm-5">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.verifiedBy"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.verifiedBy == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Verificat. Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  [(ngModel)]="CollateralForm.verificationDate"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.verificationDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  disabled
+                />
+              </div>
+              <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colVerificationDate1($event, CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Market Value</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.marketValue"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.marketValue == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  (change)="colMarketValAmount(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Forced Sale Val
+              </label>
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.forcedSaleValue"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.forcedSaleValue == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  (change)="colforceSaleValAmount(CollateralForm)"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Location</label
+              >
+              <div class="col-sm-5">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.location"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.location == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label
+                *ngIf="collTypeselect === 'OTHERS'"
+                for="input-11"
+                class="col-sm-1 col-form-label"
+                >Description</label
+              >
+              <div class="col-sm-5" *ngIf="collTypeselect === 'OTHERS'">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.collDescription"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.collDescription == null &&
+                      collTypeselect === 'OTHERS'
+                  }"
+                />
+              </div>
+            </div>
+          </div>
+          <!--OTHERS MORTGAGE Collateral End here-->
+
+          <!--INSURANCE Collateral Start here-->
+          <div
+            *ngIf="
+              CollateralForm.collateralName === 'INSURANCE' &&
+              CollateralForm.selected === true
+            "
+          >
+            <br />
+            <hr />
+            <h6 class="selectCollateral">
+              {{ CollateralForm.collateralName | uppercase }} {{ info }}
+            </h6>
+
+            <div style="margin-top: 10px" class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Type</label
+              >
+              <div class="col-sm-2">
+                <select
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.acctType"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctType == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                >
+                  <option value=''>Acct Type</option>
+                  <option
+                    *ngFor="let a of acttypes"
+                    [value]="a.accountTypeCode"
+                  >
+                    {{ a.accountTypeCode }}
+                  </option>
+                </select>
+              </div>
+
+              <label
+                for="input-11"
+                class="col-sm-1 col-form-label margin-left40"
+                >Acct No</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="CollateralForm.acctNo"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctNo == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  (change)="collateralValidation(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Avail Bal</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.availBal"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.availBal == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Ccy</label
+              >
+              <div class="col-sm-2">
+                <select
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.acctCCy"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctCCy == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                >
+                  <option value=''>Ccy Type</option>
+                  <option *ngFor="let a of currencies" [value]="a.isoCode">
+                    {{ a.isoCode }}
+                  </option>
+                </select>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Status</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="CollateralForm.acctStatus"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctStatus == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  disabled
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Acct Name</label
+              >
+              <div class="col-sm-5">
+                <input
+                  disabled
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.acctName"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.acctName == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH')
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Place Hold?</label
+              >
+              <div class="col-sm-1">
+                <mat-checkbox
+                  color="primary"
+                  *ngIf="action.actionName === 'Add'"
+                  [(ngModel)]="CollateralForm.placeHoldBoolean"
+                  class="example-margin"
+                >
+                </mat-checkbox>
+
+                <mat-checkbox
+                  color="primary"
+                  *ngIf="action.actionName !== 'Add'"
+                  [(ngModel)]="CollateralForm.placeHoldBoolean"
+                  class="example-margin"
+                  (change)="updateHold(CollateralForm)"
+                >
+                </mat-checkbox>
+              </div>
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 125px; margin-left: -68px"
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.holdId"
+                  disabled
+                />
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Lien Amount</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.lienAmount"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.lienAmount == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS' ||
+                        collTypeselect === 'CASH')
+                  }"
+                  (change)="formatLientAmount(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Effective Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.effectiveDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="CollateralForm.effectiveDate"
+                  disabled
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colEffectiveDate1($event, CollateralForm)"
+                />
+              </div> -->
+              <div class="col-md-1 col-sm-1" style="text-align:right;justify-content:right">
+                <input matInput 
+                    [matDatepicker]="myColEffectiveDate" 
+                    placeholder=""
+                    
+                    #colEffectiveDate
+                    (dateChange)="colEffectiveGetDate(colEffectiveDate.value, CollateralForm)"
+                    style="width:0px"
+                >
+                <mat-datepicker-toggle [for]="myColEffectiveDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myColEffectiveDate [startAt]="startDateVal"></mat-datepicker>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Expiry Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.expiryDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'CASH' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="CollateralForm.expiryDate"
+                  readonly
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colExpiryDate1($event, CollateralForm)"
+                />
+              </div> -->
+              <div class="col-md-1 col-sm-1" style="text-align:right;justify-content:right">
+                <input matInput 
+                    [matDatepicker]="myColExpiryDate" 
+                    placeholder=""
+                    
+                    #colExpiryDate
+                    (dateChange)="colExpiryGetDate(colExpiryDate.value, CollateralForm)"
+                    style="width:0px;"
+                >
+                <mat-datepicker-toggle [for]="myColExpiryDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myColExpiryDate [startAt]="startDateVal"></mat-datepicker>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Mortgage No</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.collMortgageNo"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.collMortgageNo == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Valuer</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.valuer"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.valuer == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >verified By</label
+              >
+              <div class="col-sm-5">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.verifiedBy"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.verifiedBy == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Verificat. Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [(ngModel)]="CollateralForm.verificationDate"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.verificationDate == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  type="text"
+                  disabled
+                />
+              </div>
+              <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="colVerificationDate1($event, CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Market Value</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.marketValue"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.marketValue == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  (change)="colMarketValAmount(CollateralForm)"
+                />
+              </div>
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Forced Sale Val
+              </label>
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control txtRight"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.forcedSaleValue"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.forcedSaleValue == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                  (change)="colforceSaleValAmount(CollateralForm)"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Location</label
+              >
+              <div class="col-sm-5">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.location"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.location == null &&
+                      (collTypeselect === 'LEGAL MORTGAGE' ||
+                        collTypeselect === 'DEBENTURE MORTGAGE' ||
+                        collTypeselect === 'OTHERS')
+                  }"
+                />
+              </div>
+              <label
+                *ngIf="collTypeselect === 'OTHERS'"
+                for="input-11"
+                class="col-sm-1 col-form-label"
+                >Description</label
+              >
+              <div class="col-sm-5" *ngIf="collTypeselect === 'OTHERS'">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  placeholder=""
+                  [(ngModel)]="CollateralForm.collDescription"
+                  [ngClass]="{
+                    redBorder:
+                      CollateralForm.collDescription == null &&
+                      collTypeselect === 'OTHERS'
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div
+                class="col-sm-12 infoAcctdetails"
+                style="background-color: #444; color: #fff; text-align: center"
+              >
+                <label class="control-label lbl" style="color: #fff" for=""
+                  >INSURANCE DETAILS</label
+                >
+              </div>
+            </div>
+
+            <div style="margin-top: 10px" class="form-group row">
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Insured</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.insured"
+                  [ngClass]="{
+                    redBorder:
+                    instrumentForm.insured == null &&
+                      (CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'INSURANCE')
+                  }"
+                  
+                />
+              </div>
+
+              <label
+                for="input-11"
+                class="col-sm-1 col-form-label margin-left40"
+                >Coy Name</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.insuranceCoyName"
+                  
+                />
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Cover Type</label
+              >
+              <div class="col-sm-2">
+                
+                <select
+                  class="form-control"
+                  [(ngModel)]="instrumentForm.insuranceCoverTypeId"
+                  [ngClass]="{
+                    redBorder:
+                    instrumentForm.insuranceCoverTypeId == '' &&
+                      (CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'INSURANCE')
+                  }"
+                >
+                  <option value=''>Cover Type</option>
+                  <option
+                    *ngFor="let a of IssuranceCoverTypes"
+                    [value]="a.itbId"
+                  >
+                    {{ a.coverName }}
+                  </option>
+                </select>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                > Effective Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                    instrumentForm.insuranceEffectiveDate == null &&
+                      (CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'INSURANCE' ||
+                      CollateralForm.collateralName === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="instrumentForm.insuranceEffectiveDate"
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="insuranceEffectiveDate1($event)"
+                />
+              </div> -->
+              <div class="col-md-1 col-sm-1" style="text-align:right;justify-content:right">
+                <input matInput 
+                    [matDatepicker]="myInsuranceEffectiveDate" 
+                    placeholder=""
+                    
+                    #insuranceEffectiveDate
+                    (dateChange)="insuranceGetEffectiveDate1(insuranceEffectiveDate.value)"
+                    style="width:0px"
+                >
+                <mat-datepicker-toggle [for]="myInsuranceEffectiveDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myInsuranceEffectiveDate [startAt]="startDateVal"></mat-datepicker>
+              </div>
+            </div>
+
+            <div style="margin-top: 10px" class="form-group row">
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                > Expiry Date</label
+              >
+
+              <div class="col-sm-1">
+                <input
+                  style="width: 100px"
+                  class="form-control"
+                  [ngClass]="{
+                    redBorder:
+                    instrumentForm.insuranceExpiryDate == null &&
+                      (CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'INSURANCE' ||
+                      CollateralForm.collateralName === 'OTHERS')
+                  }"
+                  type="text"
+                  [(ngModel)]="instrumentForm.insuranceExpiryDate"
+                />
+              </div>
+              <!-- <div class="col-sm-1">
+                <input
+                  style="border: none !important"
+                  class="form-control cursorPointer"
+                  type="date"
+                  (change)="insuranceExpiryDate1($event)"
+                />
+              </div> -->
+              <div class="col-md-1 col-sm-1" style="text-align:right;justify-content:right">
+                <input matInput 
+                    [matDatepicker]="myInsuranceExpiryDate" 
+                    placeholder=""
+                    
+                    #insuranceExpiryDate
+                    (dateChange)="insuranceGetExpiryDate1(insuranceExpiryDate.value)"
+                    style="width:0px;"
+                >
+                <mat-datepicker-toggle [for]="myInsuranceExpiryDate" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myInsuranceExpiryDate [startAt]="startDateVal"></mat-datepicker>
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Policy No</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.insurancePolicyNo"
+                  [ngClass]="{
+                    redBorder:
+                    instrumentForm.insurancePolicyNo == '' &&
+                      (CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'INSURANCE')
+                  }"
+                  
+                />
+              </div>
+
+              <label
+                for="input-11"
+                class="col-sm-1 col-form-label margin-left40"
+                >Sum Assured</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.insuranceSumAssured"
+                  [ngClass]="{
+                    redBorder:
+                    instrumentForm.insuranceSumAssured == null &&
+                      (CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'INSURANCE')
+                  }"
+                  
+                />
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Premium Payable</label
+              >
+              <div class="col-sm-2">
+                
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.insurancePremiumPayable"
+                  
+                  
+                />
+              </div>
+
+              
+            </div>
+
+            <div style="margin-top: 10px" class="form-group row">
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                > Currency</label
+              >
+
+              <div class="col-sm-2">
+                
+                <select
+                  class="form-control"
+                  [(ngModel)]="instrumentForm.insuranceCurrency"
+                  [ngClass]="{
+                    redBorder:
+                    instrumentForm.insuranceCurrency == '' &&
+                      (CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'INSURANCE')
+                  }"
+                >
+                  <option value=''>Currency Type</option>
+                  <option *ngFor="let a of currencies" [value]="a.isoCode">
+                    {{ a.isoCode }}
+                  </option>
+                </select>
+              </div>
+
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Location Of Property</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.insuranceLocationOfProperty"
+                  [ngClass]="{
+                    redBorder:
+                    instrumentForm.insuranceLocationOfProperty == '' &&
+                      (CollateralForm.collateralName === 'LEGAL MORTGAGE' ||
+                      CollateralForm.collateralName === 'DEBENTURE MORTGAGE' ||
+                      CollateralForm.collateralName === 'INSURANCE')
+                  }"
+                  
+                />
+              </div>
+
+              <label
+                for="input-11"
+                class="col-sm-1 col-form-label margin-left40"
+                >Contigent DrAcctType</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.contDrAcctType"
+                  
+                  
+                />
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Contigent DrAcctNo</label
+              >
+              <div class="col-sm-2">
+                
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.contDrAcctNo"
+                  
+                  
+                />
+              </div>
+
+              
+            </div>
+
+            <div style="margin-top: 10px" class="form-group row">
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                > Contigent DrCcy</label
+              >
+
+              <div class="col-sm-2">
+                
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.contDrCcyCode"
+                  
+                  
+                />
+              </div>
+
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Contigent CrAcctType</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.contCrAcctType"
+                  
+                  
+                />
+              </div>
+
+              <label
+                for="input-11"
+                class="col-sm-1 col-form-label margin-left40"
+                >Contigent CrAcctNo</label
+              >
+              <div class="col-sm-2">
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.contCrAcctNo"
+                  
+                  
+                />
+              </div>
+
+              <label for="input-11" class="col-sm-1 col-form-label"
+                >Contigent CrCcy</label
+              >
+              <div class="col-sm-2">
+                
+                <input
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="instrumentForm.contCrCcyCode"
+                  
+                  
+                />
+              </div>
+
+              
+            </div>
+
+          </div>
+          <!--INSURANCE MORTGAGE Collateral End here-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Collaterat Details End here-->
+  <!--Insurance Details-->
+  <div style="display: none" class="displayOnLapTop" *ngIf="tabVlues === 3">
+    <div style="border: none solid black">
+      <br />
+
+      <div class="form-group">
+        <div
+          class="col-sm-12 infoAcctdetails"
+          style="background-color: #444; color: #fff; text-align: center"
+        >
+          <label class="control-label lbl" style="color: #fff" for="tagsinput-2"
+            >INSURANCE DETAILS</label
+          >
+        </div>
+      </div>
+
+      <div
+        style="
+          border: 1px solid #c0c0c0 !important;
+          padding-right: 10px !important;
+        "
+      >
+        <div style="margin-top: 10px" class="form-group row">
+          <label for="input-11" class="col-sm-2 col-form-label"
+            >Company Name</label
+          >
+          <div class="col-sm-4">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.insuranceCoyName"
+            />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Insured</label>
+          <div class="col-sm-4">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.insured"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-2 col-form-label"
+            >Sum Assured</label
+          >
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control txtRight"
+              type="text"
+              [(ngModel)]="instrumentForm.insuranceSumAssured"
+              (change)="formatSumAssured($event)"
+            />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Currency</label>
+          <div class="col-sm-1">
+            <select
+              class="form-control"
+              [(ngModel)]="instrumentForm.insuranceCurrency"
+            >
+              <option>Acct Type</option>
+              <option *ngFor="let a of currencies" [value]="a.isoCode">
+                {{ a.isoCode }}
+              </option>
+            </select>
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Prop. Location</label
+          >
+          <div class="col-sm-4">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.insuranceLocationOfProperty"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-2 col-form-label"
+            >Covert Type</label
+          >
+          <div class="col-sm-2">
+            <select
+              class="form-control"
+              [(ngModel)]="instrumentForm.insuranceCoverTypeId"
+            >
+              <option>Acct Type</option>
+              <option *ngFor="let a of IssuranceCoverTypes" [value]="a.itbId">
+                {{ a.coverName }}
+              </option>
+            </select>
+          </div>
+          <label
+            style="margin-left: -40px"
+            for="input-11"
+            class="col-sm-1 col-form-label"
+            >Policy No</label
+          >
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              style="margin-left: -25px; width: 150px"
+              [(ngModel)]="instrumentForm.insurancePolicyNo"
+            />
+          </div>
+
+          <label
+            style="margin-left: -75px"
+            for="input-11"
+            class="col-sm-1 col-form-label"
+            >Effective Date</label
+          >
+          <div class="col-sm-1">
+            <input
+              autocomplete="off"
+              style="width: 110px"
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.insuranceEffectiveDate"
+              readonly
+            />
+          </div>
+          <div class="col-sm-1">
+            <input
+              style="border: none !important"
+              class="form-control cursorPointer"
+              type="date"
+              (change)="instrumentInsuranceEffectiveDate1($event)"
+            />
+          </div>
+
+          <label
+            style="margin-left: -25px"
+            for="input-11"
+            class="col-sm-1 col-form-label"
+            >Expire Date</label
+          >
+          <div class="col-sm-1">
+            <input
+              autocomplete="off"
+              style="width: 110px"
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.insuranceExpiryDate"
+              readonly
+            />
+          </div>
+          <div class="col-sm-1">
+            <input
+              style="border: none !important"
+              class="form-control cursorPointer"
+              type="date"
+              (change)="instrumentInsuranceExpireDate1($event)"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-2 col-form-label"
+            >Prem. Payable
+          </label>
+          <div class="col-sm-4">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.insurancePremiumPayable"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Insurance Details End here-->
+
+  <!--Contigent Details-->
+  <div *ngIf="tabVlues === 5">
+    <br />
+    <div>
+      <div
+        class="col-sm-12 infoAcctdetails info"
+        style="background-color: #444; color: #fff; text-align: center"
+      >
+        <label class="control-label lbl" style="color: #fff" for="tagsinput-2">
+          CONTIGENT ACCT DETAILS
+        </label>
+      </div>
+      <div
+        class="col-sm-12 infoAcctdetails info"
+        style="background-color: #444; color: #fff; text-align: center"
+      >
+        <label
+          class="control-label lbl"
+          style="margin-left: 10px; color: white"
+          for="tagsinput-2"
+          >DEBIT DETAILS
+        </label>
+        <label
+          class="control-label lbl"
+          style="margin-left: 500px; color: white"
+          for="tagsinput-2"
+          >CREDIT DETAILS
+        </label>
+      </div>
+      <div
+        style="
+          border: 1px solid #c0c0c0 !important;
+          padding-right: 10px !important;
+        "
+      >
+        <div style="margin-top: 10px" class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Acct Type</label
+          >
+          <div class="col-sm-2">
+            <select
+              class="form-control"
+              [(ngModel)]="instrumentForm.contDrAcctType"
+            >
+              <option>Acct Type</option>
+              <option *ngFor="let a of acttypes" [value]="a.accountTypeCode">
+                {{ a.accountTypeCode }}
+              </option>
+            </select>
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Acct. No</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.contDrAcctNo"
+              (change)="chgChargeCalculate($event)"
+            />
+          </div>
+
+          <!--cr incom-->
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Acct Type
+          </label>
+          <div class="col-sm-2">
+            <select
+              disabled
+              class="form-control"
+              [(ngModel)]="instrumentForm.contCrAcctType"
+            >
+              <option>Acct Type</option>
+              <option *ngFor="let a of acttypes" [value]="a.accountTypeCode">
+                {{ a.accountTypeCode }}
+              </option>
+            </select>
+          </div>
+          <!--cr income-->
+          <label for="input-11" class="col-sm-1 col-form-label">Acct No</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.contCrAcctNo"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Currency</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.contDrCcyCode"
+              readonly
+            />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Avail. Balance</label
+          >
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              style="text-align:right"
+              [(ngModel)]="instrumentForm.contDrAvailBal"
+              readonly
+            />
+          </div>
+
+          <!--Cr income-->
+          <label for="input-11" class="col-sm-1 col-form-label">Currency</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.contCrCcyCode"
+              readonly
+            />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Avail. Balance</label
+          >
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control txtRight"
+              type="text"
+              placeholder=""
+              [(ngModel)]="instrumentForm.contCrAvailBal"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Acct Name</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.contDrAcctName"
+              readonly
+            />
+          </div>
+          <!--Cr income-->
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Acct Name</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.contCrAcctName"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.contDrAcctStatus"
+              readonly
+            />
+          </div>
+          <!--Cr income-->
+          <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.contCrAcctStatus"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Narration</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.contDrAcctNarration"
+              readonly
+            />
+          </div>
+          <!--Cr income-->
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Narration</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="instrumentForm.contCrAcctNarration"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-sm-12 infoAcctdetails info"
+        style="background-color: #444; color: #fff; text-align: center"
+      >
+        <label class="control-label lbl" style="color: #fff" for="tagsinput-2">
+          INSTRUMENT AMOUNT
+        </label>
+      </div>
+      <div
+        style="
+          border: 1px solid #c0c0c0 !important;
+          padding-right: 10px !important;
+        "
+      >
+        <div style="margin-top: 10px" class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Amount</label>
+          <div class="col-sm-4">
+            <input
+              autocomplete="off"
+              class="form-control txtRight"
+              type="text"
+              [(ngModel)]="instrumentForm.amount"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Contigent Details End -->
+
+  <!--  Charge Details -->
+  <div *ngIf="tabVlues === 4">
+    <br />
+
+    <!--  Do ngFof on the below div-->
+    <div *ngFor="let chg of chargeFormList; let h = index">
+      <div
+        class="col-sm-12 infoAcctdetails info"
+        style="background-color: #444; color: #fff; text-align: center"
+      >
+        <label class="control-label lbl" style="color: #fff" for="tagsinput-2">
+          CHARGE {{ h + 1 }}
+        </label>
+      </div>
+      <div
+        class="col-sm-12 infoAcctdetails info"
+        style="background-color: #444; color: #fff; text-align: center"
+      >
+        <label
+          class="control-label lbl"
+          style="margin-left: 10px; color: white"
+          for="tagsinput-2"
+          >DEBIT DETAILS
+        </label>
+        <label
+          class="control-label lbl"
+          style="margin-left: 500px; color: white"
+          for="tagsinput-2"
+          >CREDIT DETAILS
+        </label>
+      </div>
+      <div
+        style="
+          border: 1px solid #c0c0c0 !important;
+          padding-right: 10px !important;
+        "
+      >
+        <div style="margin-top: 10px" class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Acct Type</label
+          >
+          <div class="col-sm-2">
+            <select class="form-control" [(ngModel)]="chg.chgAcctType">
+              <option>Acct Type</option>
+              <option *ngFor="let a of acttypes" [value]="a.accountTypeCode">
+                {{ a.accountTypeCode }}
+              </option>
+            </select>
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Acct. No</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              [(ngModel)]="chg.chgAcctNo"
+              (change)="chgChargeCalculate($event)"
+            />
+          </div>
+
+          <!-- cr incom -->
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Inc.Acct Type
+          </label>
+          <div class="col-sm-2">
+            <select disabled class="form-control" [(ngModel)]="chg.incAcctType">
+              <option>Acct Type</option>
+              <option *ngFor="let a of acttypes" [value]="a.accountTypeCode">
+                {{ a.accountTypeCode }}
+              </option>
+            </select>
+          </div>
+          <!--cr income-->
+          <label for="input-11" class="col-sm-1 col-form-label">Acct No</label>
+          <div class="col-sm-2">
+            <input
+              class="form-control"
+              type="text"
+              [(ngModel)]="chg.incAcctNo"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Currency</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              [(ngModel)]="chg.chgAcctCcy"
+              readonly
+            />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Balance</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              placeholder=""
+              style="text-align:right"
+              [(ngModel)]="chg.chgAvailBal"
+              readonly
+            />
+          </div>
+
+          <!--Cr income-->
+          <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="chg.chgAcctStatus"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Acct Name</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="chg.chgAcctName"
+              readonly
+            />
+          </div>
+          <!--Cr income-->
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Inc. Acct Name</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="chg.incAcctName"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Charge Rate</label
+          >
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="chg.chargeRate"
+            />
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Orig.Chg Amt
+          </label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control txtRight"
+              type="text"
+              [(ngModel)]="chg.origChgAmount"
+            />
+          </div>
+          <!--Cr Income-->
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Trans Date</label
+          >
+          <div class="col-sm-2">
+            <input
+              
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              readonly
+              [(ngModel)]="chg.transactionDate"
+            />
+          </div>
+          <!--Cr Income-->
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Value Date
+          </label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              readonly
+              [(ngModel)]="chg.valueDate"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Exchange Rate</label
+          >
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="chg.exchangeRate"
+            />
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Chg Amt.
+          </label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control txtRight"
+              type="text"
+              [(ngModel)]="chg.equivChgAmount"
+            />
+          </div>
+          <!--Cr Income-->
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Narration</label
+          >
+          <div class="col-sm-5">
+            <input
+              class="form-control"
+              
+              autocomplete="off"
+              type="text"
+              [(ngModel)]="chg.incAcctNarr"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Charge Code</label
+          >
+          <div class="col-sm-2">
+            <input
+              id="cghcode"
+              class="form-control"
+              type="text"
+              [(ngModel)]="chg.chargeCode"
+            />
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Tax Amt </label>
+          <div class="col-sm-2">
+            <input
+              autocomplete="off"
+              class="form-control txtRight"
+              type="text"
+              [(ngModel)]="chg.taxAmount"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label"
+            >Narration</label
+          >
+          <div class="col-sm-5">
+            <input
+              autocomplete="off"
+              class="form-control"
+              type="text"
+              [(ngModel)]="chg.chgNarration"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Charge Details End here-->
+
+  <br />
+  <div class="form-group row">
+    <div class="col-sm-2">
+      <select
+        class="form-control"
+        *ngIf="data.actionName == 'Ammend' || data.actionName == 'Reprint'"
+        (change)="onAmmend($event)"
+        [(ngModel)]="instrumentForm.ammendOrRepreintReasonId"
+        [ngClass]="{
+          redBorder:
+            instrumentForm.ammendOrRepreintReasonId === null &&
+            (serviceId === 11 ||
+              serviceId == 14 ||
+              serviceId == 18 ||
+              serviceId == 19)
+        }"
+      >
+        <option>Select Ammendments Reason</option>
+        <option *ngFor="let a of admAmendReprintReason" [value]="a.reasonId">
+          {{ a.reason }}
+        </option>
+      </select>
+    </div>
+    <div class="col-sm-1">
+      <button
+        id="btnAmend"
+        style="margin: 0 0 0 10px"
+        *ngIf="data.actionName == 'Ammend'"
+        mat-raised-button
+        color="accent"
+        (click)="add(instrumentForm)"
+      >
+        <img
+          *ngIf="actionLoaderSave === true"
+          src="assets/img/loader/loader.gif"
+        />
+        {{ btnAmendOrReprint }}
+      </button>
+
+      <button
+        id="btnReprint"
+        style="margin: 0 0 0 10px"
+        *ngIf="data.actionName == 'Reprint'"
+        mat-raised-button
+        color="primary"
+        (click)="add(instrumentForm)"
+      >
+        <img
+          *ngIf="actionLoaderSave === true"
+          src="assets/img/loader/loader.gif"
+        />
+        {{ btnAmendOrReprint }}
+      </button>
+    </div>
+
+    <div class="col-sm-9">
+      <div class="btn-group" style="margin: 0 0% 0 20%">
+        <button
+          id="btnMandate"
+          mat-raised-button
+          color="accent"
+          (click)="getMandate()"
+        >
+          View Mandate
+        </button>
+
+        <button
+          id="btnviewTemplate"
+          class="viewManmdate"
+          mat-raised-button
+          color="accent"
+          (click)="viewTemp(instrumentForm)"
+        >
+          View Template
+        </button>
+
+        <button
+          id="btnSave"
+          style="margin: 0 0 0 10px"
+          *ngIf="data.actionName == 'Add'"
+          mat-raised-button
+          color="accent"
+          (click)="add(instrumentForm)"
+        >
+          <img
+            *ngIf="actionLoaderSave === true"
+            src="assets/img/loader/loader.gif"
+          />
+          Save
+        </button>
+
+        <button
+          id="btnUpdate"
+          style="margin-left: 10px"
+          *ngIf="data.actionName == 'Edit'"
+          mat-raised-button
+          color="accent"
+          (click)="update(instrumentForm)"
+        >
+          <img
+            *ngIf="actionLoaderUpdate === true"
+            src="assets/img/loader/loader.gif"
+          />
+          Update
+        </button>
+        <button
+          type="button"
+          style="margin: 0 0 0 10px"
+          mat-raised-button
+          color="primary"
+          (click)="close()"
+        >
+          Return
+        </button>
+
+        <button type="button" style="margin-left: 10px" *ngIf="data.actionName == 'Edit'" mat-raised-button color="primary" (click)="auditList()"
+                        >Audit Trail</button>
+
+        <mat-spinner
+          *ngIf="displayloader == true"
+          strokeWidth="1"
+          [diameter]="30"
+          color="primary"
+        ></mat-spinner>
+      </div>
+    </div>
+  </div>
+</div>

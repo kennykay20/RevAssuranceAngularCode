@@ -1,0 +1,159 @@
+<div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+        <div id="square5">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+
+    </div>
+</div>
+
+<form [formGroup]="basicForm" [formGroup]="basicForm">
+
+
+
+    <div class="card-title-text"> <b>  SERVICE REFERENCE DETAILS</b><label class="allFieldRequired"> <label
+                class="allFieldRequiredtxt">{{requiredFieldMsg}}</label></label></div>
+    <hr>
+    <div style="border: none solid black;">
+        <div class="form-group">
+            <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+                <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">SERVICE DETAIL</label>
+            </div>
+        </div>
+        <div style="border: 1px solid rgb(177, 160, 160); padding: 10px;">
+            <div class="form-group row">
+
+                <!-- <label for="input-11" class="col-md-1 col-form-label">Service Name</label>
+                <div class="col-md-3">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="serviceName"
+                        formControlName="serviceName" />
+                </div> -->
+
+                <label for="input-11" class="col-sm-2 col-form-label">Service Code</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="serviceCode"
+                        formControlName="serviceCode" />
+                </div>
+
+
+                <label for="input-11" class="col-md-2 col-form-label">Service Description</label>
+                <div class="col-md-3">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="serviceDescription"
+                        formControlName="serviceDescription" readonly />
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group" style="padding-top: 3px;">
+            <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+                <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">SET UP DETAILS</label>
+            </div>
+        </div>
+
+        <div style="border: 1px solid rgb(177, 160, 160); padding: 10px;">
+            <div class="form-group row">
+                <!-- <label for="input-11" class="col-sm-1 col-form-label">Service Code</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="serviceCode"
+                        formControlName="serviceCode" />
+                </div> -->
+
+                <label for="input-11" class="col-sm-2 col-form-label">Bank Abbrv.</label>
+                <div class="col-sm-2">
+                    <input type="text" autocomplete="off" class="form-control" placeholder="" name="bankAbreviation"
+                        formControlName="bankAbreviation" />
+
+
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Frequency</label>
+                <div class="col-sm-2">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="frequency"
+                        formControlName="frequency" />
+                </div>
+                <label for="input-11" class="col-sm-2 col-form-label">Ref Format</label>
+                <div class="col-sm-3">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="referenceFormat"
+                        formControlName="referenceFormat" />
+                </div>
+            </div>
+
+       
+        </div>
+
+
+        <div class="form-group" style="padding-top: 3px;">
+            <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+                <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+            </div>
+        </div>
+
+        <div style="border: 1px solid rgb(177, 160, 160); padding: 10px;">
+            <div class="form-group row">
+                <label for="input-11" class="col-sm-2 col-form-label">Date Created</label>
+                <div class="col-sm-2">
+                    <input  autocomplete="off" readonly class="form-control" type="text"
+                        placeholder="" formControlName="datecreated" />
+    
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Created By</label>
+                <div class="col-sm-3">
+                    <input [(ngModel)] = "createdBy"  readonly 
+                    class="form-control" formControlName="createdBy" type="text" placeholder="" />
+    
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Status </label>
+                <div class="col-sm-2">
+                    <select class="form-control" formControlName="status">
+                        <option>Select Status</option>
+                        <option *ngFor="let a of statuses" [value]="a.status">
+                            {{ a.status }}</option>
+                    </select>
+                </div>
+
+              
+            </div>
+
+       
+        </div>
+        
+        <br>
+        <div class="form-group row">
+            <div class="btn-group" style="margin: 0  50% 0 40%">
+
+                <button id="btnSave" *ngIf="data.actionName == 'Add'" mat-raised-button color="accent"
+                    (click)="add(basicForm.value)" [disabled]="!basicForm.valid">
+                    <img *ngIf="actionLoaderSave === true" src="assets/img/loader/loader.gif" />
+                    Save</button>
+
+                <button id="btnUpdate" *ngIf="data.actionName == 'Edit'" mat-raised-button color="accent"
+                    (click)="update(basicForm.value)">
+                    <img *ngIf="actionLoaderUpdate === true" src="assets/img/loader/loader.gif" />
+                    Update</button>
+
+                <button type="button" style="margin: 0 10px 0 10px;" mat-raised-button color="primary"
+                    (click)="close()">Return</button>
+
+                <button type="button" mat-raised-button color="accent" *ngIf="data.actionName == 'Edit'" 
+                    (click)="auditList()"
+                    >Audit Trail</button>
+
+                <mat-spinner *ngIf="displayloader == true" strokeWidth="1" [diameter]="30" color="primary">
+                </mat-spinner>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+</form>

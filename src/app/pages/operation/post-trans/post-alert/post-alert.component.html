@@ -1,0 +1,57 @@
+  <!--
+  ================================ Alert ==================
+  -->
+
+  <div class="alertPostTrans" *ngIf="alertPostTrans == true">
+  <div  class="col-sm-4">
+
+      <div *ngIf="postTransResponse.totalPostedSucess > 0"  class="alert alert-primary" role="alert">
+          {{ postTransResponse.totalPostedSucess }} {{ postTransResponse.successMsg }}
+      <a style="margin-left: 250px; cursor: pointer" (click)="viewTransPostDetails()"> View Trans</a>
+      </div>
+      <div *ngIf="postTransResponse.totalPostedFailed > 0"  class="alert alert-danger" role="alert">
+          {{ postTransResponse.totalPostedFailed }} {{ postTransResponse.errorMsg }} <a style="margin-left: 150px; cursor: pointer" (click) = "viewTransPostDetails()"> View</a>
+      </div>
+
+      <div (click)="closeAlertPostTrans()"  class="alert alert-danger" role="alert" style="width: 80px;
+      cursor: pointer;background: darkslategrey; color: white;">
+      CLOSE
+      </div>
+
+      <!--Display Details
+      =====================================
+      -->
+  <table  *ngIf="viewTransDetails == true"   style="background-color: white; overflow-y: scroll;"
+      class="table table-bordered table-sm table-hover tableStyle">
+      <thead>
+        <tr>
+          <th style="width: 5px">S/No.</th>
+          <th style="width: 200px">Trans. Tracer</th>
+           <th style="width: 200px">Trans. Ref</th>
+          <th style="width: 500px">Details</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="postTransResponseList.length > 0">
+        <tr *ngFor="let row of postTransResponseList; let h = index;">
+          <td>
+            {{ h + 1 }}
+          </td>
+          <td> {{ row?.transTracer }} </td>
+          <td><span style = "color: red;"> {{ row?.transReference }}</span> </td>
+          <td> {{ row?.postErrorText }}</td>
+        </tr>
+
+      </tbody>
+    </table>
+      <!-- Display details ends here
+        ====================
+      -->
+
+
+    </div>
+    
+  </div>
+
+  <!--
+  ================================ Alert ==================
+  -->

@@ -1,0 +1,250 @@
+<!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <p>{{retryMessage}}</p>
+</div>
+
+
+
+
+
+<ul class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+  <li [class]="selectedCalss">
+    <a class="nav-link {{tab1}}" data-toggle="tab" (click)="swapTab(1)"><i class="icon-home">
+
+      </i> <span class="hidden-xs">
+        <b>APPROVE TRANSACTION LIST </b>
+      </span></a>
+  </li>
+  <!-- class="nav-item cursorPointer" -->
+  <!-- <li [class]="selectedCalss2">
+        <a class="nav-link {{tab2}}" data-toggle="tab" (click) ="swapTab(2)"><i class="icon-home"></i> 
+          <span class="hidden-xs">
+            <b>SEEK APPROVAL 3</b> 
+          </span></a>
+    </li> -->
+
+
+</ul>
+
+<br>
+
+<!--Tabb 1-->
+<div class="col-sm-12 row">
+  <div class="col-sm-4">
+    <div class="btn-group">
+      <button id="btnProcess" style="margin: 0 0 0 0px;" (click)="authTrans()" mat-raised-button color="accent"
+        class="mat-elevation-z12 box-button" type="submit">
+
+        Approve Transaction(s)
+      </button>
+
+      <button id="btnProcess" style="margin: 0 0 0 10px;" (click)="openRejectionReason()" mat-raised-button
+        color="primary" class="mat-elevation-z12 box-button" type="submit">
+
+        Reject Transaction(s)
+      </button>
+
+    </div>
+  </div>
+  <label for="input-11" class="col-sm-1 col-form-label ">Item Per Page</label>
+  <div class="col-sm-2">
+    <select style="margin-top: 5px" class='form-control' [(ngModel)]="pageLmit" (change)='onOptionsSelected($event)'>
+      <option class='option' *ngFor='let option of ItemsPerPage' [value]="option.itemPerPage">{{option.itemPerPage}}
+      </option>
+    </select>
+
+  </div>
+  <div class="col-sm-3">
+    <!-- <mat-radio-group  (change)='radio($event)'>
+            <mat-radio-button value="All">UnProcessed</mat-radio-button>
+            <mat-radio-button value="Processed">Processed</mat-radio-button>
+        </mat-radio-group> -->
+  </div>
+</div>
+<br>
+<table style="background-color: white; overflow-y: scroll;; width: 2500px"
+  class="table table-bordered table-sm table-hover tableStyle">
+  <thead>
+    <tr>
+      <th style="width: 20px">S/NO</th>
+      <th style="width: 80px">ACTION</th>
+      <th style="width: 20px">SEL.</th>
+      <th style="width: 90px">TRANS DATE</th>
+      <th style="width: 150px">TRANS TRACER</th>
+      <th style="width: 200px">SERVICE TYPE</th>
+      <th style="width: 120px">DR ACCT NO</th>
+      <th style="width: 100px">DR ACCT TYPE</th>
+      <th style="width: 250px">DR ACCT NAME</th>
+      <th style="width: 90px">DR TC</th>
+      <th style="width: 150px">AMOUNT</th>
+      <th style="width: 150px">CHARGE AMOUNT</th>
+      <th style="width: 90px">CCY</th>
+      <th style="width: 150px">CR ACCT NO</th>
+      <th style="width: 90px">CR ACCT TYPE</th>
+      <th style="width: 250px">CR ACCT NAME</th>
+      <th style="width: 90px">STATUS</th>
+      <th style="width: 100px">DEPT</th>
+      <th style="width: 150px">ORIG BRANCH</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="rows != null">
+    <!--Search Here-->
+    <tr>
+      <td>
+
+      </td>
+      <td>
+        <!-- <input style="width: 100%" (keyup)="updateFilter1($event, 0)" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" /> -->
+      </td>
+      <td>
+        <mat-checkbox 
+            color="primary" 
+            [(ngModel)]="selectedAllTrans" 
+            class="example-margin" 
+            (change)="selectAll()"
+            [disabled]="rows.length === 0 ? true : false">
+        </mat-checkbox>
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter1($event, 'TRANS DATE')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter1($event, 'TRANS TRACER')" autocomplete="off"
+          class="form-control" type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter1($event, 'SERVICE TYPE')" autocomplete="off"
+          class="form-control" type="text" placeholder="Search" />
+      </td>
+
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter1($event, 'DR ACCT NO')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td> <input style="width: 100%" (keyup)="updateFilter1($event, 'DR ACCT TYPE')" autocomplete="off"
+          class="form-control" type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter1($event, 'DR ACCT NAME')" autocomplete="off"
+          class="form-control" type="text" placeholder="Search" />
+      </td>
+      <td> <input style="width: 100%" (keyup)="updateFilter1($event, 'CR ACCT NAME')" autocomplete="off"
+          class="form-control" type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter1($event, 'DR TC')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td> <input style="width: 100%" (keyup)="updateFilter1($event, 'AMOUNT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td> <input style="width: 100%" (keyup)="updateFilter1($event, 'CHARGE AMOUNT')" autocomplete="off"
+          class="form-control" type="text" placeholder="Search" />
+      </td>
+      <td> <input style="width: 100%" (keyup)="updateFilter1($event, 'CCY')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td> <input style="width: 100%" (keyup)="updateFilter1($event, 'CR ACCT NO')" autocomplete="off"
+          class="form-control" type="text" placeholder="Search" />
+      </td>
+      <td> <input style="width: 100%" (keyup)="updateFilter1($event, 'CR ACCT TYPE')" autocomplete="off"
+          class="form-control" type="text" placeholder="Search" />
+      </td>
+      <td> <input style="width: 100%" (keyup)="updateFilter1($event, 'CR ACCT NAME')" autocomplete="off"
+          class="form-control" type="text" placeholder="Search" />
+      </td>
+      <td> <input style="width: 100%" (keyup)="updateFilter1($event, 'STATUS')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td> <input style="width: 100%" (keyup)="updateFilter1($event, 'DEPT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+
+    </tr>
+    <!--Search End Here-->
+    <tr *ngFor="let row of rows; let h = index;">
+      <td> {{ h + 1 }}</td>
+      <td style="text-align: center;">
+        <span matTooltip="View  {{ row?.drAcctNo }} Details" class="viewSpan" 
+        (click)="action('View', row)">
+          View
+        </span>
+        <!-- <span *ngIf="row.serviceStatus" matTooltip="Edit  {{ row?.acctNo }} Details" 
+              (click)= "action('Edit', row)" class = "editSpan">Edit</span> -->
+      </td>
+      <td>
+        <mat-checkbox color="primary" [(ngModel)]="row.select" [(ngModel)]="row.select"
+          class="example-margin">
+        </mat-checkbox>
+      </td>
+      <td> {{ row?.transactionDate | date: 'd-MMM-y' }}</td>
+      <td> {{ row?.transTracer }}</td>
+      <td> {{ row?.servicename }}</td>
+      <td> {{ row?.drAcctNo }}</td>
+      <td class="txtCenter"> {{ row?.drAcctType }}</td>
+      <td> {{ row?.drAcctName }} </td>
+      <td class="txtCenter"> {{ row?.drAcctTC }} </td>
+      <td style="text-align: right"> {{ row?.amount | number : '.2' }} </td>
+      <td style="text-align: right"> {{ row?.drAcctChargeAmt | number : '.2' }} </td>
+      <td class="txtCenter"> {{ row?.ccyCode }} </td>
+      <td> {{ row?.crAcctNo }} </td>
+      <td class="txtCenter"> {{ row?.crAcctType }} </td>
+      <td> {{ row?.crAcctName }} </td>
+      <td>
+        <mat-chip mat-sm-chip class="activestatus" [selected]="row.status" *ngIf="row.status == 'Posted'">
+          {{ row.status }}
+        </mat-chip>
+
+        <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Posted'">
+          {{ row.status }}
+        </mat-chip>
+      </td>
+      <td> {{ row?.deptName }} </td>
+      <td> {{ row?.branchName }} </td>
+    </tr>
+
+  </tbody>
+</table>
+
+ <div class="row">
+    <div class="col-sm-4">
+
+    </div>
+
+    <div class="col-sm-2">
+
+      <div class="btn-group">
+        <button mat-raised-button color="primary" style="margin-left: 0%" (click)="prevPage()"
+          class="mat-elevation-z12 box-button" type="submit">
+          <mat-icon id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+        </button>
+        <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" class="mat-elevation-z12 box-button"
+          (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+      </div>
+
+    </div>
+    <div class="col-sm-2">
+      <span style="font-size: 15px; margin-left: 5px; text-align: center !important; 
+           font-weight: 900; ">
+        Page: </span>
+      <span style="font-size: 15px; text-align: center !important; font-weight: 900;" id="page"></span>
+
+    </div>
+
+  </div>

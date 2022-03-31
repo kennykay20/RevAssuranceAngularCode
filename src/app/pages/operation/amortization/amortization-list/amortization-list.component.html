@@ -1,0 +1,246 @@
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <p>{{retryMessage}}</p>
+</div>
+
+<div class="form-group row">
+  <div class="col-sm-2">
+    <div class="btn-group">
+      <button id="btnSearchEnq" style="margin: 0 0 0 0px;" (click)="dismiss()" mat-raised-button color="primary"
+        class="mat-elevation-z12 box-button" type="submit">
+        DISMISS AMORTIZATION
+      </button>
+      <button id="btnSearchEnq" style="margin: 0 0 0 10px;" (click)="action('Add','')" mat-raised-button color="accent"
+        class="mat-elevation-z12 box-button" type="submit">
+        ADD NEW AMORTIZATION
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<hr />
+
+<div class="form-group row">
+  <label for="input-11" class="col-sm-1 col-form-label">Effective Date</label>
+  <div class="col-sm-1">
+    <input class="form-control" readonly style="width: 100px" [(ngModel)]="armortizationParam.pdtStartDate"
+      type="text" />
+  </div>
+  <div class="col-sm-1">
+    <input id="effectiveDate" style="border: none !important;" class="form-control cursorPointer" type="date" value=""
+      (change)="fromDate($event)" />
+  </div>
+
+  <label for="input-11" class="col-sm-1 col-form-label">Next Run Date</label>
+  <div class="col-sm-1">
+    <input class="form-control" readonly style="width: 100px" [(ngModel)]="armortizationParam.pdtEndDate" type="text" />
+  </div>
+  <div class="col-sm-1">
+    <input id="endDate" style="border: none !important;" class="form-control cursorPointer" type="date" value=""
+      (change)="toDate($event)" />
+  </div>
+  <label for="input-11" class="col-sm-1 col-form-label">Total Amount</label>
+  <div class="col-sm-2">
+    <input [(ngModel)]="armortizationParam.totalAmt" class="form-control cursorPointer txtRight" type="text" value=""
+      (change)="formAmt($event)"
+      (keypress)="keyPress($event)" />
+  </div>
+
+  <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+  <div class="col-sm-2">
+    <select class="form-control" [(ngModel)]="armortizationParam.psStatus">
+        <option>Select Status</option>
+        <option *ngFor="let a of statuses" [value]="a.status">{{ a.status }}</option>
+    </select>
+  </div>
+
+</div>
+
+
+
+<div class="form-group row">
+  <label for="input-11" class="col-sm-1 col-form-label">Currency</label>
+  <div class="col-sm-2">
+    <select class="form-control" [(ngModel)]="armortizationParam.psCurrencyIso">
+      <option>Currency Type</option>
+      <option *ngFor="let a of currencies" [value]="a.isoCode">{{ a.isoCode }}</option>
+    </select>
+  </div>
+
+  <label for="input-11" class="col-sm-1 col-form-label">Dr Acct No</label>
+  <div class="col-sm-2">
+    <input class="form-control" [(ngModel)]="armortizationParam.psDrAcctNo" type="text" />
+  </div>
+  <label for="input-11" class="col-sm-1 col-form-label">Cr Acct No</label>
+  <div class="col-sm-2">
+    <input class="form-control" [(ngModel)]="armortizationParam.psCrAcctNo" type="text" />
+  </div>
+</div>
+
+<div class="form-group row">
+  
+  <label for="input-11" class="col-sm-2 col-form-label ">Item Per Page</label>
+  <div class="col-sm-1">
+    <select class='form-control' [(ngModel)]="pageLmit" (change)='onOptionsSelected($event)'>
+      <option class='option' *ngFor='let option of ItemsPerPage' [value]="option.itemPerPage">{{option.itemPerPage}}
+      </option>
+    </select>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="btn-group">
+      <button id="btnSearchEnq" style="margin: 0 0 0 0px;" (click)="search()" mat-raised-button color="accent"
+        class="mat-elevation-z12 box-button" type="submit">
+        SEARCH
+      </button>
+      &nbsp; |
+      &nbsp;
+      <button id="btnClear" (click)="clearItem()" style="margin: 0 0 0 0px;"  mat-raised-button color="primary"
+              class="btn btn-danger" type="button">
+                  CLEAR
+      </button>
+    </div>
+  </div>
+</div>
+
+<ul style="margin-top: 10px" class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+  <li [class]="selectedCalss">
+    <a class="nav-link {{tab1}}" data-toggle="tab"><i class="icon-home">
+
+      </i> <span class="hidden-xs">
+        <b> AMORTIZATION LIST <span style="font-size: 15px; font-weight: 800; margin-left: 50px"></span></b>
+      </span></a>
+  </li>
+</ul>
+<!--Tabb 1-->
+<div class="displayOnLapTop">
+  <table style="background-color: white; overflow-y: scroll;"
+    class="table table-bordered table-sm table-hover tableStyle">
+    <thead>
+
+      <tr>
+        <th>S/NO</th>
+        <th style="width: 80px">ACTION</th>
+        <th style="width: 20px">SEL.</th>
+        <th style="width: 120px">DR ACCT NO</th>
+        <th style="width: 100px">DR ACCT TYPE</th>
+        <th style="width: 150px">CR ACCT NO</th>
+        <th style="width: 90px">CR ACCT TYPE</th>
+        <th style="width: 90px">CCY</th>
+        <th style="width: 90px">EFFECTIVE DATE</th>
+        <th style="width: 90px">NEXT INST. DATE</th>
+        <th style="width: 90px">TOTAL AMOUNT</th>
+        <th style="width: 150px">USER</th>
+        <th style="width: 90px">STATUS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--Search Here-->
+
+      <tr>
+        <td>
+
+        </td>
+        <td>
+          <!-- <input style="width: 100%" (keyup)="updateFilter1($event, 0)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" /> -->
+        </td>
+        <td>
+          <mat-checkbox color="primary" [disabled]="rows.length === 0 ? true : false" [(ngModel)]="selectedAllTrans" class="example-margin" (change)="selectAll()">
+          </mat-checkbox>
+        </td>
+
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 1)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 2)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 3)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 4)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter1($event, 5)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 6)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter1($event, 7)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter1($event, 8)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter1($event, 9)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter1($event, 10)" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+
+
+      </tr>
+      <!--Search End Here-->
+      <tr *ngFor="let row of rows; let h = index;">
+        <td>
+          {{ h + 1}}
+        </td>
+        <td style="text-align: center;">
+          <span matTooltip="View  {{ row?.drAcctNo }} Details" class="viewSpan" (click)="action('View', row)">
+            View
+          </span>
+          <span matTooltip="View  {{ row?.crAcctNo }} Details" class="editSpan" (click)="action('Edit', row)">
+            Edit
+          </span>
+        </td>
+        <td>
+          <mat-checkbox color="primary" [(ngModel)]="row.select" class="example-margin">
+          </mat-checkbox>
+        </td>
+        <td> {{ row?.drAcctNo }}</td>
+        <td style="text-align: center"> {{ row?.drAcctType }}</td>
+        <td> {{ row?.crAcctNo }} </td>
+        <td style="text-align: center"> {{ row?.crAcctType }}</td>
+        <td style="text-align: center"> {{ row?.currencyCode }} </td>
+
+        <td> {{ row?.effectiveDate | date: 'd-MMM-y' }}</td>
+        <td> {{ row?.nextInstlmtDate | date: 'd-MMM-y' }}</td>
+        <td style="text-align: right"> {{ row?.totalAmount | number : '.2' }} </td>
+        <td> {{ row?.userName }}</td>
+        <td>
+
+          <mat-chip mat-sm-chip class="activestatus" [selected]="row.status" *ngIf="row?.status == 'Posted'">
+            {{ row?.status }}
+          </mat-chip>
+
+          <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row?.status !== 'Posted'">
+            {{ row?.status }}
+          </mat-chip>
+        </td>
+
+      </tr>
+
+    </tbody>
+  </table>
+
+
+
+</div>

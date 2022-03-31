@@ -1,0 +1,257 @@
+
+<!-- <div class="fadeMe">
+<div id="snackbar" class = "show">{{broadCastMessage}}</div>
+
+</div> -->
+
+
+<div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+        <div id="square5">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <p>{{retryMessage}}</p>
+</div>
+
+<form [formGroup]="basicForm" [formGroup]="basicForm">
+    <mat-card>
+        <mat-card-header fxLayoutAlign="left">
+            <!-- <mat-icon>person_add</mat-icon>        -->
+            <!-- <small class="text-danger"  *ngIf="showForm">
+                Password Combination must be greater than minimun password and lesser than  maximum password.
+            </small>
+            <small class="text-danger"  *ngIf="form.hasError('Correct')">
+                Minimun password must be lesser than  maximum password.
+            </small>  -->
+        </mat-card-header>
+        <div class="card-title-text"> <b>CLIENT PROFILE </b><label class="allFieldRequired"> <label
+                    >Note:</label> <span class="allFieldRequiredtxt">Fields with red border are required </span></label></div>
+        <hr>
+
+        <mat-card-content class="centerDiv">
+            <div class="form-group row">
+
+                <label for="input-11" class="col-sm-2 col-form-label">Bank Code</label>
+                <div class="col-sm-1">
+                    <input autocomplete="off" class="form-control" readonly type="text" placeholder="" name="bankCode"
+                        formControlName="bankCode" required />
+                </div>
+                <label for="input-11" class="col-sm-2 col-form-label">Bank Name</label>
+                <div class="col-sm-3">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="bankName"
+                        formControlName="bankName" required />
+                </div>
+
+
+                <label for="input-11" class="col-sm-2 col-form-label">Core Banking </label>
+                <div class="col-sm-2">
+                    <select class="form-control" formControlName="bankingSystemId">
+                        <option value=''>Select Banking System</option>
+                        <option *ngFor="let a of cbs" [value]="a.itbid">{{ a.cbsName }} - {{ a.cbsVersion }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="input-11" class="col-sm-2 col-form-label">Channel ID</label>
+                <div class="col-sm-1">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="channelId"
+                        formControlName="channelId" required />
+                </div>
+
+                <label for="input-11" class="col-sm-2 col-form-label">Currency Code</label>
+                <div class="col-sm-3">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="currencyCode"
+                        formControlName="currencyCode" required />
+                </div>
+                <label for="input-11" class="col-sm-2 col-form-label">Country</label>
+                <div class="col-sm-2">
+                    <select class="form-control" formControlName="countryCode" (change)="getCurrency(basicForm.value.countryCode)">
+                        <option>Select Country</option>
+                        <option *ngFor="let a of countries" [value]="a.countryCode">{{ a.countryName }}</option>
+                    </select>
+
+                </div>
+
+
+
+            </div>
+
+            <div class="form-group row">
+                <label for="input-11" class="col-sm-2 col-form-label">Bank Address</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="bankAddress"
+                        formControlName="bankAddress" required>
+
+                </div>
+                
+            </div>
+
+            <hr>
+            <div class="card-title-text"> <b>SECURITY INFO </b></div>
+            <div class="form-group row">
+
+                <label for="input-11" class="col-sm-2 col-form-label">Enforce Pwd Chg Duration</label>
+                <div class="col-sm-1">
+                    <input autocomplete="off" class="form-control" type="text" placeholder=""
+                        name="enforcePasswordChangeDays" 
+                        formControlName="enforcePasswordChangeDays" required  (keypress)="keyPress($event)"/>
+                </div>
+                <div style="margin-left:-10px;"> <span><i>Day(s)</i> </span>
+                </div>
+                <label for="input-11" class="col-sm-2 col-form-label">Idle Time Out </label>
+                <div class="col-sm-1">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="systemIdleTimeout"
+                        formControlName="systemIdleTimeout"  (keypress)="keyPress($event)" required />
+                </div>
+                <div style="margin-left:-10px;"> <span><i>Minute(s)</i> </span>
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Login Count</label>
+                <div class="col-sm-1">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" name="loginCount"
+                        formControlName="loginCount" required   (keypress)="keyPress($event)"/>
+                </div>
+                <div style="margin-left:-10px;"> 
+                    <span><i>Trie(s)</i> </span>
+                </div>
+
+                <label class="col-sm-2 col-form-label" style="font-weight: 500; font-size: 12px;">Encrypt Login ID</label>
+                <div>
+                    <input formControlName="encryptLogin" 
+                                    class="form-control2 client-radio" type="checkbox" /> 
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label for="input-11" class="col-form-label">Set Password</label> &nbsp;
+                    <div style="text-align: none !important;  display:inline-flex;">
+                        <div  style="display:inline-flex;">
+                            &nbsp;
+                            <label style="text-align:right; font-size: 14px; font-weight: 700; margin-top: 5px;">Simple</label>
+                            &nbsp;&nbsp;
+                            <input formControlName="complexPassword" (change)="setPassword(basicForm.value.complexPassword)" id="userAuth" class="form-control" value="S" style="width: 15px; height: 15px;" type="radio" />
+                        </div>
+                        <div  style="margin-left: 30px; display:inline-flex;">
+                            &nbsp;
+                            <label style="text-align:right; font-size: 14px; font-weight: 700; margin-top: 5px;">Complex</label>
+                            &nbsp;&nbsp;
+                            <input formControlName="complexPassword" (change)="setPassword(basicForm.value.complexPassword)" id="userAuth" class="form-control" value="C" style="width: 15px; height: 15px;" type="radio" />
+                        </div>
+                    </div>
+                    <div >
+                        <label class="col-form-label">Login Type</label> 
+                        
+                        <select class="form-control" formControlName="loginType">
+                            <option *ngIf="clientLogValues == ''" value="">Select Login Type</option>
+                            
+                            <option *ngFor="let a of loginTypes" [selected]="a.loginType === clientLogValues" [value]="a.loginType">
+                                {{ a.description }}</option>
+                        </select>
+                       
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <mat-card>
+                        <div class="form-group row">
+                            <label for="input-11" class="col-sm-3 col-form-label">Mini. Password</label>
+                            <div class="col-sm-3">
+                                <input formControlName="miniPasswordLength" class="form-control" (keypress)="numberOnly($event)" min="0" type="number" /> 
+                                    
+                                <small class="text-danger" *ngIf="basicForm.get('miniPasswordLength').touched && basicForm.get('miniPasswordLength').hasError('required')">
+                                    Minimum Password Length is required</small>
+                            </div>
+                            <label for="input-11" class="col-sm-3 col-form-label">Maxi. Password</label>
+                            <div class="col-sm-3">
+                                <input formControlName="maxiPasswordLength" class="form-control  custom-input" 
+                                     (keypress)="numberOnly($event)" min="0" type="number" /> 
+                                <small class="text-danger" 
+                                *ngIf="basicForm.get('maxiPasswordLength').touched && basicForm.get('maxiPasswordLength').hasError('required')" >
+                                Maximum Password Length is required |</small>
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="showForm">
+                            <label for="input-11" class="col-sm-3 col-form-label">Special. Charact</label>
+                            <div class="col-sm-3">
+                                <input formControlName="specialCharacter"  class="form-control  custom-input" min="0"
+                                        (keypress)="numberOnly($event)" type="number" /> 
+                            </div>
+                            <label for="input-11" class="col-sm-3 col-form-label">No. of Uppercase(s)</label>
+                            <div class="col-sm-3">
+                                <input formControlName="uppercase"  class="form-control  custom-input" min="0" 
+                                        (keypress)="numberOnly($event)" type="number" /> 
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="showForm">
+                            <label for="input-11" class="col-sm-3 col-form-label">Numeric Value</label>
+                            <div class="col-sm-3">
+                                <input formControlName="numericNumber"
+                                        class="form-control"  (keypress)="numberOnly($event)" min="0" type="number" /> 
+                            </div>
+                           
+                        </div>
+                        
+                        <div>
+                            <small class="text-danger"  *ngIf="showForm">
+                                Password Combination must be greater than minimun password and lesser than  maximum password.
+                            </small>
+                            <small class="text-danger"  *ngIf="form.hasError('Correct')">
+                                Minimun password must be lesser than  maximum password.
+                            </small> 
+                        </div>
+                    </mat-card>
+                </div>
+                
+            </div>
+
+            <hr>
+            <div class="card-title-text"> <b>AUDIT TRAIL</b></div>
+            <div class="form-group row">
+                <label for="input-11" class="col-sm-2 col-form-label">Date Created</label>
+                <div class="col-sm-2">
+                    <input [(ngModel)]="dateCreated" autocomplete="off" readonly class="form-control" type="text"
+                        placeholder="" formControlName="dateCreated" />
+
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Created By</label>
+                <div class="col-sm-3">
+                    <input [(ngModel)]="createdBy"  readonly 
+                    class="form-control" formControlName="createdBy" type="text" placeholder="" />
+
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label">Status </label>
+                <div class="col-sm-2">
+                    <select class="form-control" formControlName="status">
+                        <option>Select Status</option>
+                        <option *ngFor="let a of statuses" [value]="a.status">
+                            {{ a.status }}</option>
+                    </select>
+                </div>
+            </div>
+
+            
+            <br>
+            <br>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <button id="btnRenewLicence" mat-raised-button color="primary" (click)="renewLicence('renew', '')"> <img *ngIf="actionLoaderSave === true"
+                        src="assets/img/loader/loader.gif" type="button" /> Renew Licence</button>
+                </div>
+                <div class="col-md-8 btn-group">
+
+                    <button id="btnUpdate" mat-raised-button color="accent" type="button" (click)="update(basicForm.value)"> <img *ngIf="actionLoaderSave === true"
+                            src="assets/img/loader/loader.gif" /> Update</button>
+
+                    <mat-spinner *ngIf="displayloader == true" strokeWidth="1" [diameter]="30" color="primary">
+                    </mat-spinner>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</form>
+
+ 

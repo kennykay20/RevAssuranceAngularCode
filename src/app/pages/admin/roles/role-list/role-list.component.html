@@ -1,0 +1,127 @@
+ 
+  <!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+   <p>{{retryMessage}}</p> 
+  </div>
+  <div style="margin-left: 20px; background-color: white !important" class="card-title-text">     
+  </div>
+  
+  <div class="col-sm-12 row">
+    
+    <div class="col-sm-1">
+      <button style="margin: 0 0 0 10px;" (click)="action('Add','')"  mat-raised-button color="accent" 
+      class="mat-elevation-z12 box-button" type="submit">Add New</button>
+      <mat-spinner *ngIf ="statusTrack == 'Decline'"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+     
+    </div>
+    
+    <div class="col-sm-2"></div>
+
+    <div class="col-sm-3">
+      <select style="margin-top: 5px; width: 200px" class="form-control" 
+      [(ngModel)] = "pageLmit" (change)='onOptionsSelected($event)'>
+        <option>Item Per Page</option>
+        <option *ngFor="let a of ItemsPerPage"
+        [value]="a.itemPerPage">{{ a.itemPerPage }}</option>
+      </select>
+    </div>
+
+    <div class="col-sm-3 text-center">
+      <b>   ROLES  </b>
+    </div>
+  </div>
+  <br>
+    <div class="displayOnLapTop">
+      <table  class="table table-bordered table-sm table-hover tableStyle" 
+              style="background-color: white; width: 80%; margin: 0 10% 0 10%">
+        <thead>
+          <tr>
+            <th  style="width: 20px">S/NO</th>
+            <th  style="width: 250px">ACTION</th>
+            <th  style="width: 200px">Name</th>
+            <th  style="width: 20px">DATE CREATED</th>
+            <th  style="width: 10px">STATUS</th>
+          </tr>
+        </thead>
+        <tbody >
+          <!--Search Here-->
+          <tr>
+            <td> 
+              <!-- <input style ="width: 100%"  (keyup)="updateFilter($event, 1)"
+              autocomplete="off" class="form-control"
+               type="text" placeholder="Search" 
+                /> -->
+             </td>
+              <td> 
+                <!-- <input style ="width: 100%"  (keyup)="updateFilter($event, 2)"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    /> -->
+              </td>
+              <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 3)"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+            </td>
+              <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 9)"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+            </td>
+                <td> 
+                  <input style ="width: 100%"  (keyup)="updateFilter($event, 10)"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+                 </td>
+                 
+          </tr>
+        <!--Search End Here-->
+  
+          <tr *ngFor="let row of rows; let h = index;">
+            <td>  {{ h + 1 }}</td>
+            <td style="text-align: left;" class="pageFont"> 
+     
+              <span *ngIf = "roleAssign.canView == true" matTooltip="View  {{ row?.roleName }} Details" class="viewSpan" 
+              (click)="action('View', row)">View</span>  
+
+              <span *ngIf = "roleAssign.canEdit == true" matTooltip="Assign Role to {{ row?.roleName }}" 
+              (click)="assignRole(row)" class = "editSpan">Assign Privilege</span>
+
+              <span *ngIf = "roleAssign.canEdit == true" style="margin-left: 10px"  matTooltip="View  {{ row?.roleName }} Details" class="viewSpan" 
+              (click)="action('Edit', row)">Edit</span> 
+              
+              <span *ngIf = "roleAssign.canEdit == true" matTooltip="Assign Limit to {{ row?.roleName }}" 
+              (click)="roleLimit('Limit', row)" class = "editSpan">Assign Limits</span>
+
+            </td>
+            <td class="pageFont"> {{ row?.roleName }}</td>
+            <td>  {{ row?.dateCreated | date: 'd-MMM-y' }}</td>
+            <td>
+                  <mat-chip mat-sm-chip class="activestatus" 
+                  [selected]="row.status" *ngIf="row.status == 'Active'">
+                      {{ row.status }} 
+                  </mat-chip>
+                  <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Active'">
+                    {{ row.status }}
+                  </mat-chip>
+          </td>
+          </tr>
+        </tbody>
+      </table>
+   
+    </div>

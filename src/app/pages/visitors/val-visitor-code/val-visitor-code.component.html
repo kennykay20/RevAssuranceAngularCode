@@ -1,0 +1,117 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+    <!-- <div class="col-sm-2">
+        <div id="square5">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div> 
+        
+       
+    </div> -->
+  
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+  
+  </div>
+  
+  
+  
+  <form [formGroup]="basicForm" [formGroup]="basicForm">
+  <mat-card>
+  <mat-card-header fxLayoutAlign="left"> 
+                  
+  </mat-card-header>
+  <div class="card-title-text"> <b> Validate Code  </b>   <label class="allFieldRequired"> <label class="allFieldRequiredtxt">Note:</label> All fields marked * are required</label></div>
+  <br><br>
+  <mat-card-content class="centerDiv">
+  <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+    <div fxFlex="100" fxFlex.gt-xs="23" class="pr-1">
+       
+  </div>
+      <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+            <mat-form-field class="full-width">
+                    <input matInput name="unique_code" formControlName="unique_code"
+                        placeholder="Visitor Code" value="" required>
+                </mat-form-field>    
+      </div>
+      <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+            <button  *ngIf="displayloader != true"
+            mat-raised-button color="primary" 
+            (click)="validateCode(basicForm)">Submit</button> 
+
+
+            <mat-spinner *ngIf="displayloader === true"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+                  
+    </div>
+     
+    
+  
+        
+    </div>
+
+
+<div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex="100" fxFlex.gt-xs="23" class="pr-1">
+        <mat-form-field class="full-width">
+            <input   placeholder="Host" readonly matInput name="Host" formControlName="host">
+        </mat-form-field>   
+  </div>
+    <div fxFlex="100" fxFlex.gt-xs="23" class="pr-1">
+        <mat-form-field class="full-width">
+            <input   placeholder="Address" readonly matInput name="address" formControlName="address">
+        </mat-form-field>   
+  </div>
+  <div fxFlex="100" fxFlex.gt-xs="23" class="pr-1">
+    <mat-form-field class="full-width">
+        <input matInput name="visitor_name" formControlName="visitor_name"
+           value="" placeholder="Visitor Name" readonly>
+    </mat-form-field>     
+</div>
+<div fxFlex="100" fxFlex.gt-xs="23" class="pr-1">
+    <mat-form-field class="full-width">
+        <input matInput name="reason_for_visit2" formControlName="reason_for_visit2"
+            value=""  placeholder="Reason for Visit" readonly>
+    </mat-form-field>   
+</div>
+<div fxFlex="100" fxFlex.gt-xs="23" class="pr-1">
+    <mat-form-field class="full-width">
+        <input matInput name="status" formControlName="status"
+            value="" placeholder="Status" readonly>
+    </mat-form-field>   
+</div>
+</div>
+   
+      <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+        <div fxFlex="100" fxFlex.gt-xs="30" class="pr-1">
+
+        </div>
+            <div fxFlex="100" fxFlex.gt-xs="20" class="pr-1">        
+                
+                <div class="btn-group">
+                    <button mat-raised-button color="primary"   *ngIf="displayloaderA != true"
+                    (click)="Accept('Approve')">Approve</button> 
+    
+                    <mat-spinner *ngIf="displayloaderA === true"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+                    
+                    <button style="margin-left: 10px;"
+                mat-raised-button color="accent"  *ngIf="displayloaderD != true"
+                (click)="Decline('Decline')">Decline</button> 
+
+                <mat-spinner *ngIf="displayloaderD === true"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+               
+                </div>
+                
+              
+            
+            </div>
+
+          
+    </div>
+  
+    </mat-card-content>
+  </mat-card>
+  </form>

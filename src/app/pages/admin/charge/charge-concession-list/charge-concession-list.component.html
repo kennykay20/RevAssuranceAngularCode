@@ -1,0 +1,159 @@
+
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+   <p>{{retryMessage}}</p> 
+  </div>
+  <div style="font-size: larger; background-color: white !important"
+   class="card-title-text"> <b> CHARGE CONCESSION FOR CHARGECODE:<span style="color:  #C70039 !important;"> {{stuff.record.chargeCode}} </span>   </b>    
+  </div>
+  <br>
+
+  <div class="displayOnLapTop" >
+
+    <div style="position: relative; left: 300px;">
+    <div class="form-group row">
+      <div class="col-sm-">
+        <button  style="margin: 0 0 0 10px;" (click)="action('Add','')"  mat-raised-button color="accent" 
+        class="mat-elevation-z12 box-button" type="submit">Add New</button>
+        <button  style="margin: 0 0 0 10px;" (click)="close()"  mat-raised-button color="primary" 
+        class="mat-elevation-z12 box-button" type="submit">Return</button>
+        <mat-spinner *ngIf ="statusTrack == 'Decline'"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+        
+       
+      </div>
+      <div class="col-sm-2"> 
+        <select style="margin-left: 10px" class='form-control' [(ngModel)]="pageLmit"
+        (change)='onOptionsSelected($event)'>
+      <option class='option'  *ngFor='let option of ItemsPerPage' 
+      [value]="option.itemPerPage">{{option.itemPerPage}}</option>
+    </select>
+  
+      </div>
+    </div>
+    <br>
+    <table style="background-color: white; width: 70%; margin-left:-10%;" class="table table-bordered table-sm table-hover tableStyle">
+      <thead>
+        <tr>
+          <th style="width: 5%;">SNO</th>
+          <th style="width: 10%;">ACTION</th>
+          <th style="width: 10%;">CHARGE CODE</th>
+          <th style="width: 15%;">DESCRIPTION</th>
+          <th style="width: 10%;">STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--Search Here-->
+        <tr>
+          <td></td>
+          <td></td>
+          <!-- <td> 
+            <input style ="width: 100%"  (keyup)="updateFilter($event, 1)"
+            autocomplete="off" class="form-control"
+             type="text" placeholder="Search" 
+              />
+           </td>
+            <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 2)"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+            </td> -->
+            <!-- <td> 
+                   <mat-checkbox color="primary"  [(ngModel)]="selectedAllTrans" 
+                    class="example-margin" 
+                   (change)="selectAll()"></mat-checkbox> 
+             </td> -->
+              <td> <input (keyup)="updateFilter($event, 1)"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+              </td>
+              <td> 
+                <input (keyup)="updateFilter($event, 2)"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+               </td>
+               <td> 
+                <input (keyup)="updateFilter($event, 3)"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+               </td>
+                  
+        </tr>
+      <!--Search End Here-->
+  
+        <tr *ngFor="let row of rows; let h = index;">
+          <td>  {{ h + 1 }}</td>
+          <td style="text-align: center;">  
+            <span *ngIf="row.status" matTooltip="View  {{ row?.loginId }} Details" class="viewSpan" 
+            (click)= "action('View', row)">View</span>  
+            <span *ngIf="row.status" matTooltip="Edit  {{ row?.loginId }} Details" 
+            (click)= "action('Edit', row)" class = "editSpan">Edit</span>
+          </td>
+          <!-- <td>
+            <mat-checkbox 
+                  color="primary" *ngIf="row.select === true"  
+                  [(ngModel)]="row.select" class="example-margin" 
+                  (change)="select(row)">
+            </mat-checkbox>
+  
+            <mat-checkbox color="primary" *ngIf="row.select === false" 
+                  [(ngModel)]="row.select"  [(ngModel)]="row.select" class="example-margin" 
+                  (change)="select(row)"  >
+            </mat-checkbox>
+  
+  
+  
+          </td> -->
+          <td> {{ row?.chargeCode }}</td>
+          <td> {{ row?.description }}</td>
+          <td>
+             <mat-chip mat-sm-chip class="activestatus" 
+             [selected]="row.status" *ngIf="row.status == 'Active'">
+            {{ row.status }} 
+          </mat-chip>
+        
+           <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Active'">
+            {{ row.status }}
+          </mat-chip></td>
+        </tr>
+       
+      </tbody>
+    </table>
+  </div>
+    <div  class="row" >
+      <div class="col-sm-4">
+    </div>
+ 
+      <div class="col-sm-2">
+
+          <div class="btn-group">
+              <button mat-raised-button color="primary"
+              style = "margin-left: 0%" (click)="prevPage()"
+                class="mat-elevation-z12 box-button" type="submit">
+                <mat-icon  id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+              </button> 
+                <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+                class="mat-elevation-z12 box-button" (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+          </div> 
+    
+        </div>
+        <div class="col-sm-2">
+          <span style = "font-size: 15px;margin-left: 15px; text-align: center !important; 
+           font-weight: 900; ">
+          Page: </span> &nbsp;
+          <span style="font-size: 15px; color:black; text-align: center !important; font-weight: 900;"
+           id="page">{{pageResponse}}</span>
+    
+        </div>
+
+      </div>
+    </div>

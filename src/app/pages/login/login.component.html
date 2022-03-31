@@ -1,0 +1,344 @@
+<div class="preloaderLogin" *ngIf="loginSucc == true">
+    <div class="col-sm-2">
+        <div id="square5">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+</div>
+<!-- <button color="accent" (click)="action('add', '')">pop up</button> -->
+<mat-sidenav-container  *ngIf="enforcePassword == false"
+    style="background-image: url('../assets/img/landing/authentication-bg.png'); background-repeat: no-repeat;background-size: cover;"
+    class="">
+
+    <!-- <div style="background-image: url('../assets/img/login/formalImg - Copy (2).jpg'); background-repeat: no-repeat;"  fxLayout="row" fxLayoutAlign="center center" class="h-100"> -->
+
+    <div style="text-align:center; margin-top:60px;margin-bottom:40px;" class="container">
+        
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="h-30">
+
+        <!---  TAB START  --->
+        <div fxFlex="80" fxFlex.gt-sm="30" fxFlex.sm="60" style="margin: 0px auto !important; display: grid !important">
+            <mat-card class="p-0 mat-elevation-z24 box">
+                <div style="background-color: #525151 !important;" fxLayout="column" fxLayoutAlign="center center"
+                    class="bg-primary box-header">
+                    
+                    <!-- <a mat-button routerLink="/register">Don't have an account? Sign up now!</a>  -->
+                    <img src="assets/img/login/logo_animatex.gif" class="img-fluid" />
+                    <span style="font-size: 18px; font-weight: 900; margin-top: 20px">RevAssurance</span>
+                </div>
+                <mat-card-content fxLayout="column" fxLayoutAlign="end center" class="box-content">
+    
+                    <mat-card fxLayout="column" fxLayoutAlign="center center"
+                        class="mat-elevation-z12 box-content-inner">
+                        
+                        <form [formGroup]="selectGroup">
+                            <div class="select" style="margin:20px 0px 5px 0px;">
+                                <select class="form-control" style="border-radius: 0px;" formControlName="selectfrm"  data-toggle="tab" (change)="swapTab($event.target.value)" id="formSelect">
+                                    <option *ngIf="clientLogType == ''" value="">Select Login Type</option>
+                                    <option *ngFor="let cType of selectTypeList" [selected]="cType.LoginType === clientLogType" [value]="cType.loginType ">{{ cType.description }}</option>
+                                </select>
+                            </div>
+                        </form>
+                        <form [formGroup]="formApplication" (ngSubmit)="onSubmitApplication(formApplication.value)" *ngIf="tabVlues === 'App'" >
+                            
+                                    <div class="form-group row">
+                                        
+
+                                        <div class="col-sm-12">
+
+                                            <input type="text" class="form-control" autocomplete="off"
+                                                style="width:100% !important; font-weight: 800; margin-right:40px; margin-left:1px;" placeholder="USERNAME"
+                                                formControlName="userName" id="userName" />
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                    
+                                        <div class="col-sm-12">
+                                            <input type="password" class="form-control"
+                                                style="width: 100% !important; font-weight: 800; margin-left:1px;" placeholder="PASSWORD"
+                                                formControlName="password" />
+
+                                        </div>
+
+                                    </div>
+
+                                    <div *ngIf="loginResponse.licenseErrorCode === -1000 || loginResponse.licenseErrorCode === 2000"
+                                        class="form-group row divLicense">
+                                    
+                                        {{ loginResponse.errorMessage }}
+
+                                    </div>
+
+                                <button [disabled]="!formApplication.valid" style="width: 100%;" mat-raised-button color="primary"
+                                    class="mat-elevation-z8 box-button" type="submit">{{ btnlogtxt }}</button>
+
+                        </form>
+                        <form [formGroup]="formCbs" (ngSubmit)="onSubmitCbs(formCbs.value)" *ngIf="tabVlues === 'CBS'">
+                            
+                            
+                                
+                                    
+                                    <div class="form-group row">
+                                        
+            
+                                        <div class="col-sm-12">
+            
+                                            <input type="text" class="form-control" autocomplete="off"
+                                                style="width:100% !important; font-weight: 800; margin-right: 40px; margin-left: 1px" placeholder="USERNAME"
+                                                formControlName="userName" id="userName" />
+                                        </div>
+            
+                                    </div>
+            
+            
+                                    <div class="form-group row">
+                                    
+                                        <div class="col-sm-12">
+                                            <input type="password" class="form-control"
+                                                style="width: 100% !important; font-weight: 800; margin-left: 1px" placeholder="PASSWORD"
+                                                formControlName="password" />
+            
+                                        </div>
+            
+                                    </div>
+            
+                                    <div *ngIf="loginResponse.licenseErrorCode === -1000 || loginResponse.licenseErrorCode === 2000"
+                                        class="form-group row divLicense">
+                                        
+                                        {{ loginResponse.errorMessage }}
+            
+                                    </div>
+            
+                               
+            
+                            
+            
+                                <button [disabled]="!formCbs.valid" style="width: 100%;" mat-raised-button color="primary"
+                                    class="mat-elevation-z12 box-button" type="submit">{{ btnlogtxt }}</button>
+            
+                            
+                        </form>
+
+                        <form [formGroup]="formStaff" (ngSubmit)="onSubmitTwoFactorPin(formStaff.value)" *ngIf="tabVlues === '2Fpin'">
+                            
+                           
+                                
+                                    <div class="form-group row">
+                                        
+            
+                                        <div class="col-sm-12">
+            
+                                            <input type="text" class="form-control" autocomplete="off"
+                                                style="width:100% !important; font-weight: 800;  margin-right: 40px; margin-left: 1px" placeholder="STAFF ID"
+                                                formControlName="staffId" id="staffId" />
+                                        </div>
+            
+                                    </div>
+
+                                    <div class="form-group row">
+                                        
+                                        <div class="col-sm-12">
+                                            <input type="password" class="form-control"
+                                                style="width: 100% !important; font-weight: 800; margin-left: 1px" placeholder="Pin+Token"
+                                                formControlName="password" />
+            
+                                        </div>
+            
+                                    </div>
+            
+                                    
+            
+                                    <div *ngIf="loginResponse.licenseErrorCode === -1000 || loginResponse.licenseErrorCode === 2000"
+                                        class="form-group row divLicense">
+                                    
+                                        {{ loginResponse.errorMessage }}
+            
+                                    </div>
+            
+                                
+            
+                               
+            
+                                <button [disabled]="!formStaff.valid" style="width: 100%;" mat-raised-button color="primary"
+                                    class="mat-elevation-z12 box-button" type="submit">{{ btn2FPinLogin }}</button>
+            
+                            
+                        </form>
+                        <form [formGroup]="form2Fotp" (ngSubmit)="onSubmitTwoFactorOtp(form2Fotp.value)" *ngIf="tabVlues === '2Fotp'">
+                            
+                            
+                                    
+                                    <div class="form-group row">
+                                        
+            
+                                        <div class="col-sm-12">
+            
+                                            <input type="text" class="form-control" autocomplete="off"
+                                                style="width:100% !important; font-weight: 800; margin-right: 40px; margin-left: 1px" placeholder="USERNAME"
+                                                formControlName="userName" id="userName" />
+                                        </div>
+            
+                                    </div>
+
+                                    <div class="form-group row">
+                                        
+                                        <div class="col-sm-12">
+                                            <input type="password" class="form-control"
+                                                style="width: 100% !important; font-weight: 800; margin-left: 1px" placeholder="PASSWORD"
+                                                formControlName="password" />
+            
+                                        </div>
+            
+                                    </div>
+            
+                                    
+            
+                                    <div *ngIf="loginResponse.licenseErrorCode === -1000 || loginResponse.licenseErrorCode === 2000"
+                                        class="form-group row divLicense">
+                                    
+                                        {{ loginResponse.errorMessage }}
+            
+                                    </div>
+            
+                                
+            
+                                
+            
+                                <button [disabled]="!form2Fotp.valid" style="width: 100%;" mat-raised-button color="primary"
+                                    class="mat-elevation-z12 box-button" type="submit">{{ btn2FOtpLogin }}</button>
+            
+                            
+                        </form>
+
+                        <mat-progress-bar *ngIf="displayloader === true" mode="indeterminate"></mat-progress-bar>
+                        
+                    </mat-card>
+                </mat-card-content>
+            </mat-card>
+
+            <footer class="footer footerLogin">
+                <!-- <p> <span> © <a style="color: white" class="foot" href="#">IETECH.com</a> 2020. All rights reserved.</span></p> -->
+
+                <p> <span style="color: black"> 
+                    <!-- © -->
+                        <a style="color: black" class="foot" href="#"></a>
+                        Powered by Information Engineering Technologies Ltd
+                    </span> <span style="color: #C70039">(IETech)</span> <span
+                        style="color: black; margin-left: 1px">{{version}}</span>
+                </p>
+            </footer>
+        </div>
+        
+        <!----TAB END-->
+        <!-- <div fxFlex="80" fxFlex.gt-sm="30" fxFlex.sm="60">
+            
+
+            
+        </div>
+
+        <div fxFlex="80" fxFlex.gt-sm="30" fxFlex.sm="60">
+           
+        </div> -->
+    </div>
+
+</mat-sidenav-container>
+
+
+<!--Change Password-->
+
+<mat-sidenav-container *ngIf="enforcePassword == true"
+    style="background-image: url('../assets/img/landing/authentication-bg.png'); background-repeat: no-repeat;background-size: cover;"
+    class="">
+    <div fxLayout="row" fxLayoutAlign="center center" class="h-100" >
+        <div style="border: 1px solid black; padding: 4px;margin-top: 8%;">
+            <form [formGroup]="form1" (ngSubmit)="onChangePassword(form1.value)" style="padding: 4px;">
+                <div style="background-color: #525151 !important;" fxLayout="column" fxLayoutAlign="center center"
+                                class="bg-primary box-header">
+                                
+                                <!-- <a mat-button routerLink="/register">Don't have an account? Sign up now!</a>  -->
+                                <img src="assets/img/login/logo_animatex.gif" class="img-fluid" />
+                                <span style="font-size: 18px; font-weight: 900; margin-top: 10px; margin-bottom: 20px;">REVASSURANCE</span>
+                </div>
+                <br/>
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <label style=" margin-left: -8px; margin-bottom: -12px" for="input-11"
+                            class="col-form-label">
+                            Old Password
+                        </label>
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="password" class="form-control"
+                            style="width: 100% !important; font-weight: 800" placeholder=""
+                            formControlName="oldPassword" />
+        
+                    </div>
+        
+                </div>
+                
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <label style=" margin-left: -8px; margin-bottom: -12px" for="input-11"
+                            class="col-form-label">
+                            New Password
+                        </label>
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="password" class="form-control"
+                            style="width: 100% !important; font-weight: 800" placeholder=""
+                            formControlName="newPassword" />
+        
+                    </div>
+        
+                </div>
+        
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <label style=" margin-left: -8px; margin-bottom: -12px" for="input-11"
+                            class="col-form-label">
+                            Confirm Password
+                        </label>
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="password" class="form-control"
+                            style="width: 100% !important; font-weight: 800" placeholder=""
+                            formControlName="confirmPassword" />
+        
+                    </div>
+                    
+                </div>
+                <small class="text-danger" *ngIf="form1.hasError('notSame')"> Passwords do not match </small>
+        
+                <mat-progress-bar *ngIf="displayloader === true" mode="indeterminate"></mat-progress-bar>
+                <br/>
+                <button [disabled]="!form1.valid" mat-raised-button color="primary"
+                    class="mat-elevation-z12 box-button" type="submit">{{ btnlogtxt }}</button>
+                                        
+                <input type="hidden" id="loginId" formControlName="loginId" />
+                <footer class="footer footerLogin">
+                        <!-- <p> <span> © <a style="color: white" class="foot" href="#">IETECH.com</a> 2020. All rights reserved.</span></p> -->
+                
+                        <p> <span style="color: black"> 
+                            <!-- © -->
+                                <a style="color: black" class="foot" href="#"></a>
+                                Powered by Information Engineering Technologies Ltd
+                            </span> <span style="color: #C70039">(IETech)</span> <span
+                                style="color: black; margin-left: 60px">{{version}}</span>
+                        </p>
+                </footer>
+            </form>
+        </div>
+    </div>
+</mat-sidenav-container>
+    
+<!-- Verification box-->
+    

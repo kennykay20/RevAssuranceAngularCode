@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,UADM,CACN,iBAAiB,CAAA;EACb,KAAK,EAAE,KAAK;CACf;;AAHL,AAII,UAJM,CAIN,iBAAiB,CAAA;EACb,YAAY,EAAE,IAAI;CACrB",
+    "sources": [
+        "user-dialog.component.scss"
+    ],
+    "names": [],
+    "file": "user-dialog.component.css"
+}

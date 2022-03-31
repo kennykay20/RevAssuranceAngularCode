@@ -1,0 +1,66 @@
+.messages .mat-tab-label {
+  min-width: 93.3px;
+  height: 40px;
+}
+
+.messages .content {
+  padding: 0;
+  height: 250px;
+}
+
+.messages img {
+  margin-right: 8px;
+  border-radius: 4px;
+}
+
+.messages span.name {
+  text-transform: capitalize;
+  font-size: 13px;
+  line-height: 22px;
+}
+
+.messages span.info {
+  font-size: 12px;
+  opacity: 0.8;
+  line-height: 22px;
+}
+
+.messages span.text {
+  font-size: 11px;
+  line-height: 14px;
+  white-space: initial;
+  text-align: left;
+}
+
+.messages .mat-button {
+  padding: 8px;
+}
+
+.messages .mat-button .mat-button-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+}
+
+.messages .mat-button .mat-icon {
+  height: 16px;
+  font-size: 12px;
+  width: 12px;
+  vertical-align: middle;
+}
+
+.messages .row-1 {
+  -webkit-box-shadow: 0 0 5px #ccc;
+          box-shadow: 0 0 5px #ccc;
+  border-radius: 4px;
+  padding: 2px 13px;
+  margin-right: 8px;
+}
+/*# sourceMappingURL=messages.component.css.map */

@@ -1,0 +1,206 @@
+<div class="preloader" *ngIf="loadPage == true">
+
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+
+</div>
+
+<div fxLayout="column">
+  <div class="flex-p">
+
+    <!--Payment Section-->
+
+<div class="container">
+  <div class="py-5">
+    <h2>Review & Make Payment</h2>
+  </div>
+
+  <div class="row">
+      <!-- Begin right panel -->
+    <div class="col-md-3 order-md-2 mb-4" *ngIf ="myCartList.length > 0">
+        <h4 style="text-align: center; color: #000;">Bills Summary</h4>
+
+        <div class="container checkoutcontainer">
+            <div class="content">
+      <ul class="list-group mb-3">
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+          <div>
+            <h6 class="my-0">Sub Total</h6>
+          </div>
+          <span class="text-mutedd">₦{{myCheckOutList?.subtotal  | number : '.2' }}   </span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+          <div>
+            <h6 class="my-0 text-muted">Cart Fee</h6>
+          </div>
+          <span class="text-muted">₦{{myCheckOutList?.cart_fee | number : '.2' }}     </span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+          <div>
+            <h6 class="my-0 text-muted">PayStack Fee</h6>
+          </div>
+          <span class="text-muted">₦{{myCheckOutList?.paystackFee  | number : '.2' }}     </span>
+        </li>
+        
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+          <div>
+            <h6 class="my-0">Total</h6>
+          </div>
+          <span class="text-mutedd">₦ {{myCheckOutList?.amount_in_naira  | number : '.2' }}  </span>
+        </li>
+
+      </ul>
+      </div>
+
+
+   <div class="total-due-today-texts">
+    <div class="content-total">
+        <!-- <span class="total-due-today-text">Total Due Today</span>
+        <br>
+        <span id="totalDueToday" class="amt">N13,400.00</span> -->
+
+        <!-- <button class="btn btn-primary btn-lg btn-block button-checkout" type="submit"><span><i class="fa fa-share-square"></i>checkout</span></button> -->
+        <button id="btnmakePayment" style="width: 100% !important" mat-raised-button  color="primary"
+         (click)="chkVGGStatus()"
+        class="mat-elevation-z12 box-button btn" type="submit"> 
+        {{makePaymentTxt}}
+        </button>  
+        </div>
+
+
+   </div>
+
+
+
+    </div>
+
+    </div>
+
+   <!-- End right Panel -->
+
+
+
+
+
+    <div class="col-md-9 order-md-1">
+
+      <form class="needs-validation" novalidate>
+
+
+            <div class="mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row row-sm">
+                        <div class="col-sm-8">
+                        Bills
+                        </div>
+                        <div class="col-sm-3">
+                        Amount(₦)
+                        </div>
+                        <div class="col-sm-2"></div>
+                        </div>
+
+
+                </div>
+
+                <div class="row row-sm"  *ngIf ="myCartList.length == 0">
+                      <div class="col-sm-8 prod-name" data-content="Domain">
+                        <div class="cart-item-title">
+                        <h2> Your Cart is Empty</h2>
+                        <span class="text-domain"> </span>
+                        </div>
+                        </div>
+                        
+              </div>
+                <div class="card-body" *ngFor ="let a of myCartList">
+                   
+                  
+                  
+                  
+                  <div class="row row-sm">
+                        <div class="col-sm-8 prod-name" data-content="Domain">
+                        <div class="cart-item-title">
+                        <h2>{{a.type}}</h2>
+                        <span class="text-domain">{{a.description}}</span>
+                        </div>
+                        </div>
+                        <div class="col-sm-3 prod-price no-qty" data-content="Price">
+                        <span class="cart-item-price">
+                        <div class="dropdown">
+                           <!-- <button class="btn button disabledbtn btn-default btn-sm" disabled style="color: rgb(0, 0, 0);">N50,000</button> -->
+
+                           {{ a?.amount | number}}.00
+                        </div>
+                        </span>
+                        </div>
+                        <div class="col-sm-1 prod-actions">
+                        <div class="cart-item-actions d-flex">
+                          <mat-icon (click)="removeFromCart(a)" class="icon-sm curSor">delete_forever</mat-icon>
+                        <!-- <button type="button" class="btn btn-icon btn-sm" id="removeItem" data-toggle="tooltip" data-html="true" data-original-title=" Remove" onclick="removeItem('d', '0')">
+                        <i class="fa fa-trash"></i>
+                        </button> -->
+                        </div>
+                        </div>
+                        </div>
+
+
+
+
+                </div>
+<!-- 
+                <div class="card-footer">
+                  
+
+
+
+                </div> -->
+                <!-- <div class="content">
+                </div> -->
+              </div>
+
+        </div>
+
+
+      </form>
+    </div>
+  </div>
+
+
+</div>
+
+<!--Payment Swection End-->
+
+
+<div fxLayout="row wrap" class="divMat">
+  <!--Check Out-->
+
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+ 
+
+</div>
+
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+     
+          <div class="w-100 h-100p divMat">
+             
+            <mat-progress-bar *ngIf="displayloader === true" mode="indeterminate"></mat-progress-bar>
+
+     
+
+        <button mat-raised-button color="accent" (click)="back()"
+        class="mat-elevation-z12 box-button btn" type="submit"> 
+        <mat-icon class="icon-sm">keyboard_arrow_left</mat-icon>  
+        Back</button> 
+          </div>
+     
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+ 
+
+  </div>
+</div>
+
+
+
+
+    </div>
+ </div>

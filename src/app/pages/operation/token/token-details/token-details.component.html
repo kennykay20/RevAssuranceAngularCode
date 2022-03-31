@@ -1,0 +1,489 @@
+
+ <div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+     <div id="square5">
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+     </div> 
+ </div> 
+</div>
+
+
+
+
+    <ul class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+        
+        <li [class]="selectedCalss">
+            <a  class="nav-link {{tab1}}" data-toggle="tab" (click) ="swapTab(1)"><i class="icon-home">
+    
+            </i> <span class="hidden-xs">
+              <b>TOKEN REQUEST DETAILS</b>
+              </span></a>
+        </li>
+        <li [class]="selectedCalss2">
+            <a class="nav-link {{tab2}}" data-toggle="tab" (click) ="swapTab(2)"><i class="icon-home"></i> 
+              <span class="hidden-xs">
+                <b>CHARGE DETAIL</b> 
+              </span></a>
+    </li>  
+
+            
+         <!-- <li class="nav-item cursorPointer">
+            <a  class="nav-link {{tab1}}" data-toggle="tab"  (click) ="swapTab(1)"><i class="icon-home">
+    
+            </i> <span class="hidden-xs">
+              <b>INSTRUMENTN DETAILS</b>
+              </span></a>
+        </li>
+        <li class="nav-item cursorPointer">
+            <a class="nav-link {{tab2}}" data-toggle="tab" (click) ="swapTab(2)"><i class="icon-home"></i> 
+              <span class="hidden-xs">
+                <b>CHARGE DETAIL</b> 
+              </span></a>
+        </li>  -->
+      
+     
+    </ul> 
+
+ 
+        <div class="displayOnLapTop" *ngIf ="tabVlues === 1">
+
+            <div style="border: none solid black;">
+    
+                <div class="card-title-text"> <b></b><label class="allFieldRequired"> <label class="allFieldRequiredtxt">{{requiredFieldMsg}}</label></label></div>
+           <br>
+    
+           <div class="form-group">
+            <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+                <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">ACCOUNT DETAILS</label>
+            </div>
+          </div>
+
+         <div style = "border: 1px solid #c0c0c0;">
+           
+            <div style="margin-top: 10px" class = "form-group row">
+              
+                <label for="input-11" class="col-sm-1 col-form-label ">Acct. Type</label>
+                <div class = "col-sm-1">
+                    <select  class="form-control"  [(ngModel)]="basicForm.acctType">
+                        <option>Acct Type</option>
+                        <option *ngFor="let a of acttypes"
+                        [value]="a.accountTypeCode">{{ a.accountTypeCode }}</option>
+                      </select>
+                </div>
+           
+           
+                <label for="input-11" class="col-sm-1 col-form-label margin-left50">Acct No</label>
+                <div class = "col-sm-2">
+                    
+                    <input autocomplete="off" 
+                    class="form-control" type="text" 
+                    placeholder=""
+                       [(ngModel)]="basicForm.acctNo"
+                      id="acctNo"
+                    
+                      (change)="validateAcct($event)"/>
+                
+                </div>
+           
+           
+                <label for="input-11" class="col-sm-1 col-form-label margin-left40">Acct. Name</label>
+                <div class = "col-sm-4">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" 
+                     [(ngModel)]="basicForm.acctName" readonly/>
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label margin-left50">Status</label>
+                <div class = "col-sm-2">
+                    <input autocomplete="off" class="form-control" type="text" placeholder=""
+                     [(ngModel)]="basicForm.acctStatus" readonly/>
+                </div>
+               
+            </div>
+            <div class = "form-group row">
+              
+                <label for="input-11" class="col-sm-1 col-form-label ">Currency</label>
+                <div class = "col-sm-1">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" 
+                     [(ngModel)]="basicForm.ccyCode" readonly/>
+                </div>
+           
+           
+                <label for="input-11" class="col-sm-1 col-form-label margin-left50">Balance</label>
+                <div class = "col-sm-2">
+                    
+                  
+                    <input autocomplete="off" 
+                    class="form-control" type="text" placeholder=""
+                       [(ngModel)]="basicForm.availBal" readonly/>
+                
+                </div>
+           
+           
+                <label for="input-11" class="col-sm-1 col-form-label margin-left40">Branch</label>
+                <div class = "col-sm-4">
+                    
+                    <input autocomplete="off" 
+                    class="form-control" type="text" placeholder=""
+                       [(ngModel)]="basicForm.branchName" />
+                </div>
+                <label for="input-11" class="col-sm-1 col-form-label margin-left50">Proc. Dept</label>
+                <div class = "col-sm-2">
+                    <select class="form-control"   [(ngModel)]="basicForm.processingDeptId">
+                        <option>Select Department</option>
+                        <option *ngFor="let a of departments"
+                        [value]="a.deptId">{{ a.deptname }}</option>
+                      </select>
+                </div>
+            </div>
+           
+           <div class="form-group row">
+                <label for="input-11" class="col-sm-1 col-form-label">Proc. Rsm</label>
+                <div class = "col-sm-3">
+                    <select style = "width: 380px" class="form-control"  
+                     [(ngModel)]="basicForm.rsmId">
+                        <option>Select RSM</option>
+                        <option *ngFor="let a of users"
+                        [value]="a.rsmId">{{ a.fullName }}</option>
+                      </select>
+                </div>
+           </div>
+        </div>
+
+        <!--Account Details End here-->
+
+
+        <div class="form-group">
+            <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+                <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">OTHER PROCESSING DETAILS</label>
+            </div>
+          </div>
+
+         <div style = "border: 1px solid #c0c0c0;">
+           
+            <div style="margin-top: 10px" class = "form-group row">
+              
+                <label for="input-11" class="col-sm-1 col-form-label ">Serial No</label>
+                <div class = "col-sm-2">
+                    <input  autocomplete="off" class="form-control" type="text" placeholder=""
+                     [(ngModel)]="basicForm.serialNo"/>
+                </div>   
+                <label for="input-11" class="col-sm-1 col-form-label ">Record Date</label>
+                <div class = "col-sm-2">
+                    <input  autocomplete="off" class="form-control" type="text" placeholder=""
+                     [(ngModel)]="basicForm.serialNo"/>
+                </div>         
+           
+                <!-- <label for="input-11" class="col-sm-1 col-form-label margin-left50">Trans. Id</label>
+                <div class = "col-sm-2">
+                  
+                    <input autocomplete="off" 
+                    class="form-control" type="text" placeholder=""
+                       [(ngModel)]="basicForm.referenceNo" />
+                </div> -->
+           
+           
+                <label for="input-11" class="col-sm-1 col-form-label margin-left40">Reference No</label>
+                <div class = "col-sm-2">
+                    <input autocomplete="off" class="form-control" type="text" placeholder="" 
+                     [(ngModel)]="basicForm.referenceNo"/>
+                </div>
+              
+               
+            </div>
+        </div>
+        
+        <!-- Instrument Details End here -->
+             <div *ngIf ="data.actionName !== 'Add'">
+            
+                <div class="form-group">
+                    <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+                        <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+                    </div>
+                 </div>
+                        
+       <div style = "border: 1px solid #c0c0c0;">
+        <div style="margin-top: 10px" class = "form-group row">
+                     
+            <label for="input-11" class="col-sm-1 col-form-label">Created By</label>
+            <div class = "col-sm-2">
+                <input autocomplete="off" [(ngModel)]="basicForm.createdBy"  class="form-control" 
+                type="text" placeholder=""
+                  readonly/>
+            
+            </div>
+            <label for="input-11" class="col-sm-1 col-form-label">Date Created</label>
+            <div class = "col-sm-2">
+                <input autocomplete="off" 
+                class="form-control" type="text" placeholder="" 
+                name="dateCreated"  [(ngModel)]="basicForm.dateCreated" readonly/>
+            </div>
+             <label for="input-11" class="col-sm-1 col-form-label">Service Status</label>
+             <div class = "col-sm-2">
+    
+                <select class="form-control"   [(ngModel)]="basicForm.serviceStatus">
+                    <option>Select Status</option>
+                    <option *ngFor="let a of serviceStatuses"
+                    [value]="a.status">{{ a.status }}</option>
+                  </select>
+                 
+             </div>
+
+             <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+             <div class = "col-sm-2">
+    
+                <input autocomplete="off" [(ngModel)]="basicForm.status" class="form-control" 
+                type="text" placeholder=""
+                 readonly/>
+                 
+             </div>
+        
+         </div>
+    
+    </div>
+                
+             </div>
+            
+             <!--Add Panel End here-->
+            
+          
+            
+            </div>
+        </div>
+
+           <!--  Charge Details  start here -->
+
+
+  
+
+
+           <div *ngIf ="tabVlues === 2"> 
+                        <br>
+                    <div *ngFor = "let chg of chargeFormList; let h = index;" >
+                        <!--  Do ngFof on the below div-->
+                        <div  >
+
+                            <div class="col-sm-12 infoAcctdetails info" style="background-color:#444;color:#fff; text-align:center;">
+                                <label class="control-label lbl" style="color:#fff;" for="tagsinput-2"> CHARGE {{ h + 1 }}   </label>
+                            </div>
+                            <div class="col-sm-12 infoAcctdetails info" style="background-color:#444;color:#fff; text-align:center;">
+                                <label class="control-label lbl" style="margin-left: 10px; color: white" for="tagsinput-2">DEBIT DETAILS  </label>
+                                <label class="control-label lbl" style="margin-left: 500px; color: white" for="tagsinput-2">CREDIT DETAILS  </label>
+                            </div>
+                            <div style = "border: 1px solid #c0c0c0;">
+                        
+                                <div style="margin-top: 10px" class = "form-group row">
+                                
+                                    <label for="input-11" class="col-sm-2 col-form-label ">Acct. Type</label>
+                                    <div class = "col-sm-1">
+                                        <select  class="form-control"   [(ngModel)]="chg.chgAcctType">
+                                            <option>Acct Type</option>
+                                            <option *ngFor="let a of acttypes"
+                                            [value]="a.accountTypeCode">{{ a.accountTypeCode }}</option>
+                                        </select>
+                                    </div>
+                            
+                            
+                                    <label for="input-11" class="col-sm-1 col-form-label">Acct. No</label>
+                                    <div class = "col-sm-2">
+
+                                        <input autocomplete="off" 
+                                        class="form-control" type="text" placeholder=""
+                                         [(ngModel)]="chg.chgAcctNo" (change)="validateAcctChg($event)" />
+                                    
+                                    </div>
+                            
+                                    <!--cr incom-->
+                                    <label for="input-11" class="col-sm-1 col-form-label">Inc.Acct Type </label>
+                                    <div class = "col-sm-1">
+                                    
+
+                                        <select disabled class="form-control"   [(ngModel)]="chg.incAcctType">
+                                            <option>Acct Type</option>
+                                            <option *ngFor="let a of acttypes"
+                                            [value]="a.accountTypeCode">{{ a.accountTypeCode }}</option>
+                                        </select>
+
+                                    </div>
+                                    <!--cr income-->
+                                    <label for="input-11" class="col-sm-1 col-form-label">Acct No</label>
+                                    <div class = "col-sm-2">
+                                        <input autocomplete="off" class="form-control" type="text" placeholder="" 
+                                         [(ngModel)]="chg.incAcctNo"/>
+                                    </div>
+
+                                </div>
+                                <div class = "form-group row">
+                                
+                                    <label for="input-11" class="col-sm-2 col-form-label ">Currency</label>
+                                    <div class = "col-sm-1">
+                                        <input autocomplete="off" class="form-control" type="text" placeholder=""
+                                         [(ngModel)]="chg.chgAcctCcy" readonly/>
+                                    </div>
+                                    <label for="input-11" class="col-sm-1 col-form-label">Balance</label>
+                                    <div class = "col-sm-2">
+                                        
+                                    
+                                        <input autocomplete="off" 
+                                        class="form-control" type="text" placeholder=""
+                                         [(ngModel)]="chg.chgAvailBal" readonly />
+                                    
+                                    </div>
+                            
+                                    <!--Cr income-->
+                                    <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+                                    <div class = "col-sm-1">
+                                        <input autocomplete="off" class="form-control" type="text"
+                                            placeholder=""  [(ngModel)]="chg.chgAcctStatus" readonly />
+                                    </div>
+                                
+                                
+                                </div>
+                            
+                            <div class="form-group row">
+                                    <label for="input-11" class="col-sm-2 col-form-label">Acct Name</label>
+                                    <div class = "col-sm-4">
+                                        <input autocomplete="off" class="form-control" type="text"
+                                            placeholder=""   [(ngModel)]="chg.chgAcctName" readonly/>
+                                    </div>
+                                    <!--Cr income-->
+                                    <label for="input-11" class="col-sm-1 col-form-label">Inc. Acct Name</label>
+                                    <div class = "col-sm-4">
+                                        <input autocomplete="off" class="form-control" type="text"
+                                            placeholder=""   [(ngModel)]="chg.incAcctName" readonly/>
+                                    </div>
+                            </div>
+
+
+                        <div class="form-group row">
+                                <label for="input-11" class="col-sm-2 col-form-label">Charge Rate</label>
+                                <div class = "col-sm-1">
+                                    <input autocomplete="off" class="form-control" type="text"
+                                        placeholder=""  [(ngModel)]="chg.chargeRate" />
+                                </div>
+                            
+                                <label for="input-11" class="col-sm-1 col-form-label">Orig. Chg Amt </label>
+                                <div class = "col-sm-2">
+                                    <input autocomplete="off" class="form-control" type="text"
+                                        placeholder=""  [(ngModel)]="chg.origChgAmount" />
+                                </div>
+                                <!--Cr Income-->
+                                <label for="input-11" class="col-sm-1 col-form-label">Trans. Date</label>
+                                <div class = "col-sm-1">
+                                    <input style="width: 120px" autocomplete="off" class="form-control" type="text"
+                                        placeholder="" readonly   [(ngModel)]="chg.transactionDate" /> 
+                                </div>
+                            <!--Cr Income-->
+                                <label for="input-11" class="col-sm-1 col-form-label">Value Date </label>
+                                <div class = "col-sm-2">
+                                    <input autocomplete="off" class="form-control" type="text"
+                                        placeholder="" readonly   [(ngModel)]="chg.valueDate" />
+                                </div>
+                        
+                        
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="input-11" class="col-sm-2 col-form-label">Exchange Rate</label>
+                                <div class = "col-sm-1">
+                                    <input autocomplete="off" class="form-control" type="text"
+                                        placeholder=""  [(ngModel)]="chg.exchangeRate" />
+                                </div>
+                            
+                                <label for="input-11" class="col-sm-1 col-form-label">Chg Amt. </label>
+                                <div class = "col-sm-2">
+                                    <input autocomplete="off" class="form-control" type="text"
+                                        placeholder=""  [(ngModel)]="chg.equivChgAmount" />
+                                </div>
+                                <!--Cr Income-->
+                                <label for="input-11" class="col-sm-1 col-form-label">Narration</label>
+                                <div class = "col-sm-4">
+                                    <input autocomplete="off" class="form-control" type="text"
+                                        placeholder=""  [(ngModel)]="chg.incAcctNarr" />
+                                </div>
+                            
+                        
+                        
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="input-11" class="col-sm-2 col-form-label">Charge Code</label>
+                                <div class = "col-sm-1">
+                                    <input autocomplete="off" class="form-control" type="text"
+                                        placeholder=""  [(ngModel)]="chg.chargeCode" />
+                                </div>
+                            
+                                <label for="input-11" class="col-sm-1 col-form-label">Tax Amt </label>
+                                <div class = "col-sm-2">
+                                    <input autocomplete="off" class="form-control" type="text"
+                                        placeholder=""  [(ngModel)]="chg.taxAmount" />
+                                </div>
+                            
+                            
+                        
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="input-11" class="col-sm-2 col-form-label">Narration</label>
+                                <div class = "col-sm-4">
+                                    <!-- <textarea style="border: 1px solid black" autocomplete="off" class="form-control" type="text"
+                                        placeholder=""  [(ngModel)]="chg.chgNarration"></textarea> -->
+
+                                        <input autocomplete="off" class="form-control" type="text"
+                                        placeholder=""  [(ngModel)]="chg.chgNarration" />
+                                </div>
+                            
+                            
+                            
+                        
+                        
+                            </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+      
+   
+         <!--Charge Details End here-->
+
+         <br>
+         <div class = "form-group row"> 
+          <div class = "btn-group" style="margin: 0  50% 0 40%">
+
+             <button id="btnSave"   *ngIf="data.actionName == 'Add'"
+             mat-raised-button color="accent"  (click)="add(basicForm)"
+            >
+             <img *ngIf = "actionLoaderSave === true" src="assets/img/loader/loader.gif"/>
+             Save</button>
+                  
+              <!-- <button id="btnUpdate"   *ngIf="data.actionName == 'Edit'" 
+              mat-raised-button color="accent" (click)="update(basicForm)"
+              >
+              <img *ngIf = "actionLoaderUpdate === true" src="assets/img/loader/loader.gif"/>
+              Update</button> -->
+
+              <button id="btnProcess"   *ngIf="notServiceChargeYet == true && data.actionName != 'Edit'" 
+              mat-raised-button color="accent" (click)="processTrans(basicForm)"
+              >
+              <img *ngIf = "actionLoaderUpdate === true" src="assets/img/loader/loader.gif"/>
+              Process Trans</button>
+
+              <button id="btnDismiss"  *ngIf="notServiceChargeYet == true && data.actionName != 'Edit'" type="button" style="margin: 0 0 0 10px;" 
+              mat-raised-button color="primary" 
+              (click)="dismissTrans(basicForm)"> 
+              <img *ngIf = "actionLoaderDismiss === true" src="assets/img/loader/loader.gif"/>Dismiss Trans</button>
+         
+                
+
+
+              <button type="button" style="margin: 0 0 0 10px;" 
+              mat-raised-button color="primary" 
+              (click)="close()">Return</button>
+                     
+              <mat-spinner *ngIf ="displayloader == true" 
+              strokeWidth="1" [diameter]="30" color="primary"></mat-spinner> 
+              </div>
+          </div>

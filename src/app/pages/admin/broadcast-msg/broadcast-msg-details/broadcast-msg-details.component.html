@@ -1,0 +1,341 @@
+
+
+ <div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+     <div id="square5">
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+     </div> 
+     
+    
+ </div> 
+</div>
+
+
+
+<div style="border: none solid black;padding:0px;margin:0px;">
+
+        <div class="card-title-text"> 
+            <b>  BROADCAST MESSAGE DETAIL</b>
+            <label class="allFieldRequired"> 
+                <label class="allFieldRequiredtxt">{{requiredFieldMsg}}</label>
+            </label>
+        </div>
+
+        <div style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important;">
+        
+            <div style="margin-top: 10px">
+
+            </div>
+
+            <br/>
+            <div class = "form-group row">
+
+                <label for="" class="col-sm-2 col-md-2 col-form-label" style="margin-left: 0px;">Subject</label>
+                <div class="col-sm-3 col-md-3">
+                    <input class="form-control" type="text" 
+                    [(ngModel)]="basicForm.subject"
+                    [ngClass]="{'redBorder': basicForm.subject == null }"
+                    [disabled]="actionDataEvent == 'View'"/>
+                </div>
+
+                <!-- <label for="" class="col-sm-1 col-md-1 col-form-label">All.Dept</label> -->
+                <div class = "col-sm-1 col-md-1">
+                    <mat-checkbox color="primary"  [(ngModel)]="basicForm.targetAudienceBoolean" 
+                    class="example-margin" 
+                    >
+                    All.Dept
+                    </mat-checkbox> 
+                </div>
+                <div class="col-sm-1 col-md-1"></div>
+                <label for="" class="col-sm-2 col-md-2 col-form-label" >Dept.</label>
+                <div class = "col-sm-3 col-md-3"> 
+                    <select class="form-control" 
+                        [(ngModel)]="basicForm.deptId"
+                        [ngClass]="{'redBorder':
+                        basicForm.deptId  == null }" >
+                        <option value="" *ngIf="basicForm.deptId == null">Select Department</option>
+                        <option *ngFor="let a of departments"
+                        [value]="a.deptId">{{ a.deptname }}</option>
+                    </select>
+                </div> 
+
+            
+            </div>
+
+            <div class="form-group row">
+
+                <label for="" class="col-sm-2 col-md-2 col-form-label">Start Date</label>
+                <div class="col-sm-2 col-md-2">
+                    <input  class="form-control" type="text"
+                        placeholder="Select date Picker" 
+                        [(ngModel)]="basicForm.startDate"
+                        [ngClass]="{'redBorder': basicForm.startDate == null}"
+                        [disabled]="true" 
+                    />
+                </div>
+                <div class="col-md-1 col-sm-1">
+                    <input matInput 
+                        [matDatepicker]="myStartDate1" 
+                        placeholder=""
+                        [min]="minDate"
+                        #refStartDate
+                        (dateChange)="startDate1(refStartDate.value)"
+                        style="width:2px"
+                    >
+                    <mat-datepicker-toggle [for]="myStartDate1" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #myStartDate1 [startAt]="startDateVal"></mat-datepicker>
+                </div>
+                <!-- <div class = "col-sm-1 col-md-1"> 
+                    <input  style = "border: none !important;"
+                        class=" form-control cursorPointer" 
+                        placeholder="Select date" 
+                        type="date" 
+                        (change)="startDate($event)"/> 
+                </div> -->
+                <div class="col-sm-1 col-md-1">
+
+                </div>
+                <div class="col-sm-1 col-md-1">
+                    
+                </div>
+                <label for="" class="col-sm-2 col-md-2 col-form-label">Expiry Date</label>
+                <div class = "col-sm-2 col-md-2">
+                    <input  class="form-control" type="text" style=""
+                        placeholder="Select date Picker"  
+                        [(ngModel)]="basicForm.endDate" 
+                        [ngClass]="{'redBorder': basicForm.endDate == null}"
+                        disabled
+                    />
+                </div>
+                <!-- <div class = "col-sm-1 col-md-1"> 
+                    <input  style = "border: none !important;"
+                        class="form-control cursorPointer" 
+                        type="date" 
+                        placeholder="Select date" 
+                        (change)="endDate($event)"/>
+                    
+                </div> -->
+
+                <div class="col-md-1 col-sm-1">
+                    <input matInput 
+                        [matDatepicker]="myEndDate" 
+                        placeholder=""
+                        [min]="minDate"
+                        #refEndDate
+                        (dateChange)="endDate1(refEndDate.value)"
+                        style="width:2px"
+                    >
+                    <mat-datepicker-toggle [for]="myEndDate" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #myEndDate [startAt]="startDateVal"></mat-datepicker>
+                </div>
+            </div>
+
+            <div class = "form-group row">
+                
+                <label for="" class="col-sm-2 col-md-2 col-form-label">Start Time</label>
+                <div class = "col-sm-1 col-md-1">
+
+                    <select class="form-control"
+                        [(ngModel)]="basicForm.starthour"
+                        [ngClass]="{'redBorder': basicForm.starthour == null}">
+                        <option value="">Hour</option>
+                        <option *ngFor="let a of hour" [value]="a" [selected]="a === basicForm.starthour">
+                            {{ a }}</option>
+                    </select>
+                </div>
+                <div class="col-md-1 col-sm-1"> 
+                    <select class="form-control " 
+                    [(ngModel)]="basicForm.startminute"
+                    [ngClass]="{'redBorder': basicForm.startminute == null}">
+                        <option *ngIf="basicForm.startminute == null || basicForm.startminute == ''" value="">Select Minute</option>
+                        <option *ngFor="let a of minute" [value]="a" [selected]="a == basicForm.startminute">
+                            {{ a }}</option>
+                    </select>
+                </div>
+                <div class="col-md-1 col-sm-1"> 
+                    <select class="form-control" 
+                    [(ngModel)]="basicForm.startamOrPm"
+                    [ngClass]="{'redBorder': basicForm.startamOrPm == null}">
+                        <option *ngIf="basicForm.startamOrPm == null" value="Hr">Hr</option>
+                        <option *ngFor="let a of AmOrPm" [value]="a">
+                            {{ a }}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-1 col-sm-1">
+
+                </div>
+                <div class="col-md-1 col-sm-1">
+
+                </div>
+
+                <label for="" style="" class="col-form-label col-md-2 col-sm-2">End Time</label>
+                <div class = "col-sm-1 col-md-1">
+
+                    <select style = "" class="form-control" 
+                    [(ngModel)]="basicForm.endhour"
+                    [ngClass]="{'redBorder': basicForm.endhour == null}">
+                        <option *ngIf="basicForm.endhour == null" value="">Select Hour</option>
+                        <option *ngFor="let a of hour" [value]="a">
+                            {{ a }}</option>
+                    </select>
+                </div>
+                <div class="col-md-1 col-sm-1"> 
+                    <select style = "" class="form-control" 
+                    [(ngModel)]="basicForm.endminute"
+                    [ngClass]="{'redBorder': basicForm.endminute == null}">
+                        <option *ngIf="basicForm.endminute == null" value="">Select Minute</option>
+                        <option *ngFor="let a of minute" [value]="a">
+                            {{ a }}</option>
+                    </select>
+                </div>
+                <div class="col-md-1 col-sm-1"> 
+                    <select style="" class="form-control" 
+                    [(ngModel)]="basicForm.endamOrPm"
+                    [ngClass]="{'redBorder': basicForm.endamOrPm == null}">
+                        <option *ngIf="basicForm.endamOrPm == null" value="">Hr</option>
+                        <option *ngFor="let a of AmOrPm" [value]="a">
+                            {{ a }}</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <label class="col-sm-2 col-md-2 col-form-label" for="input-11" >Notification Ahead In</label>
+                <div class = "col-sm-1 col-md-1"> 
+                        <input class="form-control" type="number" 
+                        [(ngModel)]="basicForm.notifyTimeInterval" 
+                        [ngClass]="{'redBorder': basicForm.notifyTimeInterval == 0}" 
+                        (keypress)="keyPress($event)"/>
+                </div> 
+                <div style="" class="col-sm-1 col-md-1"> <span><i>minute(s)</i> </span>
+                </div>
+                <div class="col-sm-1 col-md-1">
+
+                </div>
+                <div class="col-sm-1 col-md-1">
+
+                </div>
+                <div class="col-sm-1 col-md-1">
+
+                </div>
+
+                <label for="input-11" class="col-sm-2 col-md-2 col-form-label">BroadCast Type</label>
+                <div class = "col-sm-3 col-md-3">
+                    <select class="form-control"  
+                        [(ngModel)]="basicForm.broadcastType"
+                        [ngClass]="{'redBorder':
+                        basicForm.broadcastType  === null }" >
+                            <option class="active">Select BroadCast Type</option>
+                            <option *ngFor="let a of broadcastType"
+                            [value]="a">{{ a }}</option>
+                        </select>
+                </div>
+            </div>
+
+            <div class = "form-group row">
+                
+            <label for="input-11" class="col-sm-2 col-form-label">Message</label>
+            <div class = "col-sm-5">
+                <textarea 
+                        style="border: solid 1px; height: 200px !important" 
+                        class="form-control" matInput name="question" 
+                        [(ngModel)]="basicForm.message"
+                        maxlength="{{ maxLengthDefault }}"
+                        [ngClass]="{'redBorder': basicForm.message == null}" 
+                        placeholder="Enter Template Content" value=""
+                        [disabled]="actionDataEvent == 'View'">
+                </textarea> 
+                <!-- <span *ngIf="this.basicForm.message.length == 200">
+                    <b style="color: red;margin-top:10px;">Your message cannot exceed more than 200 characters</b>
+                </span> -->
+            </div>
+            </div>
+
+            
+        
+        </div> 
+
+
+
+        <div *ngIf ="data.actionName !== 'Add'">
+
+            <div class="form-group">
+                <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+                    <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+                </div>
+            </div>
+
+            <div style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important;">
+            
+                <div style="margin-top: 10px" class = "form-group row">
+                
+                    <label for="input-11" class="col-sm-2 col-form-label">Created By</label>
+                    <div class = "col-sm-2">
+                        <input autocomplete="off"  disabled
+                        class="form-control" type="text"
+                        [(ngModel)]="basicForm.createdBy" />
+                    
+                    </div>
+                    <label for="input-11" class="col-sm-1 col-form-label">Date Created</label>
+                    <div class = "col-sm-2">
+                        <input autocomplete="off" 
+                        class="form-control" type="text"  disabled
+                        [(ngModel)]="basicForm.dateCreated" />
+                    </div>
+                    <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+                    <div class = "col-sm-2">
+                                    <select  class="form-control"
+                                    [(ngModel)]="basicForm.status"
+                                    >
+                                        <option>Select Status</option>
+                                        <option *ngFor="let a of statuses" [value]="a.status">
+                                            {{ a.status }}</option>
+                                    </select>
+                        
+                    </div>
+                    <!-- <div class="col-sm-1">
+                        <button type="button" mat-raised-button color="primary" (click)="auditList()"
+                        >Audit Trail</button>
+                      </div> -->
+                </div> 
+            
+            </div>                 
+        </div>
+        <hr>
+        <div class = "form-group row"> 
+            <div class = "btn-group" style="margin: 0  50% 0 40%">
+
+                <button id="btnSave"  *ngIf="data.actionName == 'Add'"
+                mat-raised-button color="accent"  (click)="add(basicForm)"
+                [disabled]="!basicForm">
+                <img *ngIf = "actionLoaderSave === true" src="assets/img/loader/loader.gif"/>
+                Save</button>
+                    
+                <button id="btnUpdate"   *ngIf="data.actionName == 'Edit'" 
+                mat-raised-button color="accent" (click)="update(basicForm)"
+                >
+                <img *ngIf = "actionLoaderUpdate === true" src="assets/img/loader/loader.gif"/>
+                Update</button>
+
+                <button type="button" style="margin: 0 0 0 10px;" 
+                mat-raised-button color="primary" 
+                (click)="close()">Return</button>
+                        
+                <mat-spinner *ngIf ="displayloader == true" 
+                strokeWidth="1" [diameter]="30" color="primary"></mat-spinner> 
+            </div>
+        </div>
+</div>
+
+
+
+
+    
+
+

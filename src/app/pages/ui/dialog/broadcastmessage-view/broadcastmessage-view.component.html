@@ -1,0 +1,55 @@
+
+
+<span> <b> NOTICE  </b> </span>
+<div mat-dialog-actions> 
+  <br>
+</div>
+
+<div *ngFor="let row of rows; let h = index;">
+
+  <div style="margin-top: 10px" class = "form-group row">
+   
+    <label for="input-11" class="col-sm-1 col-form-label">Subject</label>
+    <div class = "col-sm-5">
+        <input class="form-control" type="text" 
+        [(ngModel)]="row.subject" disabled
+       />
+    </div>
+    <label for="input-11" class="col-sm-1 col-form-label">Start Date</label>
+    <div class = "col-sm-2">
+      <input class="form-control" type="text" 
+      [(ngModel)]="row.startDate" readonly
+     />
+    </div>
+    <label for="input-11" class="col-sm-1 col-form-label">End Date</label>
+    <div class = "col-sm-2">
+      <input class="form-control" type="text" 
+      [(ngModel)]="row.endDate" readonly
+     />
+    </div>
+    <div class = "col-sm-1"> 
+       
+     </div>
+  </div>
+  <div style="margin-top: 10px" class = "form-group row">
+   
+    <label for="input-11" class="col-sm-1 col-form-label">Message</label>
+    <div class = "col-sm-11">
+        <textarea style="border: solid 1px; height: 100px !important" 
+        class="form-control" matInput name="question" 
+        [(ngModel)]="row.message" readonly
+        placeholder="Enter Template Content" value="" >
+      </textarea> 
+    </div>
+  </div>
+
+  <hr style="border: solid 0.2px red !important">
+</div>
+
+<button  style="margin-top: 10px"  
+         mat-raised-button 
+         color="primary" (click)="cancel()" 
+         class="mat-elevation-z12 box-button" 
+         mat-dialog-close>
+         Ok
+</button> 

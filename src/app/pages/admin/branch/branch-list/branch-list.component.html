@@ -1,0 +1,136 @@
+ 
+  <!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+   <p>{{retryMessage}}</p> 
+  </div>
+
+  <div style="text-align: center; background-color: white !important;font-size: larger;" class="card-title-text"> <b> 
+    BRANCH </b>    
+  </div>
+
+  <div class="col-sm-12 row">
+
+    <div class="col-sm-1">
+      <button style="margin: 0 0 0 10px;" (click)="action('Add','')"  mat-raised-button color="accent" 
+      class="mat-elevation-z12 box-button" type="submit">Add New</button>
+      <mat-spinner *ngIf ="statusTrack == 'Decline'"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+    
+    </div>
+    <div class="col-sm-1">
+
+    </div>
+    <div class="col-sm-2">
+     
+      <input style ="width: 100%"  (keyup)="updateFilter($event, 1)"
+      autocomplete="off" class="form-control"
+       type="text" placeholder="Branch Code" 
+        />
+    </div>
+    <div class="col-sm-2">
+     
+      <input style = "width: 100%" (keyup)="updateFilter($event, 2)"
+      autocomplete="off" class="form-control"
+       type="text" placeholder="Branch Name" 
+        />
+    </div>
+    <div class="col-sm-2">
+      <input style = "width: 100%" (keyup)="updateFilter($event, 3)"
+      autocomplete="off" class="form-control"
+       type="text" placeholder="Date" 
+        />
+    </div>
+    <div class="col-sm-2">
+      <input style ="width: 100%;" (keyup)="updateFilter($event, 4)"
+      autocomplete="off" class="form-control"
+       type="text" placeholder="Status" 
+        />
+    </div>
+
+    <div class="col-sm-1">
+      
+      <select style="width: 120px" class="form-control"  [(ngModel)]="pageLmit">
+        <option>Item Per Page</option>
+        <option *ngFor="let a of ItemsPerPage"
+        [value]="a.itemPerPage">{{ a.itemPerPage }}</option>
+      </select>
+    
+    </div>
+  </div>
+  <div class="col-sm-12 row">
+  </div>
+  <br>
+    <div class="displayOnLapTop">
+      <!-- <div class="form-group row">
+        
+          <div class="col-sm-1">
+            <button style="margin: 0 0 0 43px;" (click)="action('Add','')"  mat-raised-button color="accent" 
+            class="mat-elevation-z12 box-button" type="submit">Add New</button>
+            <mat-spinner *ngIf ="statusTrack == 'Decline'"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+          
+          </div>
+        </div> -->
+       
+      <ngx-datatable style="width: 900px; margin: 0  20% 0 4% !important"
+      class="material ml-0 mr-0"
+      [rows]="rows"
+      [columns]="columns"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [limit]="pageLmit"
+      [rowHeight]="'auto'">
+        <ngx-datatable-column name="S/NO" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+          {{rows.indexOf(row) + 1}}
+          </ng-template>
+        </ngx-datatable-column> 
+        <ngx-datatable-column name="Action" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="viewSpan" (click)="action('View', row)">View</span>  
+          <span (click)= "action('Edit', row)" class = "editSpan">Edit</span>
+          </ng-template>
+        </ngx-datatable-column>   
+        <ngx-datatable-column name="BRANCH CODE" [flexGrow]="2">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.branchCode }} 
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="BRANCH NAME" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.branchName }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="DATE CREATED" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.dateCreated | date: 'd-MMM-y' }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="STATUS" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <mat-chip mat-sm-chip class="activestatus" [selected]="row.status" *ngIf="row.status == 'Active'">
+              {{ row.status }}
+            </mat-chip>
+          
+            <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Active'">
+              {{ row.status }}
+            </mat-chip>
+          </ng-template>
+        </ngx-datatable-column>
+        
+      </ngx-datatable>
+    </div>

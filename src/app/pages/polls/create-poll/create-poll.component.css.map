@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "create-poll.component.scss"
+    ],
+    "names": [],
+    "file": "create-poll.component.css"
+}

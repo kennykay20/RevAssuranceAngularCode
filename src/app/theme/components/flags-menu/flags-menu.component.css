@@ -1,0 +1,10 @@
+.flags img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.flags .mat-menu-item {
+  height: 36px;
+  line-height: 36px;
+}
+/*# sourceMappingURL=flags-menu.component.css.map */

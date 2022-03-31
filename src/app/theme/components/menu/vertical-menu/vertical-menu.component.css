@@ -1,0 +1,81 @@
+.menu-icon {
+  margin-right: 12px;
+}
+
+.menu-expand-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.menu-item .mat-button {
+  padding: 0;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  width: 100%;
+  font-size: 12px !important;
+  font-weight: 400;
+}
+
+.menu-item .mat-button.expanded .menu-expand-icon {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.menu-item .mat-button-wrapper {
+  padding-left: 16px;
+}
+
+.sub-menu {
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: max-height 0.25s ease-out;
+  transition: max-height 0.25s ease-out;
+}
+
+.sub-menu .sub-menu .mat-button {
+  padding-left: 40px;
+}
+
+.sub-menu .sub-menu .sub-menu .mat-button {
+  padding-left: 60px;
+}
+
+.sub-menu .sub-menu .sub-menu .sub-menu .mat-button {
+  padding-left: 80px;
+}
+
+.sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .mat-button {
+  padding-left: 100px;
+}
+
+.sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .mat-button {
+  padding-left: 120px;
+}
+
+.sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .mat-button {
+  padding-left: 140px;
+}
+
+.sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .mat-button {
+  padding-left: 160px;
+}
+
+.sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .mat-button {
+  padding-left: 180px;
+}
+
+.sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .mat-button {
+  padding-left: 200px;
+}
+
+.sub-menu .mat-button {
+  padding-left: 20px;
+}
+
+.sub-menu.show {
+  max-height: 500px;
+  -webkit-transition: max-height 0.25s ease-in;
+  transition: max-height 0.25s ease-in;
+}
+/*# sourceMappingURL=vertical-menu.component.css.map */

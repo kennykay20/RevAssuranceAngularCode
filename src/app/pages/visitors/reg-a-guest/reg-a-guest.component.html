@@ -1,0 +1,64 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+  <!-- <div class="col-sm-2">
+      <div id="square5">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+      </div> 
+      
+     
+  </div> -->
+
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+
+</div>
+
+
+
+<form [formGroup]="basicForm" [formGroup]="basicForm" (ngSubmit)="add(basicForm.value)">
+<mat-card>
+<mat-card-header fxLayoutAlign="left"> 
+                
+</mat-card-header>
+<div class="card-title-text"> <b> Visitor Details </b>   <label class="allFieldRequired"> <label class="allFieldRequiredtxt">Note:</label> All fields marked * are required</label></div>
+<br><br>
+<mat-card-content class="centerDiv">
+<div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+          <mat-form-field class="full-width">
+                  <input matInput name="Visitor Name" formControlName="visitor_name" required
+                          placeholder="visitor Name" value="">
+          </mat-form-field>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-xs="66" class="pr-1">
+          <mat-form-field class="full-width">
+                  <input matInput name="reason_for_visit" formControlName="reason_for_visit"
+                      placeholder="Reason for visit" value="" required>
+              </mat-form-field>
+    </div>
+  
+      
+  </div>
+ 
+    <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+          <div fxFlex="100" fxFlex.gt-xs="100" class="pr-1">
+                         
+              <button title="Add New Visitor"  *ngIf="displayloader != true"
+              mat-raised-button color="primary" 
+              [disabled]="basicForm.invalid">Add</button>
+             
+            
+              <mat-spinner *ngIf="displayloader === true"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+                    
+          
+          </div>
+        </div>
+
+
+  </mat-card-content>
+</mat-card>
+</form>

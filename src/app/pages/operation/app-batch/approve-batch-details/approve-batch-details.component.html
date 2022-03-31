@@ -1,0 +1,179 @@
+<!-- <div style = "margin-top: -40px;"  class="row">
+  <div class="col-sm-12">
+      <span class="btn"
+      style = "background-color: white; color: black; font-size: 18px; 
+      font-weight: 800" 
+     > BATCH SUMMARY DETAILS  </span>
+  </div>
+</div> -->
+
+<!--Main Form Reques Below-->
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<!--Edit Batch Control Ends here-->
+<!--Items Below-->
+
+
+
+<div *ngIf="data.actionName !== 'Add'" class = "form-group row">
+     <div class="col-sm-12">
+      
+      <button type="button" style="margin: 0 0 0 10px;" 
+      mat-raised-button color="primary"
+      (click)="close()">Return</button>
+    <button id="btnRemoveBatch"  *ngIf = "data.actionName == 'Approve'"
+                style="margin: 0 0 0 10px;" (click)="removeBatches()"  
+                mat-raised-button color="primary" 
+                class="mat-elevation-z12 box-button" type="submit">
+                <img *ngIf = "actionLoaderUpdate === true" 
+                src="assets/img/loader/loader.gif"/>REJECT BATCH
+              </button>
+              <button  id="btnprocessAllItem"   *ngIf = "data.actionName == 'Approve'"
+                style="margin: 0 0 0 10px;" (click)="approvePostTrans()"  
+                mat-raised-button color="accent" 
+              class="mat-elevation-z12 box-button" type="submit">
+              APPROVE/POST BATCH
+              </button>
+
+                <button id="btnRemoveBatch"  *ngIf ="data.actionName === 'Reject'"
+                style="margin: 0 0 0 0px;" (click)="undoRemoveBatches()"  
+                mat-raised-button color="primary" 
+                class="mat-elevation-z12 box-button" type="submit">
+                <img *ngIf = "actionLoaderUpdate === true" 
+                src="assets/img/loader/loader.gif"/>UNDO REJECT BATCH(ES)  ITEMS
+              </button>
+
+              
+              <button id="btnReProcessAllItem"  *ngIf ="data.actionName === 'Reject'"
+              style="margin: 0 0 0 10px;" (click)="reApprovePostTrans()"  
+              mat-raised-button color="accent" 
+              class="mat-elevation-z12 box-button" type="submit">
+              RE-APPROVE/REPOST 
+          </button>
+     </div>
+
+     <div class="col-sm-10">
+      <h6 style = "font-weight: 800; text-align: center; margin-top: 10px">  
+         ITEMS FOR BATCH <span>{{ instrumentForm.batchNo }} </span> </h6>
+     </div>
+</div>
+<table *ngIf="data.actionName !== 'Add'" style="background-color: white;" class="table table-bordered table-sm table-hover tableStyle">
+  <thead>
+    <tr>
+      <th style="width: 20px">S/NO</th>
+      <th style="width: 30px">ACTION</th>
+      
+      <th style="width: 20px">VALUE DATE</th>
+      <th style="width: 20px">ACCT NO </th>
+      <th style="width: 20px">ACCT TYPE </th>
+      <th style="width: 20px">DR AMOUNT </th>
+      <th style="width: 20px">CR AMOUNT</th>
+      <th style="width: 20px">CCY</th>
+      <th style="width: 20px">CHARGE AMOUNT</th>
+      <th style="width: 20px">CHQ. NO</th>
+      <th style="width: 20px">SERVICE STATUS</th>
+      <th style="width: 20px">TXN STATUS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!--Search Here-->
+    <tr>
+      <td>  </td>
+      <td></td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'VALUE DATE')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'ACCT NO')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'ACCT TYPE')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'DR AMOUNT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CR AMOUNT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CCY')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CHARGE AMOUNT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+   
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CHQ. NO')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'SERVICESTATUS')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'TXNSTATUS')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+    </tr>
+    <!--Search End Here-->
+
+
+
+    <tr *ngFor="let row of rows; let h = index;">
+
+      <td> {{ h + 1 }}</td>
+      <td style="text-align: center;">
+        <span  matTooltip="View  {{ row?.tempBatchNo Details" class="viewSpan"
+          (click)="actionItem('View', row)">View</span>
+      </td>
+      
+   
+      <td class = "txtCenter"> {{ row?.valueDate | date: 'd-MMM-y'  }}</td>
+      <td> {{ row?.acctNo  }}</td>
+      <td> {{ row?.acctType  }}</td>
+      <td class="txtRight"> 
+           <span *ngIf ="row?.drCr== 'DR'"> {{ row?.amount  |  number:'.2'  }} </span> 
+           <span *ngIf ="row?.drCr != 'DR'"> 0.00 </span> 
+      </td>
+      <td class="txtRight"> 
+          <span *ngIf ="row?.drCr== 'CR'"> {{ row?.amount  |  number:'.2'  }} </span> 
+          <span *ngIf ="row?.drCr != 'CR'">  0.00 </span> 
+      </td>
+      <td class = "txtCenter"> {{ row?.ccyCode  }}</td>
+      <td class="txtRight"> {{ row?.chargeAmount |  number:'.2'  }}</td>
+      <td> {{ row?.chequeNo  }}</td>
+      <td> {{ row?.serviceStatus }} </td>
+      <td> {{ row?.status  }} </td>
+    </tr>
+    <tr>
+        <td colspan="3"></td>
+        <td class="txtRight"> <b>Total</b> </td>
+        <td class="txtRight"> <b>{{instrumentForm?.totalDr  |  number:'.2'  }}</b>  </td>
+        <td class="txtRight"> <b>{{ instrumentForm?.totalCr  |  number:'.2'  }}</b> </td>
+        <td> </td>
+        <td> </td>
+        <td class="txtRight"> <b>{{ totalChargeAmount  |  number:'.2'  }}</b>  </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+    </tr>
+  </tbody>
+</table>
+<!-- <table here -->
+<!--Items Finished here-->

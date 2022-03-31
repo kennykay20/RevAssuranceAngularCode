@@ -1,0 +1,68 @@
+.chat .chat-actions {
+  padding: 12px;
+}
+
+.chat .author-name {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.chat .talk-item {
+  padding: 6px 0;
+  height: 100%;
+}
+
+.chat .message {
+  white-space: unset;
+  text-overflow: unset;
+}
+
+.chat .message span {
+  padding: 6px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.chat .message-date {
+  opacity: 0.8;
+}
+
+.chat .empty mat-icon {
+  font-size: 220px;
+  height: 220px;
+  width: 220px;
+  opacity: 0.4;
+}
+
+.chat .empty p {
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+.chat-status-icon {
+  font-size: 14px;
+  height: 14px;
+  width: 14px;
+  line-height: 22px;
+  margin-right: 6px;
+}
+
+.author-status {
+  font-size: 13px;
+}
+
+.chat-sidenav {
+  border-right: 1px solid transparent;
+  overflow: hidden;
+}
+
+.chat-content {
+  padding: 12px;
+  height: calc(100vh - (56px + 8px*2 + 238px));
+}
+
+.chat-sidenav-list {
+  height: calc(100vh - (56px + 8px*2 + 132px));
+}
+/*# sourceMappingURL=chat.component.css.map */

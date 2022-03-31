@@ -1,0 +1,168 @@
+
+  <div style="border: none solid black;">
+
+    <div class="card-title-text"> <b></b><label class="allFieldRequired"> <label
+          class="allFieldRequiredtxt"></label></label></div>
+    <br>
+  
+    <div class="form-group">
+      <div class="col-sm-12 infoAcctdetails"
+        style="background-color:#444;color:#fff; text-align:center; margin-top: -40px">
+        <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">
+           BATCH ITEM DETAILS</label>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important;">
+
+
+
+      <div style="margin-top: 10px" class="form-group row">
+        <label for="input-11" class="col-sm-1 col-form-label ">Acct. Type</label>
+        <div class="col-sm-1">
+          <select  class="form-control"  
+              [(ngModel)]="instrumentForm.acctType">
+                  <option>Acct Type</option>
+                  <option *ngFor="let a of acttypes"
+                  [value]="a?.accountTypeCode">{{ a?.accountTypeCode }}</option>
+                </select>
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label ">Acct No</label>
+        <div class="col-sm-2">
+          <!-- <input autocomplete="off"  class="form-control" type="text" placeholder=""
+          [(ngModel)]="instrumentForm.acctNo"
+          [ngClass]="{'redBorder':
+          instrumentForm.acctNo == null }"
+          (change)="validateAcct($event)" /> -->
+          <input autocomplete="off"  class="form-control" type="text" placeholder=""
+          [(ngModel)]="instrumentForm.acctNo"
+          />
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label ">Amount</label>
+        <div class="col-sm-2">
+          <input autocomplete="off"  class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.amount"
+            (change)="formatAmt($event)"  />
+        </div>
+
+
+           
+        <label for="input-11" class="col-sm-1 col-form-label ">DR/CR</label>
+        <div class="col-sm-2">
+          <select  class="form-control"  
+              [(ngModel)]="instrumentForm.drCr"  
+              (change)='getTranConfigByServiceId(instrumentForm.drCr)'>
+                  <option> </option>
+                  <option *ngFor="let a of DrOrCr"
+                  [value]="a">{{ a }}</option>
+                </select>
+        </div>
+        </div>
+
+        <div class="form-group row">
+          <!-- <label for="input-11" class="col-sm-1 col-form-label ">Acct Name</label>
+          <div class="col-sm-4">
+            <input autocomplete="off"  class="form-control" type="text" placeholder=""
+              [(ngModel)]="instrumentForm.acctName" />
+          </div> -->
+
+          <label for="input-11" class="col-sm-1 col-form-label ">Currency</label>
+          <div class="col-sm-1">
+            <select  class="form-control"  
+            [(ngModel)]="instrumentForm.ccyCode" >
+              <option>Acct Type</option>
+              <option *ngFor="let a of currencies"
+              [value]="a.isoCode">{{ a.isoCode }}</option>
+            </select>
+          </div>
+     
+          <label for="input-11" class="col-sm-1 col-form-label ">Trans. Code</label>
+          <div class="col-sm-2">
+            
+            <select  class="form-control"  
+                [(ngModel)]="instrumentForm.cbsTC">
+                    <option> </option>
+                    <option *ngFor="let a of transCode"
+                    [value]="a">{{ a }}</option>
+                  </select>
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Trans Date</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" disabled class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.transactionDate" />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Value Date</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" disabled  class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.valueDate" />
+          </div>
+        </div>
+        <div class="form-group row">
+         
+
+          <label for="input-11" class="col-sm-1 col-form-label ">Chg Code</label>
+          <div class="col-sm-1">
+            <input autocomplete="off"  class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.chargeCode" />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label ">Chg Amount</label>
+          <div class="col-sm-2">
+            <input autocomplete="off"  class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.chargeAmount" />
+          </div>
+        
+          <label for="input-11" class="col-sm-1 col-form-label ">Ref. No</label>
+          <div class="col-sm-2">
+            <input autocomplete="off"  class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.referenceNo" />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Trans Date</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" disabled class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.transactionDate" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Narration</label>
+          <div class="col-sm-4">
+            <input autocomplete="off" class="form-control" type="text" placeholder=""
+              [(ngModel)]="instrumentForm.narration" />
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label ">Chg Narration</label>
+        <div class="col-sm-5">
+          <input autocomplete="off"  class="form-control" type="text" placeholder=""
+          [(ngModel)]="instrumentForm.chgNarration" />
+        </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Post Code</label>
+          <div class="col-sm-4">
+            <input autocomplete="off" disabled class="form-control" type="text" placeholder=""
+              [(ngModel)]="instrumentForm.postingErrorCode" />
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label ">Post Msg</label>
+        <div class="col-sm-5">
+          <input autocomplete="off" disabled class="form-control" type="text" placeholder=""
+          [(ngModel)]="instrumentForm.postingErrorDescr" />
+        </div>
+        </div>
+      </div>
+ 
+    </div>
+
+<br>
+    
+<div class = "form-group row" >
+  <div class="col-sm-1">
+   
+   <button type="button" style="margin: 0 0 0 10px;" 
+   mat-raised-button color="primary"
+   (click)="close()">Return</button>
+
+  </div>
+
+
+</div>
+
+
+

@@ -1,0 +1,59 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+    <!-- <div class="col-sm-2">
+        <div id="square5">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div> 
+        
+       
+    </div> -->
+  
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+  
+  </div>
+  
+  
+  
+  <form [formGroup]="basicForm" [formGroup]="basicForm" (ngSubmit)="add(basicForm.value)">
+  <mat-card>
+  <mat-card-header fxLayoutAlign="left"> 
+                  
+  </mat-card-header>
+  <div class="card-title-text"> <b> Lodge Complaint(s)</b>   <label class="allFieldRequired"> <label class="allFieldRequiredtxt">Note:</label> All fields marked * are required</label></div>
+  <br><br>
+  <mat-card-content class="centerDiv">
+
+
+    <div class = "col-sm-12 row">
+      <div class = "col-sm-3">
+        <mat-form-field class="full-width">
+          <input matInput name="title" formControlName="title" required
+                  placeholder="Title" value="">
+  </mat-form-field>
+      </div>
+      <div class = "col-sm-6">
+        <textarea style="border: solid 1px" class="form-control" matInput name="description" formControlName="description"
+        placeholder="Enter your Compaints" value="" required>
+        </textarea> 
+      </div>
+      <div class = "col-sm-1">
+        <button style="margin-top: 5px" matTooltip="Add New Complaint"  *ngIf="displayloader != true"
+        mat-raised-button color="primary" 
+        [disabled]="basicForm.invalid">Submit</button>
+
+        <mat-spinner *ngIf="displayloader === true"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+              
+    
+      </div>
+      <div class = "col-sm-3">
+        
+      </div>
+    </div>
+ 
+    </mat-card-content>
+  </mat-card>
+  </form>

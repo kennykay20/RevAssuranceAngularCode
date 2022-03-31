@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,UADM,CACN,YAAY,EADhB,UAAU,CACQ,gBAAgB,CAAA;EAC1B,MAAM,EAAE,gBAAgB;CAC3B;;AAHL,AAII,UAJM,CAIN,UAAU,CAAA;EACN,KAAK,EAAE,KAAK;CAMf;;AAXL,AAMQ,UANE,CAIN,UAAU,CAEN,CAAC,CAAA;EACG,SAAS,EAAE,IAAI;EACf,WAAW,EAAE,IAAI;EACjB,UAAU,EAAE,MAAM;CACrB;;AAVT,AAYI,UAZM,CAYN,cAAc,CAAA;EACV,MAAM,EAAE,IAAI;EACZ,WAAW,EAAE,IAAI;CACpB",
+    "sources": [
+        "user-menu.component.scss"
+    ],
+    "names": [],
+    "file": "user-menu.component.css"
+}

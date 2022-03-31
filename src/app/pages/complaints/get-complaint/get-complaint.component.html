@@ -1,0 +1,130 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+</div>
+
+
+
+<form [formGroup]="basicForm" [formGroup]="basicForm">
+<mat-card>
+<mat-card-header fxLayoutAlign="left"> 
+                
+</mat-card-header>
+<div class="card-title-text"> <b> Complaint Details</b>   <label class="allFieldRequired"> <label class="allFieldRequiredtxt"></label></label></div>
+<br><br>
+<mat-card-content class="centerDiv">
+<div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+  <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+        <mat-form-field class="full-width">
+          <input matInput name="ticket_id" formControlName="ticket_id" 
+                  placeholder="Ticket ID">
+    </mat-form-field>
+</div>
+<div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+  <mat-form-field class="full-width">
+    <input readonly matInput name="title" formControlName="title" 
+            placeholder="Title" >
+</mat-form-field>
+</div>
+<div fxFlex="100" fxFlex.gt-xs="45" class="pr-1">
+  <mat-form-field class="full-width">
+    <input matInput readonly name="resident_name" formControlName="resident_name" 
+            placeholder="Logged By" >
+</mat-form-field>
+</div>
+
+<div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+  <mat-form-field class="full-width">
+    <input readonly matInput name="status" formControlName="status" 
+            placeholder="Status" >
+</mat-form-field>
+</div>
+
+  </div>
+  <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+   
+
+  
+  <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+    <mat-form-field class="full-width">
+      <input matInput readonly name="admin_name" formControlName="admin_name" 
+              placeholder="Treated By" >
+  </mat-form-field>
+  </div>
+  <div fxFlex="100" fxFlex.gt-xs="50" class="pr-1">
+    <!-- <mat-form-field class="full-width">
+      <input matInput readonly name="description" formControlName="description" 
+              placeholder="Description" >
+  </mat-form-field> -->
+  
+  
+  <textarea style="border: solid 1px" class="form-control" matInput name="description" formControlName="description"
+  placeholder="Description">
+  </textarea> 
+  
+  
+  </div>
+  
+    </div>
+
+
+
+    <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+   
+      <div fxFlex="100" fxFlex.gt-xs="100" class="pr-1">
+  
+      </div>
+  </div>
+
+
+  <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+    
+
+
+
+  </div>
+
+
+
+    <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+      <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+  
+      </div>
+      <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+        <button
+        (click)="return()"
+        style="margin-top: 5px" title="Return to All Complaint"  *ngIf="displayloaderC != true"
+        mat-raised-button color="accent" 
+       > << Back</button>
+      </div>
+          <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+                         
+              <button style="margin-top: 5px"
+              
+              (click)="treat(basicForm)"
+              
+              title="Add New Complaint"  *ngIf="displayloader != true"
+              mat-raised-button color="primary" 
+              [disabled]="basicForm.invalid">TREAT</button>
+
+              <mat-spinner *ngIf="displayloader === true"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+                    
+          
+          </div>
+          <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+            <button
+            (click)="closeComplaint(basicForm)"
+            style="margin-top: 5px" title="Add New Complaint"  *ngIf="displayloaderC != true"
+            mat-raised-button color="warn" 
+            [disabled]="basicForm.invalid">CLOSE</button>
+
+            <mat-spinner *ngIf="displayloaderC === true"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+              
+          </div>    
+        </div>
+  </mat-card-content>
+</mat-card>
+</form>

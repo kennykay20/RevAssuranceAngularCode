@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>Specify Period</h1>
+
+
+
+<div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+      <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+        <mat-form-field class="example-full-width datePickertable">
+          <mat-label>Choose Start Date</mat-label>
+          <input matInput [matDatepicker]="picker" readonly [(ngModel)]="starDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker class="mat-calendar-table" touchUi #picker></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+      <button style="margin-left: 170px"    mat-raised-button 
+      color="accent" (click)="cancel()" class="mat-elevation-z12 box-button" mat-dialog-close>Cancel</button> 
+      
+  </div>
+   
+</div>
+
+<div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+
+ 
+<div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+  <mat-form-field class="example-full-width datePickertable">
+    <mat-label>Choose End Date</mat-label>
+    <input matInput [matDatepicker]="picker1" readonly [(ngModel)]="EndDate">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker class="mat-calendar-table" touchUi #picker1></mat-datepicker>
+  </mat-form-field>
+</div>
+
+<div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+
+<button style="margin-left: 170px"   mat-raised-button 
+      color="primary" (click)="downlaod()" 
+      class="mat-elevation-z12 box-button" mat-dialog-close>Downlaod</button>
+</div>
+</div>
+

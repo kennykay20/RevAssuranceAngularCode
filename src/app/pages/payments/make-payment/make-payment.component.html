@@ -1,0 +1,252 @@
+<div class="preloader" *ngIf="loadPage == true">
+  <!-- <div class="col-sm-2">
+      <div id="square5">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+      </div> 
+      
+     
+  </div> -->
+
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+  <br>
+  <p>{{retryMessage}}</p> 
+</div>
+
+<div fxLayout="row wrap" class="divMat">
+
+<!--Fine-->
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat" *ngIf="Fine > 0"> 
+    <mat-card class="p-0">
+        <mat-card-header class="p-1" fxLayoutAlign="space-between center">
+            <mat-card-subtitle class="m-0 titletxt">Fine</mat-card-subtitle>
+            <mat-chip-list>
+                <mat-chip  color="warn" selected="true" class="info-chip rebck">
+                   
+                  
+                    ₦ {{ Fine |  number:'.2' }}
+                </mat-chip>
+            </mat-chip-list>
+        </mat-card-header>         
+        <div class="w-100 h-100p divMat">
+
+          <button matTooltip="Click to View Fine Details" 
+          mat-raised-button color="primary"
+           (click)="openViewFineDetails()"
+          class="mat-elevation-z12 box-button btn" 
+          type="submit"> <mat-icon class="icon-sm">visibility</mat-icon>View Fine Details</button>  
+
+        </div>
+    </mat-card>
+</div>
+
+<!--Oustanding Service-->
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat" 
+  *ngIf="OutstandingServiceDebt > 0"> 
+      <mat-card class="p-0">
+          <mat-card-header class="p-1" fxLayoutAlign="space-between center">
+              <mat-card-subtitle class="m-0 titletxt">OutStanding Service</mat-card-subtitle>
+              <mat-chip-list>
+                  <mat-chip color="accent" selected="true" class="info-chip">
+                    
+                      
+
+                      ₦ {{ OutstandingServiceDebt | number: '.2'  }}
+                  </mat-chip>
+              </mat-chip-list>
+          </mat-card-header>         
+          <div class="w-100 h-100p divMat">
+
+            <button matTooltip="Click to View Outstanding Service Details" mat-raised-button color="primary" (click)="openViewOutStandingServiceDetails()" 
+            class="mat-elevation-z12 box-button btn" type="submit"> 
+            <mat-icon class="icon-sm">visibility</mat-icon>
+            View Details
+          </button>  
+
+          </div>
+      </mat-card>
+  </div>
+
+  <!--Oustanding Electricity-->
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat" *ngIf="OutstandingElectricityDebt > 0 && fineAddedStatus == 'Y'"> 
+    <mat-card class="p-0">
+        <mat-card-header class="p-1" fxLayoutAlign="space-between center">
+            <mat-card-subtitle class="m-0 titletxt">OutStanding Electricity</mat-card-subtitle>
+            <mat-chip-list>
+                <mat-chip color="accent" selected="true" class="info-chip">
+                
+
+                  ₦ {{ OutstandingElectricityDebt | number: '.2' }}
+
+
+                </mat-chip>
+            </mat-chip-list>
+        </mat-card-header>         
+        <div class="w-100 h-100p divMat">
+
+          <button matTooltip="Click to View Outstanding Electricity Details" 
+          mat-raised-button color="primary" (click)="openViewElectricityOutDetails()"  
+          class="mat-elevation-z12 box-button btn" type="submit">  
+          <mat-icon class="icon-sm">visibility</mat-icon>View Details
+        </button>  
+          
+        
+        </div>
+    </mat-card>
+</div>
+
+<!--Service-->
+<div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat" *ngIf="Service  > 0 && fineAddedStatus == 'Y'"> 
+  <mat-card class="p-0">
+      <mat-card-header class="p-1" fxLayoutAlign="space-between center">
+          <mat-card-subtitle class="m-0 titletxt">Service</mat-card-subtitle>
+          <mat-chip-list>
+              <mat-chip color="accent" selected="true" class="info-chip">
+                
+                
+
+                  ₦ {{ Service  }}
+              </mat-chip>
+          </mat-chip-list>
+      </mat-card-header>         
+      <div class="w-100 h-100p divMat">
+
+        <button (click)="addServiceToCart()" mat-raised-button color="primary" 
+        class="mat-elevation-z12 box-button btn" type="submit"> 
+        <mat-icon class="icon-sm">add_shopping_cart</mat-icon>
+        Add to Cart</button>  
+
+      </div>
+  </mat-card>
+</div>
+ 
+<!--Electricity-->
+<div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat" 
+*ngIf="Electricity != 0 && fineAddedStatus == 'Y'"> 
+  <mat-card class="p-0">
+      <mat-card-header class="p-1" fxLayoutAlign="space-between center">
+          <mat-card-subtitle class="m-0 titletxt">Electricity</mat-card-subtitle>
+          <mat-chip-list>
+              <mat-chip color="accent" selected="true" class="info-chip">
+                ₦ {{ Electricity  | number: '.2'  }}
+              </mat-chip>
+          </mat-chip-list>
+      </mat-card-header>         
+      <div class="w-100 h-100p divMat">
+
+        <button mat-raised-button color="primary" (click)='addElectricityToCart()'
+        class="mat-elevation-z12 box-button btn" type="submit"> 
+        <mat-icon class="icon-sm">add_shopping_cart</mat-icon>
+        Add to Cart</button>  
+
+      </div>
+  </mat-card>
+</div>
+ 
+
+<!--Donation-->
+<div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat" *ngIf="fineAddedStatus == 'Y'"> 
+  <mat-card class="p-0">
+      <mat-card-header class="p-1" fxLayoutAlign="space-between center">
+          <mat-card-subtitle class="m-0 titletxt">Donation</mat-card-subtitle>
+          <mat-chip-list>
+              <mat-chip color="accent" selected="true" class="info-chip">
+                
+
+                ₦ {{ Donation }}
+
+              </mat-chip>
+          </mat-chip-list>
+      </mat-card-header>         
+      <div class="w-100 h-100p divMat">
+
+        <button mat-raised-button color="primary" (click)='addDonation()'
+        class="mat-elevation-z12 box-button btn" type="submit"> 
+        <mat-icon class="icon-sm">add_shopping_cart</mat-icon>
+        Add to Cart</button>  
+
+      </div>
+  </mat-card>
+</div>
+ 
+<!--Top Up-->
+<div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat" *ngIf="fineAddedStatus == 'Y'"> 
+  <mat-card class="p-0">
+      <mat-card-header class="p-1" fxLayoutAlign="space-between center">
+          <mat-card-subtitle class="m-0 titletxt">Top Up Electricity</mat-card-subtitle>
+          <mat-chip-list>
+              <mat-chip color="accent" selected="true" class="info-chip">
+                
+
+
+                ₦ {{ TopUp  }}
+
+
+              </mat-chip>
+          </mat-chip-list>
+      </mat-card-header>         
+      <div class="w-100 h-100p divMat">
+
+        <button mat-raised-button color="primary" (click)='addElectricityToUp()'
+        class="mat-elevation-z12 box-button btn" type="submit"> 
+        <mat-icon class="icon-sm">add_shopping_cart</mat-icon>
+        Add to Cart</button>  
+
+      </div>
+  </mat-card>
+</div>
+
+<!--Partner Payment-->
+<div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat" *ngIf="PartnerPayment != '0.00' && fineAddedStatus == 'Y'"> 
+  <mat-card class="p-0">
+      <mat-card-header class="p-1" fxLayoutAlign="space-between center">
+          <mat-card-subtitle class="m-0 titletxt">Partner Payment</mat-card-subtitle>
+          <mat-chip-list>
+              <mat-chip color="primary" selected="true" class="info-chip">
+               
+
+
+                ₦ {{ PartnerPayment  | number: '.2' }}
+
+              </mat-chip>
+          </mat-chip-list>
+      </mat-card-header>         
+      <div class="w-100 h-100p divMat">
+
+        <button mat-raised-button color="primary"  (click)='partnerPayment()'
+        class="mat-elevation-z12 box-button btn" type="submit"> 
+        <mat-icon class="icon-sm">add_shopping_cart</mat-icon>
+        Add to Cart</button>  
+
+      </div>
+  </mat-card>
+</div>
+
+</div>
+
+
+<div fxLayout="row wrap" class="divMat">
+  <!--Check Out-->
+
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+ 
+
+</div>
+
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+     
+          <div class="w-100 h-100p divMat">
+             
+            <button id="btnCheckOut" mat-raised-button color="primary" (click) = "checkOut()"
+            class="mat-elevation-z12 box-button btn" type="submit">Check Out  <mat-icon class="icon-sm">forward</mat-icon></button>  
+  
+          </div>
+     
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p divMat"> 
+ 
+
+  </div>
+</div>

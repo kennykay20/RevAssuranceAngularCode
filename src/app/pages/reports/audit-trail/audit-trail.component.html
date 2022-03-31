@@ -1,0 +1,168 @@
+<!-- <iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe"></iframe>
+ -->
+
+<!-- <iframe src="http://localhost/RevAssurance" height="800" width="1000" title="Iframe Example"></iframe> -->
+
+
+<!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <p>{{retryMessage}}</p>
+</div>
+
+
+
+
+<div style="margin-left: 20px; background-color: white !important" class="card-title-text">
+  <b> AUDIT TRAIL REPORT</b>
+</div>
+<br>
+
+<div class="form-group row">
+  <label for="input-11" class="col-sm-1 col-form-label">Effective Date</label>
+  <div class="col-sm-1">
+    <input class="form-control" readonly style="width: 100px" [(ngModel)]="armortizationParam.pdtStartDate"
+      type="text" />
+  </div>
+  <div class="col-sm-1">
+    <input id="effectiveDate" style="border: none !important;" class="form-control cursorPointer" type="date" value=""
+      (change)="fromDate($event)" />
+  </div>
+
+  <label for="input-11" class="col-sm-1 col-form-label">Next Run Date</label>
+  <div class="col-sm-1">
+    <input class="form-control" readonly style="width: 100px" [(ngModel)]="armortizationParam.pdtEndDate" type="text" />
+  </div>
+  <div class="col-sm-1">
+    <input id="endDate" style="border: none !important;" class="form-control cursorPointer" type="date" value=""
+      (change)="toDate($event)" />
+  </div>
+  <label for="input-11" class="col-sm-1 col-form-label">User Name</label>
+  <div class="col-sm-2">
+    <select class="form-control" [(ngModel)]="armortizationParam.pnUserId">
+      <option>Select RSM</option>
+      <option *ngFor="let a of users" [value]="a?.rsmId">{{ a.fullName }}</option>
+    </select>
+  </div>
+
+  <div class="col-sm-2">
+
+    <button id="btnSearchEnq" (click)="execute()" mat-raised-button color="accent" class="mat-elevation-z12 box-button"
+      type="submit">
+      SUBMIT
+    </button>
+
+    <!-- <button id="btnSearchEnq" (click)="download()" mat-raised-button color="primary"
+      class="mat-elevation-z12 box-button m-2" type="submit">
+      Download
+    </button> -->
+
+    <img src="assets/img/excel.png" class="cursorPointer" style="height: 50px" title="Export to Excel"
+      (click)="download()" />
+
+  </div>
+</div>
+<br>
+
+
+
+
+<div class="form-group row">
+  <div class="btn-group" style="margin: 0  50% 0 40%">
+
+
+
+
+
+
+    <!-- <button   *ngIf="data.actionName == 'Add'"
+       mat-raised-button color="accent" 
+       [disabled]="!basicForm.valid">
+       <img src="assets/img/loader/loader.gif"/>
+       Save</button> -->
+  </div>
+</div>
+
+
+<div class="displayOnLapTop">
+  <table style="background-color: white; overflow-y: scroll;"
+    class="table table-bordered table-sm table-hover tableStyle">
+    <thead>
+      <tr>
+        <th style="width: 80px"></th>
+        <th style="width: 120px">Full Name</th>
+        <th style="width: 120px">Event Date</th>
+        <th style="width: 120px">Eventtype</th>
+        <th style="width: 120px">Table Name</th>
+        <th style="width: 120px">Record ID</th>
+        <th style="width: 120px">Original value</th>
+        <th style="width: 120px">New value</th>
+      </tr>
+    </thead>
+
+    <tbody *ngIf="rows.length > 0">
+      <tr *ngFor="let row of rows; let h = index;">
+        <td> {{ h + 1 }}</td>
+        <td> {{ row?.userFullName }}</td>
+        <td> {{ row?.eventdateutc }} </td>
+        <td style="text-align: center"> {{ row?.eventtype }}</td>
+        <td> {{ row?.tablename }} </td>
+        <td> {{ row?.recordid  }}</td>
+        <td> {{ row?.originalvalue }}</td>
+        <td> {{ row?.newvalue  }} </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+</div>
+
+<div class="row">
+  <div class="col-sm-4">
+
+  </div>
+
+  <div class="col-sm-2">
+
+    <div class="btn-group">
+      <button mat-raised-button color="primary" style="margin-left: 0%" (click)="prevPage()"
+        class="mat-elevation-z12 box-button" type="submit">
+        <mat-icon id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+      </button>
+      <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" class="mat-elevation-z12 box-button"
+        (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+    </div>
+
+  </div>
+  <div class="col-sm-2">
+    <span style="font-size: 15px; text-align: center !important; 
+           font-weight: 900; ">
+      Page: </span>
+    <span style="font-size: 15px; text-align: center !important; font-weight: 900;" id="page">
+    </span>
+  </div>
+
+  <div class="col-sm-2">
+
+
+    <span style="font-size: 15px; font-weight: 900; float:right !important">
+      Total Record: {{ totalRec }}</span>
+
+
+  </div>
+
+</div>

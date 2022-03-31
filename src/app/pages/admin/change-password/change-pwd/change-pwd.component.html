@@ -1,0 +1,80 @@
+<div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+        <div id="square5">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <p>{{retryMessage}}</p>
+</div>
+
+
+    <mat-card>
+        <mat-card-header fxLayoutAlign="left">
+            <!-- <mat-icon>person_add</mat-icon>        -->
+        </mat-card-header>
+        <div class="card-title-text"> <b>CHANGE PASSWORD</b></div>
+        <hr>
+
+        <mat-card-content class="centerDiv">
+            <div style="position: relative; left: 25%;">
+                <div class="form-group row">
+
+                    <label for="input-11" class="col-sm-2 col-form-label">Login Id</label>
+                    <div class="col-sm-2">
+                        <input autocomplete="off" class="form-control" 
+                        readonly type="text" placeholder=""
+                            [(ngModel)]="changePwdDTO.loginId"  />
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <label for="input-11" class="col-sm-2 col-form-label">Old Password</label>
+                    <div class="col-sm-2">
+                        <input autocomplete="off" class="form-control" 
+                          type="password"  placeholder=""
+                          [(ngModel)]="changePwdDTO.oldPassword"
+                          name="oldPass"   />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="input-11" class="col-sm-2 col-form-label">New Password</label>
+                    <div class="col-sm-2">
+                        <input autocomplete="off" class="form-control" 
+                          type="password" 
+                           placeholder="" 
+                            [(ngModel)]="changePwdDTO.newPassword"
+                               />
+
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="input-11" class="col-sm-2 col-form-label">Confirm Password</label>
+                    <div class="col-sm-2">
+                        <input autocomplete="off" class="form-control" type="password" 
+                        placeholder="" [(ngModel)]="changePwdDTO.confirmPassword"
+                             />
+
+                    </div>
+
+                </div>
+        
+            </div>
+            <div class="form-group row">
+                <div class="btn-group" style="margin: 1%  50%  0 45%">
+
+                    <button (click)="update()" id="btnUpdate" mat-raised-button color="accent"> 
+                        <img *ngIf="actionLoaderSave === true"
+                            src="assets/img/loader/loader.gif"/> Submit</button>
+
+                    <mat-spinner *ngIf="displayloader == true" strokeWidth="1" [diameter]="30" color="primary">
+                    </mat-spinner>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>

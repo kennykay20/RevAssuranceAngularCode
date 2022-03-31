@@ -1,0 +1,54 @@
+.pin {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  fill: currentColor;
+}
+
+.sidenav-header {
+  padding: 0 10px !important;
+}
+
+.user-block {
+  height: 0;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.user-block img {
+  width: 80px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+}
+
+.user-block .user-info-wrapper {
+  padding: 0 6px;
+  margin: 6px 0;
+  width: 100%;
+}
+
+.user-block .user-info-wrapper .user-info {
+  text-align: center;
+}
+
+.user-block .user-info-wrapper .user-info .name {
+  font-size: 15px;
+}
+
+.user-block .user-info-wrapper .user-info .position {
+  font-size: 13px;
+}
+
+.user-block.show {
+  height: 156px;
+}
+
+.sidenav-menu-outer {
+  height: calc(100% - 56px);
+}
+
+.sidenav-menu-outer.user-block-show {
+  height: calc(100% - 212px);
+}
+/*# sourceMappingURL=sidenav.component.css.map */

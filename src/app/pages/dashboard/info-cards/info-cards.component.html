@@ -1,0 +1,45 @@
+
+ <div class="preloaderLogin" *ngIf="loadPage">
+     <div class="col-sm-2">
+        <div id="square5">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div> 
+    </div> 
+  
+    <!-- <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/> -->
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div>
+
+
+
+<div fxLayout="row wrap" #resizedDiv *ngIf="dashboardLength > 0">
+
+    {{loadTxt}}
+    <div *ngFor="let a of dashboard" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p"> 
+        <mat-card class="p-0">
+            <a   [routerLink]="[a.routerLink]"  class="cursorPointer">  
+                <mat-card-header class="p-1" fxLayoutAlign="space-between center">
+                    <mat-card-subtitle class="m-0" style="font-weight: 800"> {{a?.dashboardMenuName | uppercase }}</mat-card-subtitle>
+                    <mat-chip-list>
+                    </mat-chip-list>
+                </mat-card-header>         
+                <div class="w-100 h-100p">
+                    
+                    <mat-icon class="" 
+                        style = "margin: 30px 0 0 40%; font-size:40px; 
+                        font-weight:800; text-align: right;color: #840808;"> 
+                        {{a?.icon}}
+                    </mat-icon>          
+                    <span style="margin: 30px 0 0 20%; font-size:15px; font-weight:800; text-align: right;"> 
+                        {{a?.dashBoardValues}} 
+                    </span>
+                </div>
+            </a>
+        </mat-card>
+    </div>
+</div>

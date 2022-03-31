@@ -1,0 +1,9 @@
+.tp-card {
+    max-width: 400px;
+ }
+ .tp-header-image {
+    background-image: url('/src/assets/img/login/logo_animatex.gif');
+    background-size: cover;
+ }
+
+ 

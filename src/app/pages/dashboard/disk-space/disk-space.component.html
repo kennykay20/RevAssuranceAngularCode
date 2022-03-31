@@ -1,0 +1,93 @@
+<div class="preloader" *ngIf="loadPage == true">
+    <!-- <div class="col-sm-2">
+        <div id="square5">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div> 
+    </div> -->
+  
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div>
+
+
+<mat-card>
+    <mat-card-header fxLayoutAlign="center">                
+        <mat-card-subtitle><h5>Complaints </h5></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-around">
+            
+            
+            <!-- <mat-checkbox color="primary" class="example-margin" [checked]="explodeSlices" (change)="explodeSlices = !explodeSlices">Explode Slices</mat-checkbox>
+            <mat-checkbox color="primary" class="example-margin" [checked]="showLabels" (change)="showLabels = !showLabels">Show Labels</mat-checkbox>
+         -->
+        
+        </div>
+        <div class="w-100 h-300p" #resizedDiv>
+
+            <!-- <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+                <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+                    <mat-chip mat-sm-chip class="activestatus">
+                      
+                      </mat-chip>
+                </div>
+                <div fxFlex="100" fxFlex.gt-xs="20" class="pr-1">
+                   {{rows?.totalComplaints}} 
+                </div>
+             
+               
+            </div> -->
+
+            <!-- <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+                <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+                    <mat-chip mat-sm-chip class="activestatus">
+                      
+                      </mat-chip>
+                </div>
+                <div fxFlex="100" fxFlex.gt-xs="20" class="pr-1">
+                       In Progress
+                </div>
+             
+               
+            </div> -->
+
+            <!-- totalComplaints: 0
+            solvedComplaints: 0
+            unSolvedComplaints: 0
+            inProgressComplaints: 0 -->
+
+      
+
+            <!-- <ngx-charts-pie-chart *ngIf="rows?.totalComplaints != 0 
+                                            && rows?.solvedComplaints != 0 
+                                            && rows?.unSolvedComplaints != 0
+                                            && rows?.inProgressComplaints != 0"
+                [scheme]="colorScheme"
+                [results]="data"
+                [legend]="showLegend"
+                [explodeSlices]="explodeSlices"
+                [labels]="showLabels"
+                [doughnut]="doughnut"
+                [gradient]="gradient"
+                (select)="onSelect($event)">
+            </ngx-charts-pie-chart>    -->
+
+
+            <ngx-charts-pie-chart 
+                    [scheme]="colorScheme"
+                    [results]="data"
+                    [legend]="showLegend"
+                    [explodeSlices]="explodeSlices"
+                    [labels]="showLabels"
+                    [doughnut]="doughnut"
+                    [gradient]="gradient"
+                    (select)="onSelect($event)">
+</ngx-charts-pie-chart> 
+        </div>
+    </mat-card-content>
+</mat-card>

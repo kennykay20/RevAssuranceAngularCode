@@ -1,0 +1,251 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+     <div id="square5">
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+     </div> 
+     
+    
+ </div> 
+</div>
+
+<form>
+
+<div style="border: none solid black;">
+
+    <div class="card-title-text"> <b> BATCH CONTROL</b><label class="allFieldRequired"> <label class="allFieldRequiredtxt">{{requiredFieldMsg}}</label></label></div>
+    <hr>
+
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Batch No</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="batchNo" [(ngModel)]="batchNo" />
+        </div>
+     
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Currency</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+            <input style="margin-left:10px ;" autocomplete="off" class="form-control" name="ccyCode" type="text" placeholder=""
+                [(ngModel)]="ccyCode" readonly/>
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Posted Tran Count</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="postedTransCount" [(ngModel)]="postedTransCount" readonly/>
+        </div>
+    
+    </div>
+    
+    <div class="form-group row">
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Record Count</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="recordCount" [(ngModel)]="recordCount" readonly/>
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Service</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="serviceId" [(ngModel)]="serviceId" readonly/>
+        </div>
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-40px ;">Total Dr Count</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="totalDrCount" [(ngModel)]="totalDrCount" readonly/>
+        </div>
+    </div>
+    
+    
+    <div class="form-group row">
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Total Cr Count</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="totalCrCount" [(ngModel)]="totalCrCount" readonly/>
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Total Dr</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="totalDr" [(ngModel)]="totalDr" readonly/>
+        </div>
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-40px ;">Total Cr</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="totalCr" [(ngModel)]="totalCr" readonly/>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Difference</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="tDifference" [(ngModel)]="tDifference" readonly/>
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">LOADED BY</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+             <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" name="loadedBy" placeholder=""
+             [(ngModel)]="loadedBy"  readonly/> 
+             
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Dept</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name ="dept" [(ngModel)]="dept" readonly/>
+        </div>
+    
+    </div>
+    
+    
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">IS BALANCED</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+         <input autocomplete="off" class="form-control" type="text" placeholder="" name="isBalanced" [(ngModel)]="isBalanced" readonly/> 
+           
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">VERIFIED BY</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+            <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+                [(ngModel)] = "verifiedBy" name="verifiedBy" readonly/>
+        </div> 
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">APPROVED BY</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+             <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="approvedBy" 
+             [(ngModel)] ="approvedBy" name="approvedBy" readonly/> 
+            
+        </div>
+    
+    </div>
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Filename</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="filename" readonly/>
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Date Verified</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+             <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+                formControlName="dateVerified" readonly/>
+               
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Date Approved</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="dateApproved" readonly/>
+        </div>
+    
+    </div>
+    
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Processing Dept</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="processingDept"
+            [(ngModel)]="processingDept" readonly />
+        </div>
+        <!-- <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Reprint Charge?</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="webServiceUrl" 
+            formControlName="webServiceUrl" />
+        </div>
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Charge Tied To Template</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="webServiceUrl" 
+            formControlName="webServiceUrl" />
+        </div> -->
+    
+    </div>
+
+
+
+ <div *ngIf ="data.actionName !== 'Add'">
+
+    <div class="form-group">
+        <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+            <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+        </div>
+     </div>
+     <br>
+     <div class = "form-group row">
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Created By</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="createdBy" [(ngModel)]="createdBy" />
+        </div>
+
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Date Created</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+             <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+               name="dateCreated" [(ngModel)]="dateCreated" />
+               
+        </div>
+
+         <label for="input-11" class="col-sm-1 col-form-label" style="margin-left:-30px ;">Status</label>
+         <div class = "col-sm-2" style="margin-left:-20px ;">
+             <input   autocomplete="off"  
+                         class="form-control" 
+                         type="text"
+                          placeholder="" 
+                          name="status" 
+                          [(ngModel)] ="status"
+                         >
+             
+         </div>
+    
+     </div>
+ </div>
+ <hr>
+
+ <br>
+<div class = "form-group row"> 
+ <div class = "btn-group" style="margin: 0  50% 0 40%">
+
+    <!-- <button   *ngIf="data.actionName == 'Add'"
+    mat-raised-button color="accent" 
+    [disabled]="!basicForm.valid">
+    <img src="assets/img/loader/loader.gif"/>
+    Save</button> -->
+
+    <button id="btnSave"   *ngIf="data.actionName == 'Add'"
+    mat-raised-button color="accent"  (click)="add(basicForm.value)"
+    [disabled]="!basicForm.valid">
+    <img *ngIf = "actionLoaderSave === true" src="assets/img/loader/loader.gif"/>
+    Save</button>
+         
+     <button id="btnUpdate"   *ngIf="data.actionName == 'Edit'" 
+     mat-raised-button color="accent" (click)="update(basicForm.value)"
+     >
+     <img *ngIf = "actionLoaderUpdate === true" src="assets/img/loader/loader.gif"/>
+     Update</button>
+
+     <button type="button" style="margin: 0 0 0 10px;" 
+     mat-raised-button color="primary" 
+     (click)="close()">Return</button>
+            
+     <mat-spinner *ngIf ="displayloader == true" 
+     strokeWidth="1" [diameter]="30" color="primary"></mat-spinner> 
+     </div>
+ </div>
+
+</div>
+
+
+
+
+    
+
+
+</form>

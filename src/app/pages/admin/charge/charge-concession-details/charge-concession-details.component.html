@@ -1,0 +1,320 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+     <div id="square5">
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+     </div> 
+     
+    
+ </div> 
+</div>
+
+<form [formGroup]="basicForm" [formGroup]="basicForm">
+
+<div style="border: none solid black;">
+
+    <div class="card-title-text"> <b> {{ActionHeaderMsg}} CHARGE CONCESSION FOR <span style="color:  #C70039 !important;">{{code}} </span> </b><label class="allFieldRequired"> <label class="allFieldRequiredtxt">{{requiredFieldMsg}}</label></label></div>
+    <hr>
+
+    <div style="border: 1px solid rgb(177, 160, 160); padding: 10px;">
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">ChargeCode</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input *ngIf="data.actionName === 'Add'" autocomplete="off" class="form-control" type="text" placeholder="" formControlName="chargeCode" name="chargeC"
+             [(ngModel)] = "code"  readonly/>
+             <input *ngIf="data.actionName != 'Add'" autocomplete="off" class="form-control" type="text" placeholder="" formControlName="chargeCode" name="chargeC"
+               readonly/>
+        </div>
+     
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Description</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+            <input *ngIf="data.actionName === 'Add'" style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+              [(ngModel)] = "desr"  formControlName="description" />
+              <input *ngIf="data.actionName != 'Add'"  style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+               formControlName="description" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Service</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+          <select *ngIf="data.actionName === 'Add'" class="form-control" formControlName="serviceId" [(ngModel)]="servi">
+            <!-- <option>Select Service</option> -->
+            <option *ngFor="let serv of services" 
+            [value]="serv.serviceId">
+                {{serv.serviceDescription}}
+            </option>
+        </select>
+
+        <select *ngIf="data.actionName != 'Add'" class="form-control" formControlName="serviceId" >
+          <!-- <option>Select Service</option> -->
+          <option *ngFor="let serv of services" [value]="serv.serviceId">{{serv.serviceDesciption}}</option>
+        </select>
+        </div>
+    
+    </div>
+    
+    <div class="form-group row">
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Recipient Branch</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <select class="form-control" formControlName="recipientBranch" [(ngModel)] = "rbranch" *ngIf="data.actionName === 'Add'" [(ngModel)]="ctype">
+                <!-- <option>Select Service</option> -->
+                <option value="A">Account Branch</option>
+                <option value="O">Originating Branch</option>
+            </select>
+            <select class="form-control" formControlName="recipientBranch" *ngIf="data.actionName != 'Add'">
+              <!-- <option>Select Service</option> -->
+              <option value="A">Account Branch</option>
+              <option value="O">Originating Branch</option>
+          </select>
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Charge Type</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <select class="form-control" formControlName="chargeType">
+                <option>No Charge</option> 
+                <option value="Amount">Amount</option>
+                <option value="Percent">Percent</option>
+            </select>
+        </div>
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-40px ;">Exempted</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+          <mat-checkbox color="primary"  formControlName="exempted"  class="example-margin"></mat-checkbox>
+        </div>
+    </div>
+    
+    
+    <div class="form-group row">
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Charge Basis</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="chargeBasis" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Direction</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <select class="form-control" formControlName="direction" [(ngModel)] = "direc"  *ngIf="data.actionName === 'Add'">
+                <!-- <option>No Charge</option>  -->
+                <option value="1">Outward</option>
+                <option value="2">Inward</option>
+            </select>
+            <select class="form-control" formControlName="direction" *ngIf="data.actionName != 'Add'">
+              <!-- <option>No Charge</option>  -->
+              <option value="1">Outward</option>
+              <option value="2">Inward</option>
+          </select>
+        </div>
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-40px ;">Currency</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <select class="form-control" formControlName="currencyIso" [(ngModel)] = "curr">
+                <!-- <option>Select Service</option> -->
+                <option *ngFor="let curr of currencies" [value]="curr.isoCode">{{curr.isoCode}}</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Charge Value</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" style="text-align: right;" (keypress)="keyPress($event)" formControlName="chargeValue" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Charge Acct Type</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+            <!-- <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+                formControlName="chargeAcctType" /> -->
+                <select style="margin-left:10px ;" class="form-control" formControlName="chargeAcctType" [(ngModel)]= "cAccttype" *ngIf="data.actionName === 'Add'">
+                    <option *ngFor="let acct of acctTypes" [value]="acct.accountTypeCode">{{acct.accountTypeCode}}</option>
+                </select>
+                <select style="margin-left:10px ;" class="form-control" formControlName="chargeAcctType"  *ngIf="data.actionName != 'Add'">
+                  <option *ngFor="let acct of acctTypes" [value]="acct.accountTypeCode">{{acct.accountTypeCode}}</option>
+              </select>
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Charge Acct No</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="chargeAcctNo" [(ngModel)] ="cAcctNo" *ngIf="data.actionName === 'Add'"/>
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="chargeAcctNo"  *ngIf="data.actionName != 'Add'"/>
+            <!-- should have a keyup function for validating account-->
+        </div>
+    
+    </div>
+    
+    
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Minimum Currency</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <!-- <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="minimumChargeCurr" /> -->
+            <select class="form-control" formControlName="minimumChargeCurr">
+                <!-- <option>Select Service</option> -->
+                <option *ngFor="let curr of currencies" [value]="curr.isoCode">{{curr.isoCode}}</option>
+            </select>
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Minimum Charge</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+            <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+                formControlName="minimumCharge" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Maximum Currency</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <!-- <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="maximumChargeCurr" /> -->
+            <select class="form-control" formControlName="maximumChargeCurr">
+                <!-- <option>Select Service</option> -->
+                <option *ngFor="let curr of currencies" [value]="curr.isoCode">{{curr.isoCode}}</option>
+            </select>
+        </div>
+    
+    </div>
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Maximum Charge</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="maximumCharge" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Charge Floor Currency</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+            <!-- <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+                formControlName="chargeFloorCurr" /> -->
+                <select style="margin-left:10px ;"  class="form-control" formControlName="chargeFloorCurr">
+                    <option *ngFor="let curr of currencies" [value]="curr.isoCode">{{curr.isoCode}}</option>
+                </select>
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Charge floor</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="chargeFloor" />
+        </div>
+    
+    </div>
+    
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Acct No</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+          <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="acctNumber" />
+        </div>
+
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Acct Type</label>
+        <div class="col-sm-2" style="margin-left:-30px ;"> 
+                <select style="margin-left:10px ;" class="form-control" formControlName="acctType">
+                  <option *ngFor="let acct of acctTypes" [value]="acct.accountTypeCode">{{acct.accountTypeCode}}</option>
+
+                </select>
+        </div>
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Cust No</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="customerNo" />
+        </div>
+    
+    </div>
+
+
+    <div class="form-group row">
+    
+      
+      <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Product Code</label>
+      <div class="col-sm-2" style="margin-left:-20px ;">
+          <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="productCode" />
+      </div>
+
+
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Subject To Tax</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+            <mat-checkbox color="primary" style="margin-left:10px ;" formControlName="subjectToTax"  class="example-margin" [(ngModel)]="subTax" *ngIf="data.actionName === 'Add'"></mat-checkbox>
+            <mat-checkbox color="primary" style="margin-left:10px ;" formControlName="subjectToTax"  class="example-margin" *ngIf="data.actionName != 'Add'"></mat-checkbox>
+
+          </div>
+    </div>
+    <div class="form-group row">
+  
+      <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Narration</label>
+      <div class="col-sm-4" style="margin-left:-20px ;">
+          <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="narration" />
+      </div>
+      </div>
+</div>
+ <div *ngIf ="data.actionName !== 'Add'" style="padding-top: 3px;">
+
+    <div class="form-group">
+        <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+            <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+        </div>
+     </div>
+     <div style="border: 1px solid rgb(177, 160, 160); padding: 10px;">
+     <div class = "form-group row">
+         
+        <label for="input-11" class="col-sm-2 col-form-label"  style="margin-left:-30px ;">Created By</label>
+        <div class = "col-sm-2"  style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" 
+            formControlName="createdBy" name="createdBy" [(ngModel)]="userFullName" readonly>
+        
+        </div>
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Date Created</label>
+        <div class = "col-sm-2" style="margin-left:-30px ;">
+            <input style="margin-left:10px ;" autocomplete="off" 
+            class="form-control" type="text" placeholder="" 
+            name="dateCreated" formControlName="dateCreated" readonly/>
+        </div>
+         <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Status</label>
+         <div class = "col-sm-2" style="margin-left:-20px ;">
+            <select class="form-control" formControlName="status" >
+                <option *ngFor="let a of this._GeneralService.Statuses" [value]="a.status">{{a.status}}
+                </option>
+            </select>   
+             
+         </div>
+    
+     </div>
+    </div>
+ </div>
+ <hr>
+
+ <br>
+<div class = "form-group row"> 
+ <div class = "btn-group" style="margin: 0  50% 0 40%">
+
+ 
+
+    <button id="btnSave"   *ngIf="data.actionName == 'Add'"
+    mat-raised-button color="accent"  (click)="add(basicForm.value)"
+    [disabled]="!basicForm.valid">
+    <img *ngIf = "actionLoaderSave === true" src="assets/img/loader/loader.gif"/>
+    Save</button>
+         
+     <button id="btnUpdate"   *ngIf="data.actionName == 'Edit'" 
+     mat-raised-button color="accent" (click)="update(basicForm.value)"
+     >
+     <img *ngIf = "actionLoaderUpdate === true" src="assets/img/loader/loader.gif"/>
+     Update</button>
+
+     <button type="button" style="margin: 0 0 0 10px;" 
+     mat-raised-button color="primary" 
+     (click)="close()">Return</button>
+            
+     <mat-spinner *ngIf ="displayloader == true" 
+     strokeWidth="1" [diameter]="30" color="primary"></mat-spinner> 
+     </div>
+ </div>
+
+</div>
+
+</form>

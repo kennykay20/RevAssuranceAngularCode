@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "create-announcement.component.scss"
+    ],
+    "names": [],
+    "file": "create-announcement.component.css"
+}

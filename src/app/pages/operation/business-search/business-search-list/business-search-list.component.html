@@ -1,0 +1,442 @@
+ <!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+   <p>{{retryMessage}}</p> 
+  </div>
+
+
+  
+   <ul class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+    <li [class]="selectedCalss">
+        <a  class="nav-link {{tab1}}" data-toggle="tab" (click) ="swapTab(1)"><i class="icon-home">
+
+        </i> <span class="hidden-xs">
+          <b>BUSINESS SEARCH REQUESTS</b>
+          </span></a>
+    </li>
+    <!-- class="nav-item cursorPointer" -->
+    <li [class]="selectedCalss2">
+        <a class="nav-link {{tab2}}" data-toggle="tab" (click) ="swapTab(2)"><i class="icon-home"></i> 
+          <span class="hidden-xs">
+            <b>BUSINESS SEARCH HISTORY</b> 
+          </span></a>
+    </li>
+     <li  [class]="selectedCalss3">
+    
+        <a  class="nav-linK" data-toggle="tab" (click)="action('Add','')"><i class="icon-home"></i> 
+          <span class="hidden-xs spanNewReq">
+            <b> <mat-icon>playlist_add</mat-icon>  NEW REQUEST</b> 
+          </span></a>
+  </li> 
+ 
+</ul> 
+
+  <br>
+
+  <!--Tabb 1-->
+
+    <div class="displayOnLapTop" *ngIf ="tabVlues === 1">
+
+      <div class="col-sm-12 row">
+        <div class="col-sm-2">
+    
+        </div>
+        <div class="col-sm-2">
+          <select style="margin-left: 0px" class='form-control' [(ngModel)]="pageLmit"
+            (change)='onOptionsSelected($event)'>
+          <option class='option'  *ngFor='let option of ItemsPerPage' 
+          [value]="option.itemPerPage">{{option.itemPerPage}}</option>
+        </select>
+        
+        </div>
+        <div class="col-sm-3">
+          <!-- <mat-radio-group  (change)='radio($event)'>
+            <mat-radio-button value="All">UnProcessed</mat-radio-button>
+            <mat-radio-button value="Processed">Processed</mat-radio-button>
+        </mat-radio-group> -->
+        </div>
+  </div>
+      <br>
+
+      <div class="col-sm-12 row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-1">
+         
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+      </div>
+     <table style="background-color: white; width: 1000px; margin: 0 10% 0 3%" class="table table-bordered table-sm table-hover tableStyle">
+      <thead>
+        <tr>
+          <th style="width: 20px">S/NO</th>
+          <th style="width: 80px">ACTION</th>
+          <th style="width: 90px">TRANS DATE</th>
+          <th style="width: 90px">ACCT NO</th>
+          <th style="width: 80px">ACCT TYPE</th>
+          <th style="width: 300px">ACCT NAME</th>
+          <th  style="width: 100px">CCY</th>
+          <th style="width: 20px">STATUS</th>
+          <th>USER</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--Search Here-->
+        <tr>
+          <td> 
+           
+           </td>
+            <td> 
+            </td>
+       
+              <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'transDate')"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+              </td>
+              <td> 
+                <input style ="width: 100%"  (keyup)="updateFilter($event, 'acctNo')"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+               </td>
+                <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'acctType')"
+                    autocomplete="off" class="form-control"
+                     type="text" placeholder="Search" 
+                      />
+                </td>
+                <td> 
+                  <input style ="width: 100%"  (keyup)="updateFilter($event, 'acctName')"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+                 </td>
+                  <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'acctCCy')"
+                      autocomplete="off" class="form-control"
+                       type="text" placeholder="Search" 
+                        />
+                  </td>
+                  <td> 
+                    <input style ="width: 100%"  (keyup)="updateFilter($event, 'Status')"
+                    autocomplete="off" class="form-control"
+                     type="text" placeholder="Search" 
+                      />
+                   </td>
+                    <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'user')"
+                        autocomplete="off" class="form-control"
+                         type="text" placeholder="Search" 
+                          />
+                    </td>
+                
+                   
+                      
+        </tr>
+      <!--Search End Here-->
+
+        <tr *ngFor="let row of rows; let h = index;">
+          <td>  {{ h + 1 }}</td>
+          <td style="text-align: center;">  
+            <span *ngIf="row.serviceStatus" 
+                  matTooltip="View  {{ row?.acctNo }} Details" class="viewSpan" 
+            (click)="action('View', row)">View</span>  
+            <span *ngIf="row.serviceStatus" matTooltip="Edit  {{ row?.acctNo }} Details" 
+            (click)= "action('Edit', row)" class = "editSpan">Edit</span>
+            
+          </td>
+          <td> {{ row?.transactionDate | date: 'd-MMM-y' }}</td>
+          <td>  {{ row?.acctNo }}</td>
+          <td style="text-align: center"> {{ row?.acctType }}</td>
+          <td> {{ row?.acctName }}</td>
+          <td>  {{ row?.ccyCode }}</td>
+          <td>
+             <mat-chip mat-sm-chip class="activestatus" 
+             [selected]="row.status" *ngIf="row.serviceStatus == 'Active'">
+            {{ row.serviceStatus }} 
+          </mat-chip>
+        
+           <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.serviceStatus !== 'Active'">
+            {{ row.serviceStatus }}
+          </mat-chip></td>
+          <td>     {{ row?.userName }}</td>
+        
+        </tr>
+       
+      </tbody>
+    </table>
+    <br> 
+    <div  class="row" >
+      <div class="col-sm-4">
+
+      </div>
+
+      <div class="col-sm-2">
+
+          <div class="btn-group">
+              <button mat-raised-button color="primary"
+              style = "margin-left: 0%" (click)="prevPage()"
+                class="mat-elevation-z12 box-button" type="submit">
+                <mat-icon  id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+              </button> 
+                <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+                class="mat-elevation-z12 box-button" (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+          </div> 
+    
+        </div>
+       
+        <div class="col-sm-2">
+          <span style = "font-size: 15px; text-align: center !important; 
+           font-weight: 900; ">
+          Page: </span> 
+          <span style="font-size: 15px; text-align: center !important; font-weight: 900;"
+           id="page"></span>
+    
+        </div>
+
+      </div>
+
+  </div>
+
+
+      <!--Tabb 2-->
+      <div class="displayOnLapTop" *ngIf="tabVlues === 2 || tabVlues === 3">
+        
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Trans Date:</label>
+          <div class="col-sm-1">
+            <input class="form-control" readonly style="width: 100px" type="text" [(ngModel)]="businessSearch.transactionDate" />
+          </div>
+          <div class="col-sm-1">
+            <input id="transactionDate" style="border: none !important;" class="form-control cursorPointer" type="date" value=""
+            (change)="fromDate($event)"/>
+          </div>
+  
+          <label for="input-11" class="col-sm-1 col-form-label">Account Name</label>
+          <div class="col-sm-2">
+            <input class="form-control" id="acctName" [(ngModel)]="businessSearch.acctName"   type="text" />
+          </div>
+          
+          <label for="input-11" class="col-sm-1 col-form-label">Acct Type</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="acctType" [(ngModel)]="businessSearch.acctType">
+              <option>Acct Type</option>
+              <option *ngFor="let a of acttypes"
+              [value]="a?.accountTypeCode">{{ a?.accountTypeCode }}</option>
+            </select>
+          </div>
+        
+          <label for="input-11" class="col-sm-1 col-form-label">Acct No</label>
+          <div class="col-sm-2">
+            <input class="form-control"  type="text" [(ngModel)]="businessSearch.acctNo" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label">Currency</label>
+          <div class="col-sm-2">
+            <select class="form-control" [(ngModel)]="businessSearch.ccyCode">
+              <option>Currency Code</option>
+              <option *ngFor="let a of currencies" [value]="a.isoCode">{{ a.isoCode }}</option>
+            </select>
+          </div>
+
+          
+
+          <label for="input-11" class="col-sm-1 col-form-label">Department</label>
+          <div class = "col-sm-2">
+              <select class="form-control"  
+              [(ngModel)]="businessSearch.processingDeptId"
+              [ngClass]="{'redBorder':
+              businessSearch.processingDeptId === null  }" >
+                  <option selected disabled value="">Select Department</option>
+                  <option *ngFor="let a of departments"
+                  [value]="a.deptId">{{ a.deptname }}</option>
+                </select>
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Branch</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="branchNo" [(ngModel)]="businessSearch.branchNo">
+              <option>Branch Type</option>
+              <option *ngFor="let b of branches"
+              [value]="b.branchNo">{{ b.branchName }}</option>
+            </select>
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label ">Item Per Page</label>
+          <div class="col-sm-2">
+            <select style="margin-left: 0px" class='form-control' [(ngModel)]="pageLmit"
+              (change)='onOptionsSelected($event)'>
+              <option class='option'  *ngFor='let option of ItemsPerPage' 
+              [value]="option.itemPerPage">{{option.itemPerPage}}</option>
+            </select>
+          </div>
+          
+        </div>
+
+        <div class="form-group row">
+          
+          <div class="col-sm-1">
+
+          </div>
+
+          <div class="col-sm-5">
+            <div class="btn-group">
+              <button id="btnSearchEnq" style="margin: 0 0 0 0px;" (click)="search()"  mat-raised-button color="accent"
+                class="mat-elevation-z12 box-button" type="submit">
+                SEARCH
+              </button> 
+              &nbsp; | 
+              &nbsp;
+            <button id="btnClear" (click)="clearItem()" style="margin: 0 0 0 0px;"  mat-raised-button color="primary"
+                class="btn btn-danger" type="button">
+                    CLEAR
+            </button>
+            </div>
+          </div>
+        
+        </div>
+
+        
+          
+        
+        <br>
+  
+        <div class="col-sm-12 row">
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-1">
+           
+          </div>
+          <div class="col-sm-1">
+  
+          </div>
+          <div class="col-sm-1">
+  
+          </div>
+          <div class="col-sm-1">
+  
+          </div>
+        </div>
+        <table style="background-color: white" class="table table-bordered table-sm table-hover tableStyle">
+        <thead>
+          <tr>
+            <th style="width: 20px">S/NO</th>
+            <th style="width: 120px">ACTION</th>
+            <!-- <th style="width: 20px">
+              SEL.
+            </th> -->
+            <th style="width: 90px">TRANS DATE</th>
+            <th style="width: 90px">ACCT NO</th>
+            <th style="width: 80px">ACCT TYPE</th>
+            <th style="width: 300px">ACCT NAME</th>
+            
+            <th  style="width: 50px">CCY</th>
+            <th style="width: 20px">INSTRUMENT STATUS</th>
+            <td>DEPARTMENT</td>
+            <td>BRANCH</td>
+            <th>USER</th>
+          </tr>
+        </thead>
+        <tbody >
+         
+  
+          <tr *ngFor="let row of rowSearch; let h = index;">
+            <td>  {{ h + 1 }}</td>
+            <td>  
+              <span *ngIf="row.serviceStatus && tabVlues === 2" 
+                    matTooltip="View  {{ row?.acctNo }} Details" class="viewSpan" 
+              (click)="action('View', row)">View</span>  
+              
+              
+              <!-- <span *ngIf="row.serviceStatus && tabVlues === 2" matTooltip="Print  {{ row?.acctNo }} Details" 
+              (click)="print(row)" class = "editSpan">Print</span> -->
+
+              <span *ngIf="row.serviceStatus && tabVlues === 3" matTooltip="Re Print  {{ row?.acctNo }} Details" 
+              (click)="action('Reprint', row)" class = "editSpan">Re-Print</span>
+
+              <span *ngIf="row.serviceStatus && tabVlues === 3" matTooltip="Ammend  {{ row?.acctNo }} Details" 
+              (click)="action('Ammend', row)" class = "viewSpan">Ammend</span>
+              
+            </td>
+            
+            <td> {{ row?.transactionDate | date: 'd-MMM-y' }}</td>
+            <td>  {{ row?.acctNo }}</td>
+            <td style="text-align: center"> {{ row?.acctType }}</td>
+            <td> {{ row?.acctName }}</td>
+            
+            <td>  {{ row?.ccyCode }}</td>
+            <td>
+               <mat-chip mat-sm-chip class="activestatus" 
+               [selected]="row.status" *ngIf="row.serviceStatus == 'Authorized'">
+              {{ row?.serviceStatus }} 
+            </mat-chip>
+          
+             <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.serviceStatus !== 'Authorized'">
+              {{ row?.serviceStatus }}
+            </mat-chip>
+          </td>
+         <td>
+           {{ row?.userProcessingDept}}
+         </td>
+         <td>
+           {{ row?.originBranch}}
+         </td>
+            
+            <td>  {{ row?.userName }}</td>
+          </tr>     
+        </tbody>
+        </table>
+      
+        <div  class="row" >
+          <div class="col-sm-4">
+    
+          </div>
+    
+          <div class="col-sm-2">
+    
+              <div class="btn-group">
+                  <button mat-raised-button color="primary"
+                  style = "margin-left: 0%" (click)="prevPage()"
+                    class="mat-elevation-z12 box-button" type="submit">
+                    <mat-icon  id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+                  </button> 
+                    <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+                    class="mat-elevation-z12 box-button" (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+              </div> 
+        
+          </div>
+            <div class="col-sm-2">
+              <span style = "font-size: 15px; text-align: center !important; 
+              font-weight: 900; ">
+              Page: </span> 
+              <span style="font-size: 15px; text-align: center !important; font-weight: 900;"
+              id="page"></span>
+        
+            </div>
+    
+        </div>
+      </div>
+
+        <!--Tabb 3-->
+
+

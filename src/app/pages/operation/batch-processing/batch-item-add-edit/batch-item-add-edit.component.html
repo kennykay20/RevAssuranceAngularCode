@@ -1,0 +1,455 @@
+<!-- <div style = "margin-top: -40px;"  class="row">
+  <div class="col-sm-12">
+      <span class="btn"
+      style = "background-color: white; color: black; font-size: 18px; 
+      font-weight: 800" 
+     > BATCH SUMMARY DETAILS  </span>
+  </div>
+</div> -->
+
+<!--Main Form Reques Below-->
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+<!-- 
+<ul class="nav nav-tabs nav-tabs-danger nav-justified top-icon">          
+  <li [class]="selectedCalss">
+      <a  class="nav-link {{tab1}}" data-toggle="tab" 
+      (click) ="swapTab(1)"><i class="icon-home">
+
+      </i> <span class="hidden-xs">
+        <b>BATCH DETAIL</b>
+        </span></a>
+  </li>
+  <li *ngIf = "chargeThisAcct === true"  [class]="selectedCalss4">
+    <a  class="nav-link {{tab4}}" data-toggle="tab"
+     (click) ="swapTab(4)"><i class="icon-home">
+
+    </i> <span class="hidden-xs">
+      <b>CHARGE DETAIL</b>
+      </span></a>
+ </li>
+</ul>  -->
+
+<!--Batch iTEMS Start here-->
+
+<div *ngIf ="tabVlues === 1">
+  <div style="border: none solid black;">
+
+    <div class="card-title-text"> <b></b><label class="allFieldRequired"> <label
+          class="allFieldRequiredtxt"></label></label></div>
+    <br>
+  
+    <div class="form-group">
+      <div class="col-sm-12 infoAcctdetails"
+        style="background-color:#444;color:#fff; text-align:center; margin-top: -20px">
+        <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">
+          BATCH {{ batchNo }} ITEM DETAILS</label>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important;">
+
+
+      <fieldset>
+          <legend style="font-size: 12px; font-weight: 800">
+           
+          </legend>
+          <div class="form-group row">
+              <div style="width: auto; margin-left: 50px  ">
+                  After Saving Keep:
+              </div>
+              <div style="width: auto">
+                <mat-checkbox style = "margin-left: 10px" color="primary" 
+                     class="example-margin" [(ngModel)]="acctTypeRetain"
+                     (change) ="keep(acctTypeRetain)">
+                </mat-checkbox>
+              </div>
+              <label style ="width: auto; margin-left: 10px"> Account Type</label>
+              <div style="width: auto">
+                <mat-checkbox style = "margin-left: 10px" color="primary" 
+                     class="example-margin" [(ngModel)]="amountRetain"
+                     (change) ="keep(amountRetain)">
+                </mat-checkbox>
+              </div>
+              <label style ="width: auto; margin-left: 10px"> Amount</label>
+
+              <div style="width: auto">
+                <mat-checkbox style = "margin-left: 10px; text-align: right;" color="primary" 
+                     class="example-margin" [(ngModel)]="narrationRetain"
+                     (change) ="keep(narrationRetain)"
+                     (keypress)="keyPress($event)">
+                </mat-checkbox>
+              </div>
+              <label style ="width: auto; margin-left: 10px"> Narration</label>
+              <div style="width: auto">
+                <mat-checkbox style = "margin-left: 10px" color="primary" 
+                     class="example-margin" [(ngModel)]="tranCodeRetain"
+                     (change) ="keep(tranCodeRetain)">
+                </mat-checkbox>
+              </div>
+              <label style ="width: auto; margin-left: 10px"> Trans Code</label>
+             
+             
+          </div>
+     
+      </fieldset>
+
+      <hr>
+
+      <div style="margin-top: 10px" class="form-group row">
+        <label for="input-11" class="col-sm-1 col-form-label ">Acct. Type</label>
+        <div class="col-sm-1">
+          <select  class="form-control"  
+              [(ngModel)]="instrumentForm.acctType">
+                  <option [selected]="instrumentForm.acctType === null" value="">Acct Type</option>
+                  <option *ngFor="let a of acttypes"
+                  [value]="a?.accountTypeCode">{{ a?.accountTypeCode }}</option>
+                </select>
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label ">Acct No</label>
+        <div class="col-sm-2">
+          <input autocomplete="off"  class="form-control" type="text" placeholder=""
+          [(ngModel)]="instrumentForm.acctNo"
+          [ngClass]="{'redBorder':
+          instrumentForm.acctNo == null }"
+          (change)="validateAcct($event)" />
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label ">Amount</label>
+        <div class="col-sm-2">
+          <input autocomplete="off"  class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.amount"
+            (change)="formatAmt($event)"  />
+        </div>
+
+      
+
+        <label for="input-11" class="col-sm-1 col-form-label ">DR/CR</label>
+        <div class="col-sm-2">
+          <select  class="form-control"  
+              [(ngModel)]="instrumentForm.drCr"
+              [ngClass]="{'redBorder':
+              instrumentForm.drCr == null }"
+              (change)='getTranConfigByServiceId(instrumentForm.drCr)'>
+                  <option value="" [selected]="instrumentForm.drCr === null"> DR/CR</option>
+                  <option *ngFor="let a of DrOrCr"
+                  [value]="a">{{ a }}</option>
+                </select>
+        </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label ">Acct Name</label>
+          <div class="col-sm-4">
+            <input autocomplete="off"  class="form-control" type="text" placeholder=""
+              [(ngModel)]="instrumentForm.acctName" />
+          </div>
+        
+          <label for="input-11" class="col-sm-1 col-form-label ">Trans. Code</label>
+        <div class="col-sm-2">
+          
+          <select  class="form-control"  
+              [(ngModel)]="instrumentForm.cbsTC"
+              [ngClass]="{'redBorder':
+              instrumentForm.cbsTC == null }">
+                  <option value="" [selected]="instrumentForm.cbsTC === null"> select </option>
+                  <option *ngFor="let a of transCode"
+                  [value]="a">{{ a }}</option>
+                </select>
+        </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Trans Date</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" disabled class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.transactionDate" />
+          </div>
+        </div>
+
+
+        <div class="form-group row">
+          <label for="input-11" class="col-sm-1 col-form-label ">Currency</label>
+          <div class="col-sm-1">
+            <select  class="form-control"  
+            [(ngModel)]="instrumentForm.ccyCode" >
+              <option value="" [selected]="instrumentForm.ccyCode === null">select</option>
+              <option *ngFor="let a of currencies"
+              [value]="a.isoCode">{{ a.isoCode }}</option>
+            </select>
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Acct Status</label>
+          <div class="col-sm-2">
+            <input autocomplete="off"  class="form-control" type="text" placeholder=""
+              [(ngModel)]="instrumentForm.acctStatus" />
+          </div>
+  
+          <label for="input-11" class="col-sm-1 col-form-label ">Avail Bal</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" class="form-control" type="text" placeholder=""
+              [(ngModel)]="instrumentForm.acctBalance"/>
+          </div>
+  
+          <label for="input-11" class="col-sm-1 col-form-label">Value Date</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" disabled  class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.valueDate" />
+          </div>
+  
+        </div>
+        <div class="form-group row">
+        
+          <label for="input-11" class="col-sm-1 col-form-label">Narration</label>
+          <div class="col-sm-4">
+            <input autocomplete="off" class="form-control" type="text" placeholder=""
+              [(ngModel)]="instrumentForm.narration" />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Charge Acct?</label>
+          <div class="col-sm-2">
+            <mat-checkbox  color="primary" 
+                     class="example-margin" [(ngModel)]="chargeThisAcct"
+                     (change) ="chargeInit(chargeThisAcct)">
+                </mat-checkbox>
+          </div>
+          <!-- <label for="input-11" class="col-sm-1 col-form-label margin-left40">Proc. Dept</label>
+          <div class="col-sm-2">
+            <select class="form-control" [(ngModel)]="instrumentForm.processingDept" [ngClass]="{'redBorder':
+                      instrumentForm.processingDept === null  }">
+              <option>Select Department</option>
+              <option *ngFor="let a of departments" [value]="a.deptId">{{ a.deptname }}</option>
+            </select>
+          </div> -->
+        </div>
+
+   
+
+      </div>
+     <!--Charges-->
+     <div *ngIf ="chargeThisAcct === true"> 
+      <br>
+
+      <div   *ngFor = "let chg of chargeFormList; let h = index;">
+
+        <!-- <div class="col-sm-12 infoAcctdetails info" style="background-color:#444;color:#fff; text-align:center;">
+            <label class="control-label lbl" style="color:#fff;" for="tagsinput-2"> CHARGE {{ h + 1 }}   </label>
+        </div> -->
+        <div class="col-sm-12 infoAcctdetails info" style="background-color:#444;color:#fff; text-align:center; margin-top:-20px">
+            <label class="control-label lbl" style="margin-left: 10px; color: white" for="tagsinput-2">DEBIT DETAILS  </label>
+            <label class="control-label lbl" style="margin-left: 500px; color: white" for="tagsinput-2">CREDIT DETAILS  </label>
+        </div>
+        <div style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important;">
+    
+           
+        <div style="margin-top: 10px" class="form-group row">
+            <label for="input-11" class="col-sm-2 col-form-label">Charge Rate</label>
+            <div class = "col-sm-1">
+                <input autocomplete="off" class="form-control" type="text"
+                [(ngModel)]="chg.chargeRate"
+                 />
+            </div>
+        
+            <label for="input-11" class="col-sm-1 col-form-label">Orig. Chg Amt </label>
+            <div class = "col-sm-2">
+                <input autocomplete="off" class="form-control" type="text"
+                [(ngModel)]="chg.origChgAmount"
+                 />
+            </div>
+          
+            <label for="input-11" class="col-sm-1 col-form-label">Inc.Acct Type</label>
+            <div class = "col-sm-1">
+              <select disabled class="form-control"  
+              [(ngModel)]="chg.incAcctType"
+              >
+                  <option>Acct Type</option>
+                  <option *ngFor="let a of acttypes"
+                  [value]="a.accountTypeCode">{{ a.accountTypeCode }}</option>
+              </select>
+            </div>
+            <label for="input-11" class="col-sm-1 col-form-label">Acct No </label>
+            <div class = "col-sm-2">
+              <input class="form-control" type="text"
+                     [(ngModel)]="chg.incAcctNo"
+              />
+            </div>
+    
+        </div>
+
+        <div class="form-group row">
+            <label for="input-11" class="col-sm-2 col-form-label">Exchange Rate</label>
+            <div class = "col-sm-1">
+                <input autocomplete="off" class="form-control" type="text"
+                [(ngModel)]="chg.exchangeRate"
+               />
+            </div>
+        
+            <label for="input-11" class="col-sm-1 col-form-label">Chg Amt. </label>
+            <div class = "col-sm-2">
+                <input autocomplete="off" class="form-control" type="text"
+                [(ngModel)]="chg.equivChgAmount"
+                (change) = "calTaxRate(chg.equivChgAmount)"
+                 />
+            </div>
+            <!--Cr Income-->
+            <label for="input-11" class="col-sm-1 col-form-label">Inc Acct Name</label>
+            <div class = "col-sm-4">
+              <input autocomplete="off" class="form-control" type="text"
+              [(ngModel)]="chg.incAcctName"
+              
+               readonly/>
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <label for="input-11" class="col-sm-2 col-form-label">Charge Code</label>
+            <div class = "col-sm-1">
+                <input id="cghcode" class="form-control" type="text"
+                [(ngModel)]="chg.chargeCode" 
+                />
+            </div>
+        
+            <label for="input-11" class="col-sm-1 col-form-label">Tax Amt </label>
+            <div class = "col-sm-2">
+                <input autocomplete="off" class="form-control" type="text"
+                [(ngModel)]="chg.taxAmount"
+                />
+            </div>
+              <!--Cr Income-->
+             
+          <!--Cr Income-->
+              <label for="input-11" class="col-sm-1 col-form-label">Status </label>
+              <div class = "col-sm-1">
+                <input autocomplete="off" class="form-control" type="text"
+                [(ngModel)]="chg.chgAcctStatus"
+                
+                readonly />
+              </div>
+    
+        </div>
+
+        <div class="form-group row">
+            <label for="input-11" class="col-sm-2 col-form-label">Narration</label>
+            <div class = "col-sm-4">
+               
+                    <input autocomplete="off" class="form-control" type="text"
+                    [(ngModel)]="chg.chgNarration"
+                     />
+            </div>
+        
+            <label for="input-11" class="col-sm-1 col-form-label">Narration</label>
+            <div class = "col-sm-4">
+              <input class="form-control" style="width: 100%" autocomplete="off" 
+              type="text"
+              [(ngModel)]="chg.incAcctNarr"
+               />
+             
+            </div>
+        
+    
+    
+        </div>
+
+
+        </div>
+      </div>
+
+
+
+
+   </div>
+    
+
+  <!--Charges End here-->
+    </div>
+
+    <!-- Audit Trail  End here -->
+    <div *ngIf="data.actionName !== 'Add'">
+
+      <div class="form-group">
+        <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+          <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+        </div>
+      </div>
+      <div style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important;">
+        <div style="margin-top: 10px" class="form-group row">
+
+          <label for="input-11" class="col-sm-1 col-form-label">Created  By</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" [(ngModel)]="createdBy" class="form-control" type="text"
+              [(ngModel)]="instrumentForm.createdBy" readonly />
+
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Date Created</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" class="form-control" type="text" 
+            [(ngModel)]="instrumentForm.dateCreated"
+              readonly />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+          <div class="col-sm-2">
+
+            <input autocomplete="off" class="form-control" type="text" 
+            [(ngModel)]="instrumentForm.serviceStatus" readonly />
+
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Trans. Status</label>
+          <div class="col-sm-2">
+
+            <input autocomplete="off" class="form-control" type="text" 
+            [(ngModel)]="instrumentForm.status" readonly />
+
+          </div>
+        </div>
+        <div class="form-group row">
+
+          <label for="input-11" class="col-sm-1 col-form-label">Post Code </label>
+          <div class="col-sm-2">
+            <input autocomplete="off"  class="form-control" type="text"
+              [(ngModel)]="instrumentForm.postingErrorCode" readonly />
+
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Post Msg</label>
+          <div class="col-sm-5">
+            <input autocomplete="off" class="form-control" type="text" 
+            [(ngModel)]="instrumentForm.postingErrorDescr"
+              readonly />
+          </div>
+        </div>
+    </div>
+    <!-- Audit Trail Details End Here-->
+
+  </div>
+</div>
+<!-- Batch iTEMS Ends here-->
+         <!--  Charge Details -->
+
+<!--Charge Details End here-->
+<br>
+<div class="form-group row">
+  <div class="btn-group" style="margin: 0  50% 0 40%">
+
+    <button id="btnSaveItem" style="margin: 0 0 0 10px;" 
+    *ngIf="data.actionName == 'Add'" 
+     mat-raised-button color="accent"
+      (click)="add(instrumentForm)">
+      <img *ngIf="actionLoaderSave === true" src="assets/img/loader/loader.gif" />
+      Save
+    </button>
+
+    <button id="btnUpdateItem" style="margin-left: 10px" *ngIf="data.actionName == 'Edit'" mat-raised-button color="accent"
+      (click)="update(instrumentForm)">
+      <img *ngIf="actionLoaderUpdate === true" src="assets/img/loader/loader.gif" />
+      Update</button>
+    <button type="button" style="margin: 0 0 0 10px;" mat-raised-button color="primary"
+      (click)="close()">Return</button>
+
+    <mat-spinner *ngIf="displayloader == true" strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+  </div>
+</div>
+
+
+

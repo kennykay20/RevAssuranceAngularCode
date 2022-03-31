@@ -1,0 +1,229 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+     <div id="square5">
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+     </div> 
+     
+    
+ </div> 
+</div>
+
+<form [formGroup]="basicForm" [formGroup]="basicForm">
+
+<div style="border: none solid black;">
+
+    <div class="card-title-text" *ngIf="data.actionName != 'Add'"> <b> TRANSACTION CONFIGURATION DETAILS
+    
+    </b><label class="allFieldRequired"> <label class="allFieldRequiredtxt">{{requiredFieldMsg}}</label></label></div>
+    <div class="card-title-text" *ngIf="data.actionName == 'Add'" > <b> ADD TRANSACTION CONFIGURATION
+    
+    </b><label class="allFieldRequired"> <label class="allFieldRequiredtxt">{{requiredFieldMsg}}</label></label></div>
+    <hr>
+
+    
+
+    <div style="border: 1px solid rgb(177, 160, 160); padding: 10px;">
+ <div class = "form-group row">
+   
+     <label for="input-11" class="col-sm-1 col-form-label">Service Id</label>
+     <div class = "col-sm-2">
+         <select class="form-control" formControlName="serviceId" >
+             <option *ngIf="data.actionName == 'Add'" value=''>Select Service</option>
+            <option *ngFor="let service of services" 
+            [value]="service.serviceId">{{service.serviceDescription}}</option>
+        </select> 
+     </div>
+
+
+     <label for="input-11" class="col-sm-1 col-form-label">GL Dr TC</label>
+    <div class = "col-sm-1">
+        <input type="text" autocomplete="off" 
+        class="form-control" placeholder=""
+         formControlName="glAcctDrTC" />
+   
+       </div>
+
+
+     <label for="input-11" class="col-sm-1 col-form-label">Cust Dr Tc</label>
+     <div class = "col-sm-1">
+         <input autocomplete="off" class="form-control" type="text" placeholder="" 
+         formControlName="customerAcctDrTC"/>
+     </div>
+    
+     <label for="input-11" class="col-sm-1 col-form-label">Cust Cr TC Rev</label>
+     <div class = "col-sm-1">
+         <input type="text" autocomplete="off" 
+         class="form-control" placeholder=""
+           formControlName="creditAcctTCRev" />
+    
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label">GL Cr TC</label>
+        <div class = "col-sm-1">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" 
+           formControlName="glAcctCrTC"/>
+        </div>
+ </div>
+
+<div class="form-group row">
+ <label for="input-11" class="col-sm-1 col-form-label">Direction</label>
+ <div class = "col-sm-2">
+     <select class="form-control"  formControlName="direction" >
+         <option value="1">Inward</option>
+         <option value="2">Outward</option>
+     </select> 
+   
+        </div>
+       <label for="input-11" class="col-sm-1 col-form-label">Cust Dr TC Rev</label>
+       <div class = "col-sm-1">
+           <input autocomplete="off" class="form-control" type="text"
+            placeholder=""  formControlName="debitAcctTCRev" />
+       </div>
+       <label for="input-11" class="col-sm-1 col-form-label">GL Dr TC Rev</label>
+       <div class = "col-sm-1">
+           <input autocomplete="off" class="form-control" type="text" placeholder="" 
+            formControlName="glAcctDrTCRev"/>
+       </div>
+       <label for="input-11" class="col-sm-1 col-form-label">GL Cr TC Rev</label>
+       <div class = "col-sm-1">
+           <input autocomplete="off" class="form-control" type="text"
+            placeholder="" name="glAcctCrTCRev" formControlName="glAcctCrTCRev" />
+       </div>
+       <label for="input-11" class="col-sm-1 col-form-label">Cust Cr TC </label>
+     <div class = "col-sm-1">
+         <input autocomplete="off" class="form-control" type="text"
+          placeholder=""  formControlName="customerAcctCrTC" />
+     </div>
+</div>
+
+<div class="form-group row">
+       <label for="input-11" class="col-sm-1 col-form-label">Charge Descr</label>
+       <div class = "col-sm-2">
+           <select class="form-control"  formControlName="chargeType" >
+              <option *ngFor="let charge of charges" [value]="charge.itbId">{{charge.description}}</option>
+          </select> 
+      
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Dr Narration</label>
+          <div class = "col-sm-3">
+              <input autocomplete="off" class="form-control" type="text" placeholder=""  
+              formControlName="drNarration" />
+          
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Cr Narration</label>
+          <div class = "col-sm-3">
+              <input autocomplete="off" class="form-control" type="text" placeholder="" 
+              formControlName="crNarration" />
+          
+          </div>
+</div>
+
+
+
+
+ <div class = "form-group row">
+     
+    <label for="input-11" class="col-sm-1 col-form-label">Dr Charge Narr.</label>
+    <div class = "col-sm-2">
+        <input autocomplete="off" class="form-control" type="text" placeholder="" 
+        formControlName="drChargeNarr" />
+    
+    </div>
+
+    <label for="input-11" class="col-sm-1 col-form-label">Cr Charge Narr.</label>
+    <div class = "col-sm-3">
+        <input autocomplete="off" class="form-control" type="text" placeholder="" 
+        formControlName="crChargeNarr" />
+
+    </div>
+ </div>
+</div>
+
+ <div *ngIf ="data.actionName !== 'Add'" style="padding-top: 3px;">
+
+    <div class="form-group" >
+        <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+            <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+        </div>
+     </div>
+     <div style="border: 1px solid rgb(177, 160, 160); padding: 10px;">
+     <div class = "form-group row">
+         
+        <label for="input-11" class="col-sm-2 col-form-label">Created By</label>
+        <div class = "col-sm-2">
+             <input [(ngModel)]="createdBy" autocomplete="off" class="form-control" type="text" placeholder="" name="createdBy"
+            formControlName="createdBy"  readonly/> 
+        
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label">Date Created</label>
+        <div class = "col-sm-2">
+             <input autocomplete="off" 
+            class="form-control" type="text" placeholder="" 
+            name="dateCreated" formControlName="dateCreated" readonly/> 
+        </div>
+         <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+         <div class = "col-sm-2">
+            <select class="form-control" formControlName="status">
+                <option *ngFor="let a of this._GeneralService.Statuses" [value]="a.status">{{a.status}}
+                </option>
+            </select>
+             
+         </div>
+    
+     </div>
+    </div>
+ </div>
+ <hr>
+
+ <br>
+<div class = "form-group row"> 
+ <div class = "btn-group" style="margin: 0  50% 0 40%">
+
+    <!-- <button   *ngIf="data.actionName == 'Add'"
+    mat-raised-button color="accent" 
+    [disabled]="!basicForm.valid">
+    <img src="assets/img/loader/loader.gif"/>
+    Save</button> -->
+
+    <button id="btnSave"   *ngIf="data.actionName == 'Add'"
+    mat-raised-button color="accent"  (click)="add(basicForm.value)"
+    [disabled]="!basicForm.valid">
+    <img *ngIf = "actionLoaderSave === true" src="assets/img/loader/loader.gif"/>
+    Save</button>
+         
+     <button id="btnUpdate"   *ngIf="data.actionName == 'Edit'" 
+     mat-raised-button color="accent" (click)="update(basicForm.value)"
+     >
+     <img *ngIf = "actionLoaderUpdate === true" src="assets/img/loader/loader.gif"/>
+     Update</button>
+
+
+
+     <button type="button" style="margin: 0 10px 0 10px;" 
+     mat-raised-button color="primary" 
+     (click)="close()">Return</button>
+
+     <div class="col-sm-1" *ngIf="data.actionName == 'Edit'"  >
+        <button type="button" mat-raised-button color="accent" (click)="auditList()"
+        >Audit Trail</button>
+      </div>
+            
+     <mat-spinner *ngIf ="displayloader == true" 
+     strokeWidth="1" [diameter]="30" color="primary"></mat-spinner> 
+     </div>
+ </div>
+
+</div>
+
+
+
+
+    
+
+
+</form>

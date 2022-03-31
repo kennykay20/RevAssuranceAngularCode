@@ -1,0 +1,180 @@
+
+
+ <div class="preloader" *ngIf="loadPage == true">
+  <!-- <div class="col-sm-2">
+      <div id="square5">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+      </div> 
+      
+     
+  </div> -->
+
+  <img class = "imgLoader" style="display: block;"  src="assets/img/loader/assuredgif.gif"/>
+  <br>
+  <p>{{retryMessage}}</p> 
+</div>
+
+
+<div fxLayout="column">
+  <div class="flex-p">
+    
+    <div style="background-color: white !important" class="flex-p"><div
+       style="margin-left: 20px; background-color: white !important" 
+       class="card-title-text"> <b> My Fines </b>    
+    </div>
+            <br>
+  
+        
+        <div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+          <div fxFlex="100" fxFlex.gt-xs="5" class="pr-1">
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Item Per Page"
+                  matInput
+                  [(ngModel)] = "pageLmit">
+              <mat-option>Item Per Page</mat-option>
+                  <mat-option *ngFor="let a of ItemsPerPage" 
+                  [value]="a.itemPerPage"
+              >{{ a.itemPerPage }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Search By"
+                  matInput
+                  [(ngModel)] = "columnId">
+              <mat-option>Search By</mat-option>
+                  <mat-option *ngFor="let a of searchUserColumns"
+                  [value]="a.id"
+              > {{ a.columnName }} </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+            <div fxFlex="100" fxFlex.gt-xs="65" class="pr-1">
+
+               
+              <mat-form-field class="full-width">
+                <input matInput
+                (keyup)="updateFilter($event)"
+                    placeholder="Search" value="" required>
+            </mat-form-field>
+
+
+            </div>
+
+         
+            
+
+           
+  </div>
+
+<br>
+
+
+
+
+<ngx-datatable
+class="material ml-0 mr-0"
+[rows]="rows"
+[columns]="columns"
+[columnMode]="'force'"
+[headerHeight]="50"
+[footerHeight]="50"
+[limit]="pageLmit"
+[rowHeight]="'auto'">
+  <ngx-datatable-column name="S/No" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+  {{rows.indexOf(row) + 1}}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Add Fine" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+   
+    <div class="btn-group" style="width:auto !important">
+        
+      <button  mat-icon-button  
+      (click)="gotoAddFine(row)" 
+      matTooltip="Add Fine for {{row?.first_name}} {{ row?.phone_number }}">
+      <mat-icon class="">local_pharmacy</mat-icon>
+</button>
+       <!-- <button  mat-icon-button  
+              (click)="addFine(row, 'Fine')" 
+              matTooltip="Add Fine for {{row?.first_name}} {{ row?.phone_number }}">
+              <mat-icon class="">local_pharmacy</mat-icon>
+      </button>
+       
+        <button  mat-icon-button   (click)="addPartner(row, 'Partner')" matTooltip="Add Partner Charge for {{row?.first_name}} {{ row?.phone_number }}"><mat-icon class="">payment</mat-icon></button>
+         -->
+     
+        </div>
+
+ 
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Full Name" [flexGrow]="2">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.first_name }} {{ row?.last_name }}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Phone Number" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.phone_number }}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Email Address" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.email }}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Meter Number" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.meter_number }}
+  </ng-template>
+</ngx-datatable-column>
+ <ngx-datatable-column name="Date Created" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row?.created_at | date: 'd-MMM-y' }}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Status" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    <mat-chip mat-sm-chip class="activestatus" [selected]="row.status" *ngIf="row.status == 'Active'">
+      {{ row.status }}
+    </mat-chip>
+    <!-- <mat-chip mat-sm-chip class="Pendingstatus" [selected]="row.status" *ngIf="row.status == 'Pending'">
+      {{ row.status }}
+    </mat-chip>   -->
+     <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Active'">
+      {{ row.status }}
+    </mat-chip>
+  </ng-template>
+</ngx-datatable-column>
+<!-- <ngx-datatable-column name="Actions" [flexGrow]="1">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    
+    
+    <button *ngIf="permission.canEdit" mat-icon-button mat-sm-button  class="mr-1" (click)="assignWorkflow(row)" matTooltip="Assign Workflow"><mat-icon class="">filter</mat-icon></button>
+    <button *ngIf="permission.canEdit" mat-icon-button mat-sm-button  class="mr-1" (click)="assignSubVisaCard(row)" matTooltip="Assign Sub Visa Cards"><mat-icon class="">library_add</mat-icon></button>
+    <button *ngIf="permission.canEdit" mat-icon-button mat-sm-button  class="mr-1" (click)="getRecord(row, updatestwitch)" matTooltip="Edit Card Product" ><mat-icon class="">edit</mat-icon></button>
+    <button *ngIf="permission.canDelete"  mat-icon-button mat-sm-button color="warn"  (click)="deleteRecDetails(row)"  matTooltip="Delete Card Product"><mat-icon>delete</mat-icon></button>        
+ 
+ 
+  </ng-template>
+</ngx-datatable-column> -->
+</ngx-datatable>
+        
+    </div>
+  
+  </div>
+
+
+</div>

@@ -1,0 +1,231 @@
+@import "../../styles/variables";
+
+.pin {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    fill: currentColor;
+}
+
+.sidenav-header {
+    padding: 0 10px !important;
+}
+
+.user-block {
+    height: 0;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    img {
+        width: 80px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 50%;
+    }
+
+    .user-info-wrapper {
+        padding: 0 6px;
+        margin: 6px 0;
+        width: 100%;
+
+        .user-info {
+            text-align: center;
+
+            .name {
+                font-size: 15px
+            }
+
+            .position {
+                font-size: 13px;
+            }
+        }
+    }
+
+    &.show {
+        height: $sidenav-user-block-height;
+    }
+}
+
+.sidenav-menu-outer {
+    height: calc(100% - #{$toolbar-height});
+
+    &.user-block-show {
+        height: calc(100% - #{$toolbar-height + $sidenav-user-block-height});
+    }
+}
+
+
+/*Mr Tosin style*/
+
+body,
+html {
+    height: 100%;
+}
+
+.nav .open>a,
+.nav .open>a:hover,
+.nav .open>a:focus {
+    background-color: transparent;
+}
+
+#custom {
+    height: 100%;
+    width: 240px;
+    position: fixed;
+}
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 220px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    left: 220px;
+    width: 240px;
+    margin-top: 12px;
+    position: fixed;
+    height: 85vh;
+    margin-left: -220px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#sidebar-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 220px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    padding-top: 70px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -220px;
+}
+
+/*-------------------------------*/
+/*     Sidebar nav styles        */
+/*-------------------------------*/
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 240px;
+    margin: 0;
+    margin-top: 70px;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    position: relative;
+    line-height: 24px;
+    display: inline-block;
+    width: 100%;
+}
+
+.sidebar-nav li:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 3px;
+    -webkit-transition: width .2s ease-in;
+    -moz-transition: width .2s ease-in;
+    -ms-transition: width .2s ease-in;
+    transition: width .2s ease-in;
+
+}
+
+.sidebar-nav li:hover:before,
+.sidebar-nav li.open:hover:before {
+    width: 100%;
+    -webkit-transition: width .2s ease-in;
+    -moz-transition: width .2s ease-in;
+    -ms-transition: width .2s ease-in;
+    transition: width .2s ease-in;
+
+}
+
+.navbar {
+    padding: none !important;
+    padding: 0px !important;
+}
+
+.sidebar-nav li a {
+    display: block;
+    border-bottom: 1px solid #eeee;
+    text-decoration: none;
+    padding: 10px 15px 10px 12px;
+}
+
+.sidebar-nav li a i {
+    margin-right: 15px;
+}
+
+
+.dp-menu {
+    height: fit-content !important;
+}
+
+.sidebar-nav>.sidebar-brand {
+    height: 65px;
+    font-size: 20px;
+    line-height: 44px;
+}
+
+.dropdown-toggle::after {
+    float: right;
+    margin-top: 10px;
+}
+
+.sidebar-nav .dropdown-menu {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+}
+
+// Mr Tosin style ends here
+
+
+a:hover {
+    //background-image: #00695C !important; //linear-gradient(#c0c0c0, black, #c0c0c0) !important;
+    color: white !important;
+    background-color: #000 !important;
+
+}
+
+.app.teal-light .active-link {
+    border-radius: 0;
+    background-color: #fff;
+    color: #000;
+}
+
+// a {
+//     font-size: 12px !important;
+//     background-color: #0D0E6F;
+//     color: white;
+// }

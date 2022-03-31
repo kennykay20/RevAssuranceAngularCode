@@ -1,0 +1,170 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+     <div id="square5">
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+     </div> 
+     
+    
+ </div> 
+</div>
+
+<form [formGroup]="basicForm" [formGroup]="basicForm">
+
+<div style="border: none solid black;">
+
+    <div class="card-title-text"> <b> {{ActionHeaderMsg}} STATEMENT</b><label class="allFieldRequired"> <label class="allFieldRequiredtxt">{{requiredFieldMsg}}</label></label></div>
+    <hr>
+
+ <div class = "form-group row">
+   
+     <label for="input-11" class="col-sm-2 col-form-label">Connection Name</label>
+     <div class = "col-sm-2">
+         <input autocomplete="off" class="form-control" type="text" placeholder="" name="connectionName" 
+         formControlName="connectionName"/>
+     </div>
+
+
+     <label for="input-11" class="col-sm-1 col-form-label">Server</label>
+     <div class = "col-sm-2">
+         
+         <!-- <select class="form-control">
+             <option value="">Select Country</option>
+             <option value>Gambial Country</option>
+         </select> -->
+         <input autocomplete="off" 
+         class="form-control" type="text" placeholder=""
+          name="server" formControlName="server" />
+     
+     </div>
+
+
+     <label for="input-11" class="col-sm-1 col-form-label">DataBase Name</label>
+     <div class = "col-sm-2">
+         <input autocomplete="off" class="form-control" type="text" placeholder="" 
+         name="dataBaseName" formControlName="dataBaseName"/>
+     </div>
+    
+ </div>
+
+<div class="form-group row">
+    <label for="input-11" class="col-sm-2 col-form-label">UserName</label>
+    <div class = "col-sm-2">
+        <input autocomplete="off" class="form-control" type="text"
+         placeholder="" name="userName" formControlName="userName" />
+    </div>
+
+    
+    <label for="input-11" class="col-sm-1 col-form-label">Password</label>
+    <div class = "col-sm-2">
+        <input type="password" autocomplete="off" 
+        class="form-control" placeholder=""
+         name="password" formControlName="password" />
+   
+     
+       </div>
+       <label for="input-11" class="col-sm-1 col-form-label">Port</label>
+    <div class = "col-sm-2">
+       <!-- <select class="form-control">
+           <option value="">Phoenix</option>
+           <option value>Zenbase</option>
+       </select> -->
+       <input autocomplete="off" class="form-control" type="text" placeholder="" 
+       name="databasePort" formControlName="databasePort"  (keypress)="keyPress($event)"/>
+    </div>
+</div>
+
+
+
+ <div class = "form-group row">
+     
+    <label for="input-11" class="col-sm-2 col-form-label">Web Service Url</label>
+    <div class = "col-sm-5">
+        <input autocomplete="off" class="form-control" type="text" placeholder="" name="webServiceUrl" 
+        formControlName="webServiceUrl" />
+    
+    </div>
+ </div>
+
+
+ <div *ngIf ="data.actionName !== 'Add'">
+
+    <div class="form-group">
+        <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+            <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+        </div>
+     </div>
+     <br>
+     <div class = "form-group row">
+         
+        <label for="input-11" class="col-sm-2 col-form-label">Created By</label>
+        <div class = "col-sm-2">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" name="webServiceUrl" 
+            formControlName="webServiceUrl" />
+        
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label">Date Created</label>
+        <div class = "col-sm-2">
+            <input autocomplete="off" 
+            class="form-control" type="text" placeholder="" 
+            name="dateCreated" formControlName="dateCreated" />
+        </div>
+         <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+         <div class = "col-sm-2">
+             <input   autocomplete="off" 
+                         class="form-control" 
+                         type="text"
+                          placeholder="" 
+                          name="status" 
+                          formControlName="status" >
+             
+         </div>
+    
+     </div>
+ </div>
+ <hr>
+
+ <br>
+<div class = "form-group row"> 
+ <div class = "btn-group" style="margin: 0  50% 0 40%">
+
+    <!-- <button   *ngIf="data.actionName == 'Add'"
+    mat-raised-button color="accent" 
+    [disabled]="!basicForm.valid">
+    <img src="assets/img/loader/loader.gif"/>
+    Save</button> -->
+
+    <button id="btnSave"   *ngIf="data.actionName == 'Add'"
+    mat-raised-button color="accent"  (click)="add(basicForm.value)"
+    [disabled]="!basicForm.valid">
+    <img *ngIf = "actionLoaderSave === true" src="assets/img/loader/loader.gif"/>
+    Save</button>
+         
+     <button id="btnUpdate"   *ngIf="data.actionName == 'Edit'" 
+     mat-raised-button color="accent" (click)="update(basicForm.value)"
+     >
+     <img *ngIf = "actionLoaderUpdate === true" src="assets/img/loader/loader.gif"/>
+     Update</button>
+
+     <button type="button" style="margin: 0 0 0 10px;" 
+     mat-raised-button color="primary" 
+     (click)="close()">Return</button>
+            
+     <mat-spinner *ngIf ="displayloader == true" 
+     strokeWidth="1" [diameter]="30" color="primary"></mat-spinner> 
+     </div>
+ </div>
+
+</div>
+
+
+
+
+    
+
+
+</form>

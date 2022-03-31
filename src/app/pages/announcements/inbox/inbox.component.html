@@ -1,0 +1,250 @@
+
+ <div class="preloader" *ngIf="loadPage == true">
+  <!-- <div class="col-sm-2">
+      <div id="square5">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+      </div> 
+  </div> -->
+
+  <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+  <br>
+  <p>{{retryMessage}}</p> 
+
+</div>
+
+
+<div fxLayout="column">
+  <div class="flex-p">
+    
+    <div style="background-color: white !important" class="flex-p">
+    <div style="margin-left: 20px; background-color: white !important" class="card-title-text">
+       <b> Inbox </b>    
+    </div>
+            <br>
+
+
+
+<div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex="100" fxFlex.gt-xs="5" class="pr-1">
+  </div>
+
+  <div fxFlex="100" fxFlex.gt-xs="10" class="pr-1">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Item Per Page"
+          matInput
+          [(ngModel)] = "pageLmit">
+      <mat-option>Item Per Page</mat-option>
+          <mat-option *ngFor="let a of ItemsPerPage" 
+          [value]="a.itemPerPage"
+      >{{ a.itemPerPage }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+  <div fxFlex="100" fxFlex.gt-xs="15" class="pr-1">
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Search By"
+          matInput
+          [(ngModel)] = "columnId">
+      <mat-option>Search By</mat-option>
+          <mat-option *ngFor="let a of searchUserColumns"
+          [value]="a.id"
+      > {{ a.columnName }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+    <div fxFlex="100" fxFlex.gt-xs="65" class="pr-1">
+
+       
+      <mat-form-field class="full-width">
+        <input matInput
+        (keyup)="updateFilter($event)"
+            placeholder="Search" value="" required>
+    </mat-form-field>
+
+
+    </div>
+
+ 
+    
+
+   
+</div>
+
+
+<!-- 
+id: 1
+title: "ee"
+body: "ee"
+maker: 101
+maker_name: "Ben Mike"
+checker: null
+checker_name: null
+updated_by: null
+updated_id: null
+publish_by: null
+publisher_id: null
+status: "Pending"
+created_at: "2020-03-16 21:53:17"
+updated_at: "2020-03-16 21:53:17"
+__proto__: Object
+1: {id: 2, title: "ttt", body: "ttttt", maker: 101, maker_name: "Ben Mike", …}
+length: 2
+__proto__: Array(0)
+ano/all:1 Refused to apply style from 'https://paystack.com/public/css/button.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+﻿ -->
+​
+
+
+
+<div class="displayOnLapTop">
+  <ngx-datatable
+  class="material ml-0 mr-0 cursorAngulTbl"
+  [rows]="rows"
+  [columns]="columns"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [limit]="pageLmit"
+  [rowHeight]="'auto'">
+  <ngx-datatable-column name="S/No" [flexGrow]="1" >
+    <ng-template  let-row="row" ngx-datatable-cell-template style="cursor: pointer !important" >
+    
+    <span matTooltip="Read {{ row?.title }}"  (click) = "view(row)"> {{rows.indexOf(row) + 1}} </span>
+      
+    
+  </ng-template>
+  </ngx-datatable-column >
+  <ngx-datatable-column name="Status" [flexGrow]="1">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <mat-chip matTooltip="Read {{ row?.title }}"  (click) = "view(row)" mat-sm-chip class="activestatus" [selected]="row.status" *ngIf="row.status == 'Read'">
+        {{ row.status }}
+      </mat-chip>
+       <mat-chip  matTooltip="Read {{ row?.title }}" (click) = "view(row)" mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Read'">
+       Un Read
+      </mat-chip>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Subject" [flexGrow]="1">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+     
+  
+      <span matTooltip="Read {{ row?.title }}"  (click) = "view(row)">  {{ row?.title | slice:0:25}} </span>
+  
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Body" [flexGrow]="1">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+     
+      <span matTooltip="Read {{ row?.title }}"  (click) = "view(row)">   {{ row?.body | slice:0:30 }} </span>
+    </ng-template>
+  </ngx-datatable-column>
+   <ngx-datatable-column name="Date Created" [flexGrow]="1">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      
+      <span matTooltip="Read {{ row?.title }}"  (click) = "view(row)">   {{ row?.created_at | date: 'd-MMM-y' }} </span>
+    </ng-template>
+  </ngx-datatable-column>
+  
+  
+  </ngx-datatable>
+
+</div> 
+
+
+        
+    </div>
+  
+  </div>
+
+
+</div>
+
+<div class="displayOnMobile">
+
+  <div  class="col-sm-12" *ngIf="rows.length > 0">
+  <table #dataTable>
+    <thead>
+    <tr>
+      <th>S/No.</th>
+      <th>Apply Waiver</th>
+      <th>Name</th>
+      <th>Created By</th>
+      <th>Amount</th>
+      <th>Date Created</th>
+      <th>Status</th>
+     
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor ="let row of rowsMobile; let h = index;">
+      <td>{{ h + 1 }}</td>
+      <td>
+        <mat-chip style="margin-left: 50px;" matTooltip="Read {{ row?.title }}"  (click) = "view(row)" mat-sm-chip class="activestatus" [selected]="row.status" *ngIf="row.status == 'Read'">
+          {{ row.status }}
+        </mat-chip>
+         <mat-chip  style="margin-left: 50px;" matTooltip="Read {{ row?.title }}" (click) = "view(row)" mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Read'">
+         Un Read
+        </mat-chip>
+      </td>
+      <td>     <span matTooltip="Read {{ row?.title }}"  (click) = "view(row)">  {{ row?.title | slice:0:25}} </span>   </td>
+      <td>  <span matTooltip="Read {{ row?.title }}"  (click) = "view(row)">   {{ row?.body | slice:0:30 }} </span></td>
+      <td>  {{ row?.created_at | date: 'd-MMM-y' }} </td>
+
+    </tr>
+    
+    </tbody>
+  </table>
+  
+</div>
+
+
+<br>
+
+
+<div  class="row" fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex="100" fxFlex.gt-xs="5" class="pr-1">
+         
+        
+
+  </div>
+
+
+  <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+    
+   
+         <div class="btn-group">
+
+          <button mat-raised-button color="primary"
+          style = "margin-left: 0%" (click)="prevPage()"
+            class="mat-elevation-z12 box-button" type="submit"><mat-icon  id="btn_prev">keyboard_arrow_left</mat-icon>Prev.</button> 
+            <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+            class="mat-elevation-z12 box-button" (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+          </div> 
+
+    </div>
+    <div fxFlex="100" fxFlex.gt-xs="33" class="pr-1">
+
+       
+    
+
+
+    </div>
+
+
+  
+  
+  </div>
+<div  class="col-sm-12 row" style = "text-align: center">
+
+<span style = "font-size: 15px; text-align: center !important; margin-left: 65%; font-weight: 900; ">Page: </span> <span style="font-size: 15px; text-align: center !important; font-weight: 900;" id="page"></span>
+
+</div>      
+       
+    
+</div>

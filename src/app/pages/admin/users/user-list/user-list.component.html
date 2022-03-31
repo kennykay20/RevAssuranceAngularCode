@@ -1,0 +1,234 @@
+ <!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+   <p>{{retryMessage}}</p> 
+  </div>
+
+
+  
+ 
+
+   <ul class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+    <li [class]="selectedCalss">
+        <a  class="nav-link {{tab1}}" data-toggle="tab" (click) ="swapTab(1)"><i class="icon-home">
+
+        </i> <span class="hidden-xs">
+          <b>USERS</b>
+          </span></a>
+    </li>
+    <!-- class="nav-item cursorPointer" -->
+    <!-- <li [class]="selectedCalss2">
+        <a class="nav-link {{tab2}}" data-toggle="tab" (click) ="swapTab(2)"><i class="icon-home"></i> 
+          <span class="hidden-xs">
+            <b>SEEK APPROVAL 3</b> 
+          </span></a>
+    </li> -->
+
+ 
+</ul> 
+
+  <br>
+
+  <!--Tabb 1-->
+    
+  <div _ngcontent-c21="" class="col-sm-12 row">
+    
+    <div class="col-sm-5" style="margin-left: 60px">
+      <div _ngcontent-c21="" class="btn-group">
+       
+        <button (click)="action('Add', '')"
+        class="mat-elevation-z12 box-button mat-raised-button mat-primary" 
+        color="accent" id="btnProcess" mat-raised-button="" 
+        style="margin: 0 0 0 0px;" type="button">
+        <span class="mat-button-wrapper">
+           Add New User
+        </span><div class="mat-button-ripple mat-ripple"
+         matripple=""></div><div class="mat-button-focus-overlay"></div>
+        </button>
+
+        <button (click)="resetPwd()"
+        class="mat-elevation-z12 box-button mat-raised-button mat-primary" 
+        color="primary" id="btnProcess" mat-raised-button="" 
+        style="margin: 0 0 0 10px;" type="submit">
+        <span class="mat-button-wrapper">
+           Reset Password
+        </span><div class="mat-button-ripple mat-ripple"
+         matripple=""></div><div class="mat-button-focus-overlay"></div>
+        </button>
+        
+        <button (click)="unlockUser()" class="mat-elevation-z12 box-button mat-raised-button mat-primary" color="primary" id="btnProcess" mat-raised-button="" style="margin: 0 0 0 10px;" type="submit"><span class="mat-button-wrapper">
+           Reset Lock Count
+        </span><div class="mat-button-ripple mat-ripple" matripple=""></div><div class="mat-button-focus-overlay"></div></button>
+      </div>
+    </div>
+    <div _ngcontent-c21="" class="col-sm-3">
+      <select  class='form-control' [(ngModel)]="pageLmit"
+      (change)='onOptionsSelected($event)'>
+      <option class='option'  *ngFor='let option of ItemsPerPage' 
+      [value]="option.itemPerPage">{{option.itemPerPage}}</option>
+     </select>
+    
+    </div>
+    <div _ngcontent-c21="" class="col-sm-3">
+      
+    </div>
+  </div>
+      <br>
+      <table style="background-color: white; overflow-x: scroll; width: 1230px; margin: 0 5% 0 3%" class="table table-responsive table-bordered table-sm table-hover tableStyle">
+        <thead>
+          <tr>
+            <th  style="width: 180px">ACTION</th>
+            <th  style="width: 20px">SEL.</th>
+            <th  style="width: 150px">LOGIN ID</th>
+            <th  style="width: 300px">FULL NAME</th>
+            <th  style="width: 150px">ROLE NAME</th>
+            <th  style="width: 200px">BRANCH NAME</th>
+            <th  style="width: 100px">DEPT. NAME</th>
+            <th  style="width: 20px">STATUS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--Search Here-->
+          <tr>
+            <td> 
+              <!-- <input style ="width: 100%"  (keyup)="updateFilter1($event, 'Action')"
+              autocomplete="off" class="form-control"
+              type="text" placeholder="Search" 
+              /> -->
+             </td>
+              <td> <mat-checkbox color="primary"  [(ngModel)]="selectedAllTrans" 
+                class="example-margin" 
+               (change)="selectAll()"></mat-checkbox> 
+              </td>
+              <td> 
+                  <input style ="width: 100%"  (keyup)="updateFilter1($event, 'loginId')"
+                  autocomplete="off" class="form-control"
+                  type="text" placeholder="Search"/>  
+               </td>
+               <td> 
+                <input style ="width: 100%"  (keyup)="updateFilter1($event, 'fullname')"
+                autocomplete="off" class="form-control"
+                type="text" placeholder="Search"/>  
+             </td>
+             <td> 
+              <input style ="width: 100%"  (keyup)="updateFilter1($event, 'roleName')"
+              autocomplete="off" class="form-control"
+              type="text" placeholder="Search"/>  
+           </td>
+
+           <td> 
+            <input style ="width: 100%"  (keyup)="updateFilter1($event, 'branchName')"
+            autocomplete="off" class="form-control"
+            type="text" placeholder="Search"/>  
+         </td>
+
+         <td> 
+          <input style ="width: 100%"  (keyup)="updateFilter1($event, 'dept')"
+          autocomplete="off" class="form-control"
+          type="text" placeholder="Search"/>  
+       </td>
+         <td> 
+          <input style ="width: 100%"  (keyup)="updateFilter1($event, 'status')"
+          autocomplete="off" class="form-control"
+          type="text" placeholder="Search"/>  
+       </td>
+
+
+    
+          </tr>
+        <!--Search End Here-->
+          <tr *ngFor="let row of rows; let h = index;">
+            <td style="text-align: center; font-size: 12px;"> 
+               <span *ngIf="roleAssign.canView == true" class="viewSpan"  
+                      (click)="action('View', row)">
+                      View
+                </span> 
+              <span *ngIf="roleAssign.canEdit == true" class="editSpan"  
+                (click)="action('Edit', row)">
+                Edit
+              </span> 
+              
+                <span *ngIf="roleAssign.canEdit == true" class="editSpan"  
+                    (click)="actionLimit('Limit', row)">
+                    Add User Limits
+              </span>  
+            
+            </td>
+            <td>  
+              <mat-checkbox color="primary"  
+                    [(ngModel)]="row.select"  [(ngModel)]="row.select" 
+                    class="example-margin">
+              </mat-checkbox>
+            </td>
+            <td class="pageFont">  {{ row?.loginId }}</td>
+            <td class="pageFont">  {{ row?.fullName }}</td>
+            <td class="pageFont">  {{ row?.roleName }}</td>
+            <td class="pageFont">  {{ row?.branchName }}</td>
+            <td class="pageFont">  {{ row?.deptName }}</td>
+            <td class="pageFont">  
+              <mat-chip mat-sm-chip class="activestatus" [selected]="row.status" 
+              *ngIf="row.status == 'Active'">
+                {{ row.status }}
+              </mat-chip>
+      
+              <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Active'">
+                {{ row.status }}
+              </mat-chip>
+            </td>
+        
+           
+    
+          
+          </tr>
+         
+        </tbody>
+      </table>
+    
+    <div style = "margin-top: 10px" class="row" >
+      <div class="col-sm-3">
+
+      </div>
+
+      <div class="col-sm-2">
+
+          <div class="btn-group">
+              <button mat-raised-button color="primary"
+              style = "margin-left: 0%" (click)="prevPage()"
+                class="mat-elevation-z12 box-button" type="submit">
+                <mat-icon  id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+              </button> 
+                <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+                class="mat-elevation-z12 box-button" (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+          </div> 
+    
+      </div>
+      <div class="col-sm-2">
+          <span style= "margin-left: 1%;font-size: 15px; text-align: center !important; 
+           font-weight: 900; ">
+          Page: </span> 
+          <span style="font-size: 15px; margin-left: 8px; text-align: center !important; font-weight: 900;"
+           id="page">{{ pageListVal }}</span>
+    
+      </div>
+
+    </div>
+
+
+
+
+
+
+

@@ -1,0 +1,113 @@
+ 
+  <!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+   <p>{{retryMessage}}</p> 
+  </div>
+
+
+
+
+  <div style="text-align: center; background-color: white !important; font-size: larger  ;" class="card-title-text"> 
+    <b> ACCOUNT TYPE </b>    
+  </div>
+  <br>
+
+  <br>
+
+
+  <div class="col-sm-12 row">
+
+   
+    <!-- <div class="col-sm-2">
+      <input style ="width: 180px"  (keyup)="updateFilter($event, 1)"
+      autocomplete="off" class="form-control"
+       type="text" placeholder="Search" 
+        />
+    </div>
+   
+  <div class="col-sm-1">
+     
+    <select class="form-control"  [(ngModel)] = "pageLmit">
+      <option>Item Per Page</option>
+      <option *ngFor="let a of ItemsPerPage"
+      [value]="a.itemPerPage">{{ a.itemPerPage }}</option>
+    </select>
+  
+  </div> -->
+  </div>
+  <br>
+    <div class="displayOnLapTop">
+      <div class="form-group row">
+      
+        <div class="col-sm-1">
+          <button style="margin: 0 0 0 40px;" (click)="action('Add','')"  mat-raised-button color="accent" 
+          class="mat-elevation-z12 box-button" type="submit">Add New</button>
+          <mat-spinner *ngIf ="statusTrack == 'Decline'"  strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+        
+        </div>
+      </div>
+ <br>
+      <ngx-datatable style="width: 800px; margin: 0  20% 0 5% !important"
+      class="material ml-0 mr-0"
+      [rows]="rows"
+      [columns]="columns"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [limit]="pageLmit"
+      [rowHeight]="'auto'">
+        <ngx-datatable-column name="S/NO" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+          {{rows.indexOf(row) + 1}}
+          </ng-template>
+        </ngx-datatable-column>  
+        <ngx-datatable-column name="Action" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="viewSpan" (click)="action('View', row)">View</span>  
+          <span *ngIf="!row?.hide" (click)="action('Edit', row)" class = "editSpan">Edit</span>
+          </ng-template>
+        </ngx-datatable-column>  
+        <ngx-datatable-column name="TYPE" [flexGrow]="2">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.accountTypeCode }} 
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="DESCRIPTION" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.description }}
+          </ng-template>
+        </ngx-datatable-column>
+      
+        <ngx-datatable-column name="DATE CREATED" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row?.dateCreated | date: 'd-MMM-y' }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="STATUS" [flexGrow]="1">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <mat-chip mat-sm-chip class="activestatus" [selected]="row.status" *ngIf="row.status == 'Active'">
+              {{ row.status }}
+            </mat-chip>
+          
+            <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.status !== 'Active'">
+              {{ row.status }}
+            </mat-chip>
+          </ng-template>
+        </ngx-datatable-column>
+        
+      </ngx-datatable>
+    </div>

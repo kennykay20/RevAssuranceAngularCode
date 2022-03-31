@@ -1,0 +1,156 @@
+
+
+<!-- <span> <b>  MANDATE </b> </span>
+
+  style = "border: 1px solid red"
+
+-->
+<div>
+
+
+  <div style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important;" > 
+  
+    <br>
+  <div class="form-group row">
+    <div class="col-sm-6">
+      <table style="background-color: white; width: 600px; margin-left: 83px" 
+    class="table table-bordered table-sm table-hover tableStyle">
+    <thead>
+      
+    </thead>
+    <tbody>
+  
+      <tr>
+        <td class = "tdStyle"> Last Name </td>
+        <td> {{mandate?.last_name}}  </td>
+      
+      </tr>  
+      
+      <tr>
+        <td class = "tdStyle"> Other Name </td>
+        <td> {{mandate?.otherNames}} </td>
+      
+      </tr>  
+      <tr>
+        <td class = "tdStyle"> Address 1 </td>
+        <td> {{mandate?.address_1}} </td>
+       
+      </tr> 
+  
+          
+      <tr>
+        <td class = "tdStyle">  Address 2 </td>
+        <td> {{mandate?.address_2 }} </td>
+      
+      </tr> 
+  
+          
+      <tr>
+        <td class = "tdStyle">  Address 3 </td>
+        <td> {{mandate?.address_3 }}  </td>
+        
+      </tr> 
+  
+          
+      <tr>
+        <td class = "tdStyle"> Branch </td>
+        <td>  {{mandate?.branch_name }} </td>
+       
+      </tr> 
+   
+      <tr>
+        <td class = "tdStyle"> No Of Signator(ies) </td>
+        <td> 
+          
+          {{mandate?.no_Signatures }}
+
+
+        </td>
+       
+      </tr> 
+  
+    </tbody>
+      </table>
+    </div>
+    <div class="col-sm-6">
+      <table style="background-color: white" 
+      class="table table-bordered table-sm table-hover tableStyle"
+      style = "background-color: white; margin-left: -50px">
+      <thead>
+        <tr>
+         
+          <th class = "txtCenter">PHOTO</th>
+          <th class = "txtCenter">SIGNATURE</th>
+        </tr>
+      </thead>
+      <tbody>
+  
+        
+        <tr>
+          <td  class = "tdStyle">    {{mandate?.last_name}}  {{mandate?.otherNames}} 
+          </td>
+          <td  class = "tdStyle">  
+            {{firstlstSignaturePhoto?.signatory}}  
+            
+          </td>
+        </tr> 
+    
+        <tr>
+          <td>   <img src="{{mandate?.photoBase64}}" class="img-fluid"/>  </td>
+  
+          <td>   <img src="{{firstlstSignaturePhoto?.photoBase64}}" class="img-fluid"/>  </td>
+        </tr> 
+        <tr>
+          <td colspan="2"> 
+            <div class="form-group row">
+              <div *ngFor="let row of lstSignaturePhoto; let h = index;" class="">
+                    <span class = "col-sm-1 spanNumber cursorPointer" (click)="loadMoreSignature(row)">{{ h + 1}}</span>
+               </div>
+         
+            </div>
+           
+          
+          </td>
+      
+        </tr>       
+      
+      </tbody>
+        </table>
+    </div>
+    </div>
+  
+  </div>
+    <!-- <div  style="color: red; font-weight: 900; background-color: #c0c0c0" 
+          class="txtCenter">
+            MANDATE
+    </div> -->
+    <div class="form-group">
+      <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+          <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">MANDATE</label>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important;" >        
+      <div style="margin-top: 3px;" class = "form-group row"> 
+        <div style="margin-left: 5px" *ngFor="let row of lstMandate; let h = index;" class="col-sm-3">
+          <img src="{{ row?.photoBase64 }}" class="img-fluid"/> 
+        </div>
+      </div>
+    </div>
+
+    <button  
+        style="margin-top: 10px"   
+        mat-raised-button 
+        color="primary" 
+        (click)="cancel()" 
+        class="mat-elevation-z12 box-button" 
+        mat-dialog-close>CLOSE</button> 
+
+
+
+  
+
+
+
+</div>
+  

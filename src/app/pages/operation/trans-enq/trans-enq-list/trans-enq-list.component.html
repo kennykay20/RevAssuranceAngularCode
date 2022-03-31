@@ -1,0 +1,214 @@
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <p>{{retryMessage}}</p>
+</div>
+
+
+<div class="form-group row">
+  <label for="input-11" class="col-sm-1 col-form-label">From Date</label>
+  <div class="col-sm-1">
+    <input class="form-control" style="width: 100px" [(ngModel)]="transEnquiry.pdtStartDate" type="text" />
+  </div>
+  <div class="col-sm-1">
+    <input id="effectiveDate" style="border: none !important;" class="form-control cursorPointer" type="date" value=""
+      (change)="fromDate($event)" />
+
+
+
+
+  </div>
+
+  <label for="input-11" class="col-sm-1 col-form-label">To Date</label>
+  <div class="col-sm-1">
+    <input class="form-control" style="width: 100px" [(ngModel)]="transEnquiry.pdtEndDate" type="text" />
+  </div>
+  <div class="col-sm-1">
+    <input id="endDate" style="border: none !important;" 
+    class="form-control cursorPointer" type="date" value=""
+      (change)="toDate($event)" />
+  </div>
+  <label for="input-11" class="col-sm-1 col-form-label">Amount</label>
+  <div class="col-sm-2">
+    <input [(ngModel)]="transEnquiry.pnAmnt" 
+    class="form-control cursorPointer txtRight" type="text" value=""
+    (change)="formAmt($event)" />
+  </div>
+
+  <div class="col-sm-2">
+    <div class="btn-group">
+      <button id="btnSearchEnq" style="margin: 0 0 0 0px;" (click)="search()" mat-raised-button color="accent"
+        class="mat-elevation-z12 box-button" type="submit">
+        SEARCH
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+
+<div class="form-group row">
+  <label for="input-11" class="col-sm-1 col-form-label">Currency</label>
+  <div class="col-sm-2">
+    <select  class="form-control"  
+    [(ngModel)]="transEnquiry.psCurrencyIso"
+    
+    >
+      <option>Acct Type</option>
+      <option *ngFor="let a of currencies"
+      [value]="a.isoCode">{{ a.isoCode }}</option>
+    </select>
+  </div>
+  <label for="input-11" class="col-sm-1 col-form-label">Orig.Branch</label>
+  <div class="col-sm-2">
+  
+    <select  class="form-control"  
+      [(ngModel)]="transEnquiry.psBranchCode" >
+      <option>Acct Type</option>
+      <option *ngFor="let a of branches"
+      [value]="a.branchNo">{{ a?.branchName }}</option>
+    </select>
+  
+  </div>
+  <label for="input-11" class="col-sm-1 col-form-label">Trans. Ref</label>
+  <div class="col-sm-2">
+    <input class="form-control" [(ngModel)]="transEnquiry.psTranRef" type="text" />
+  </div>
+</div>
+
+<div class="form-group row">
+  <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+  <div class="col-sm-2">
+ 
+    <select  class="form-control"  
+    [(ngModel)]="transEnquiry.psStatus" >
+    <option>Select Status</option>
+    <option *ngFor="let a of statuses"
+    [value]="a.status">{{ a.status }}</option>
+  </select>
+  </div>
+  <label for="input-11" class="col-sm-1 col-form-label">Service</label>
+  <div class="col-sm-2">
+    <select  class="form-control"  [(ngModel)]="transEnquiry.pnServiceId">
+      <option>Temp. Type</option>
+      <option *ngFor="let a of admService"
+      [value]="a.serviceId"> {{ a.serviceDescription }} </option>
+   </select>
+
+  </div>
+
+  <label for="input-11" class="col-sm-1 col-form-label">Batch ID</label>
+  <div class="col-sm-2">
+    <input class="form-control" [(ngModel)]="transEnquiry.pnbatchId" type="text" />
+  </div>
+</div>
+<div class="form-group row">
+  <label for="input-11" class="col-sm-1 col-form-label">Cr Acct No</label>
+  <div class="col-sm-2">
+    <input class="form-control" [(ngModel)]="transEnquiry.psCrAcctNo" type="text" />
+  </div>
+  <label for="input-11" class="col-sm-1 col-form-label">Dr Acct No</label>
+  <div class="col-sm-2">
+    <input class="form-control"  [(ngModel)]="transEnquiry.psDrAcctNo" type="text" />
+  </div>
+  <label for="input-11" class="col-sm-1 col-form-label ">Item Per Page</label>
+  <div class="col-sm-2">
+    <select class='form-control' [(ngModel)]="pageLmit" (change)='onOptionsSelected($event)'>
+      <option class='option' *ngFor='let option of ItemsPerPage' [value]="option.itemPerPage">{{option.itemPerPage}}
+      </option>
+    </select>
+
+</div>
+</div>
+
+
+
+<ul style="margin-top: 10px" class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+  <li [class]="selectedCalss">
+    <a class="nav-link {{tab1}}" data-toggle="tab"><i class="icon-home">
+
+      </i> <span class="hidden-xs">
+        <b>TRANSACTION ENQUIRY LIST <span style="font-size: 15px; font-weight: 800; margin-left: 50px"></span></b>
+      </span></a>
+  </li>
+</ul>
+<!--Tabb 1-->
+<div class="displayOnLapTop">
+  <table style="background-color: white; overflow-y: scroll;; width: 2500px"
+    class="table table-bordered table-sm table-hover tableStyle">
+    <thead>
+      <tr>
+        <th>S/NO</th>
+        <th style="width: 80px">ACTION</th>
+        <th style="width: 90px">TRANS DATE</th>
+        <th style="width: 150px">TRANS TRACER</th>
+        <th style="width: 200px">SERVICE TYPE</th>
+        <th style="width: 120px">DR ACCT NO</th>
+        <th style="width: 100px">DR ACCT TYPE</th>
+        <th style="width: 250px">DR ACCT NAME</th>
+        <th style="width: 90px">DR TC</th>
+        <th style="width: 150px">AMOUNT</th>
+        <th style="width: 150px">CHARGE AMOUNT</th>
+        <th style="width: 90px">CCY</th>
+        <th style="width: 150px">CR ACCT NO</th>
+        <th style="width: 90px">CR ACCT TYPE</th>
+        <th style="width: 250px">CR ACCT NAME</th>
+        <th style="width: 90px">STATUS</th>
+        <th style="width: 200px">DEPT</th>
+        <th style="width: 300px">ORIG BRANCH</th>
+      </tr>
+    </thead>
+    <tbody >
+      <!--Search Here-->
+      
+ 
+      <!--Search End Here-->
+      <tr *ngFor="let row of rows; let h = index;">
+        <td>
+          {{ h + 1}}
+        </td>
+        <td style="text-align: center;">
+          <span matTooltip="View  {{ row?.drAcctNo }} Details" class="viewSpan" (click)="action('View', row)">
+            View
+          </span>
+        </td>
+        <td> {{ row?.transactionDate | date: 'd-MMM-y' }}</td>
+        <td> {{ row?.transTracer }}</td>
+        <td> {{ row?.serviceName }}</td>
+        <td> {{ row?.drAcctNo }}</td>
+        <td style="text-align: center"> {{ row?.drAcctType }}</td>
+        <td> {{ row?.drAcctName }} </td>
+        <td> {{ row?.drAcctTC }} </td>
+        <td style="text-align: right"> {{ row?.amount | number : '.2' }} </td>
+        <td style="text-align: right"> {{ row?.drAcctChargeAmt | number : '.2' }} </td>
+        <td style="text-align: center"> {{ row?.ccyCode }} </td>
+        <td> {{ row?.crAcctNo }} </td>
+        <td style="text-align: center"> {{ row?.crAcctType }} </td>
+        <td> {{ row?.crAcctName }} </td>
+        <td>
+
+          <mat-chip mat-sm-chip class="activestatus" [selected]="row.status" *ngIf="row?.status == 'Posted'">
+            {{ row?.status }}
+          </mat-chip>
+
+          <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row?.status !== 'Posted'">
+            {{ row?.status }}
+          </mat-chip>
+        </td>
+        <td> {{ row?.deptName }} </td>
+        <td> {{ row?.originatingBranchName }} </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+
+
+</div>

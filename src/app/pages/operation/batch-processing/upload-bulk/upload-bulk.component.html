@@ -1,0 +1,588 @@
+
+
+<!--Main Form Reques Below-->
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<!--Add BAtch Control start here-->
+<div *ngIf="data.actionName === 'Add'">
+  <div style="border: none solid black;">
+
+    <div class="card-title-text"> <b></b><label class="allFieldRequired"> <label
+          class="allFieldRequiredtxt"></label></label></div>
+    <br>
+
+    <div class="form-group">
+      <div class="col-sm-12 infoAcctdetails"
+        style="background-color:#444;color:#fff; text-align:center; margin-top: -40px">
+        <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">UPLOAD BATCH SUMMARY DETAILS</label>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important;">
+
+      <div style="margin-top: 10px" class="form-group row">
+        <label for="input-11" class="col-sm-2 col-form-label "></label>
+        <div class="col-sm-4">
+          <div class = "btn-group">
+            <input type="file" name="filename"
+            value="" (change)="onFileChange($event)"/>
+          </div>
+          <button  id="btnSaveUpload" style="margin-left: 10px" 
+          *ngIf="data.actionName == 'Add' || validationError == false" 
+          mat-raised-button color="accent"
+          (click)="addUpload(instrumentForm)">
+          <img *ngIf="actionLoaderSave === true" 
+          src="assets/img/loader/loader.gif" />
+          SAVE TEMPORARY
+        </button>
+         
+        </div>
+      
+        <!-- <label for="input-11" class="col-sm-1 col-form-label margin-left40">Proc. Dept</label>
+        <div class="col-sm-2">
+          <select class="form-control" [(ngModel)]="instrumentForm.processingDept" [ngClass]="{'redBorder':
+                    instrumentForm.processingDept === null  }">
+            <option>Select Department</option>
+            <option *ngFor="let a of departments" [value]="a.deptId">{{ a.deptname }}</option>
+          </select>
+        </div> -->
+
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+<!--Add BAtch Control End here-->
+
+<!--Edit Batch Control Start here-->
+<div *ngIf="data.actionName === 'Edit' || data.actionName === 'View'">
+  <div style="border: none solid black;">
+
+    <div class="card-title-text"> <b></b><label class="allFieldRequired"> <label
+          class="allFieldRequiredtxt"></label></label></div>
+    <br>
+
+    <div class="form-group">
+      <div class="col-sm-12 infoAcctdetails"
+        style="background-color:#444;color:#fff; text-align:center; margin-top: -40px">
+        <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">UPLOAD BATCH DETAILS</label>
+      </div>
+    </div>
+    <div style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important;">
+      <div style="margin-top: 10px" class="form-group row">
+        <label for="input-11" class="col-sm-1 col-form-label ">Batch No</label>
+        <div class="col-sm-1">
+          <input autocomplete="off" disabled class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.batchNo" />
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label ">Currency</label>
+        <div class="col-sm-1">
+          <select class="form-control" disabled [(ngModel)]="instrumentForm.ccyCode">
+            <option> --Currencies-- </option>
+            <option *ngFor="let a of currencies" [value]="a.isoCode">{{ a.isoCode }}</option>
+          </select>
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label ">Record Count</label>
+        <div class="col-sm-1">
+          <input autocomplete="off" disabled class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.recordCount" />
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label ">Posted Count</label>
+        <div class="col-sm-1">
+          <input autocomplete="off" disabled class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.postedTransCount" />
+        </div>
+        <label for="input-11" class="col-sm-1 col-form-label ">Total Dr</label>
+        <div class="col-sm-1">
+          <input autocomplete="off" disabled class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.totalDr" />
+        </div>
+
+        <label for="input-11" class="col-sm-1 col-form-label ">Total Cr</label>
+        <div class="col-sm-1">
+          <input autocomplete="off" disabled class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.totalCr" />
+        </div>
+
+      </div>
+
+
+
+
+      <div class="form-group row">
+        <label for="input-11" class="col-sm-1 col-form-label ">Difference</label>
+        <div class="col-sm-1">
+          <input autocomplete="off" disabled class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.tDifference" />
+        </div>
+     
+
+        <label for="input-11" class="col-sm-1 col-form-label">File Name</label>
+        <div class="col-sm-3">
+          <input autocomplete="off" class="form-control" type="text" placeholder=""
+            [(ngModel)]="instrumentForm.filename"  />
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Audit Trail  End here -->
+    
+    <div *ngIf="data.actionName === 'Edit' || data.actionName === 'View'">
+
+      <div class="form-group">
+        <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+          <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #c0c0c0 !important; padding-right: 10px !important;">
+        <div style="margin-top: 10px" class="form-group row">
+
+          <label for="input-11" class="col-sm-1 col-form-label">Loaded By</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" [(ngModel)]="createdBy" class="form-control" type="text"
+              [(ngModel)]="instrumentForm.createdBy" readonly />
+
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Date Created</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" class="form-control" type="text" 
+            [(ngModel)]="instrumentForm.dateCreated"
+              readonly />
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Status</label>
+          <div class="col-sm-2">
+
+            <select class="form-control" [(ngModel)]="instrumentForm.status">
+              <option></option>
+              <option *ngFor="let a of batchStatus" [value]="a">{{ a }}</option>
+            </select>
+
+          </div>
+         
+        </div>
+        <div class="form-group row">
+
+          <label for="input-11" class="col-sm-1 col-form-label">Verfied By</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" class="form-control" type="text" [(ngModel)]="instrumentForm.verifiedBy"
+              readonly />
+
+          </div>
+          <label for="input-11" class="col-sm-1 col-form-label">Verfied Date</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" class="form-control" type="text" [(ngModel)]="instrumentForm.verifiedDate"
+              readonly />
+
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Approved By</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" class="form-control" type="text" [(ngModel)]="instrumentForm.approvedBy"
+              readonly />
+
+          </div>
+
+          <label for="input-11" class="col-sm-1 col-form-label">Approved Date</label>
+          <div class="col-sm-2">
+            <input autocomplete="off" class="form-control" type="text" [(ngModel)]="instrumentForm.approvedDate"
+              readonly />
+
+          </div>
+
+
+
+
+
+          <!-- <label for="input-11" class="col-sm-1 col-form-label margin-left40">Proc. Dept</label>
+          <div class="col-sm-2">
+            <select class="form-control" [(ngModel)]="instrumentForm.processingDept" [ngClass]="{'redBorder':
+                instrumentForm.processingDept === null  }">
+              <option>Select Department</option>
+              <option *ngFor="let a of departments" [value]="a.deptId">{{ a.deptname }}</option>
+            </select>
+          </div> -->
+
+        </div>
+      </div>
+    </div>
+    <!-- Audit Trail Details End Here-->
+
+  </div>
+
+</div>
+<!--Edit Batch Control Ends here-->
+<br>
+<div class="form-group row">
+  <div class="btn-group" style="margin: 0  50% 0 40%">
+
+    <!-- <button id="btnSave" style="margin: 0 0 0 10px;" 
+            *ngIf="data.actionName == 'Add'" 
+            mat-raised-button color="accent"
+           >
+            <img *ngIf="actionLoaderSave === true" 
+            src="assets/img/loader/loader.gif" />
+      Save
+    </button> -->
+
+    <button id="btnUpdate" style="margin-left: 10px" *ngIf="data.actionName == 'Edit'" mat-raised-button color="accent"
+      (click)="update(instrumentForm)">
+      <img *ngIf="actionLoaderUpdate === true" src="assets/img/loader/loader.gif" />
+      Update</button>
+    <button type="button" style="margin: 0 0 0 10px;" mat-raised-button color="primary"
+      (click)="close()">Return</button>
+
+    <mat-spinner *ngIf="displayloader == true" strokeWidth="1" [diameter]="30" color="primary"></mat-spinner>
+  </div>
+</div>
+
+
+<!--Items Below-->
+
+<div *ngIf="data.actionName === 'Edit' || data.actionName === 'View'" class = "form-group row">
+     <div class="col-sm-1">
+      <button id="btnSave" style="margin: 0 0 0 10px;" 
+       mat-raised-button color="accent"
+      (click)="actionAddItemUpload('Add','.')">
+      <img *ngIf="actionLoaderSave === true" src="assets/img/loader/loader.gif" />
+      Add Item
+    </button>
+     </div>
+
+     <div class="col-sm-10">
+      <h6 style = "font-weight: 800; text-align: center; margin-top: 10px">
+        ITEMS FOR BATCH <span>{{ instrumentForm.batchNo }} </span> </h6>
+     </div>
+</div>
+
+
+
+
+<table *ngIf="data.actionName !== 'Add' && validationError == false" style="background-color: white;" class="table table-bordered table-sm table-hover tableStyle">
+  <thead>
+    <tr>
+      <th style="width: 30px">ACTION</th>
+      <th style="width: 20px">SNO</th>
+      <th style="width: 20px">VALUE DATE</th>
+      <th style="width: 20px">ACCT NO </th>
+      <th style="width: 20px">ACCT TYPE </th>
+      <th style="width: 20px">DR AMOUNT </th>
+      <th style="width: 20px">CR AMOUNT</th>
+      <th style="width: 20px">CCY</th>
+      <th style="width: 20px">CHARGE AMOUNT</th>
+      <th style="width: 20px">CHARGE CODE</th>
+      <th style="width: 20px">CHQ. NO</th>
+      <th style="width: 20px">SERVICE STATUS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!--Search Here-->
+    <tr>
+      <td></td>
+      <td ></td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'VALUE DATE')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'ACCT NO')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'ACCT TYPE')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'DR AMOUNT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CR AMOUNT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CCY')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CHARGE AMOUNT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+   
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CHQ. NO')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+       <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CHQ. NO')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'SERVICESTATUS')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+    </tr>
+    <!--Search End Here-->
+      <tr *ngFor="let row of rows; let h = index;">
+
+        <td  style="text-align: center;">
+          <span  matTooltip="View  {{ row?.tempBatchNo Details" class="viewSpan"
+            (click)="actionUploadItem('View', row)">View</span>
+          <span  matTooltip="Edit  {{ row?.batchNo }} Details"
+           (click)="actionUploadItem('Edit', row)"
+            class="editSpan">Edit</span>
+  
+        </td>
+
+       
+        <td> {{ h + 1 }}</td>
+
+        <td [ngClass]="{'txtCenter errorTdBckgrd': row.valErrorMessage !== null ||  row.valErrorMessage !== '' }"  
+        *ngIf="row.valErrorMessage != null"> 3343 {{ row?.valueDate }}</td>
+        
+		<td class="txtCenter"  
+        > {{ row?.valueDate | date: 'd-MMM-y'  }} </td>
+        
+        
+       
+        <td> {{ row?.acctNo  }}</td>
+
+
+     
+        <td > {{ row?.acctType  }}</td>
+
+
+       
+        <td  class="txtRight"> 
+          <span *ngIf ="row?.drCr== 'DR'"> {{ row?.amount  |  number:'.2'  }} </span> 
+          <span *ngIf ="row?.drCr != 'DR'"> 0.00 </span> 
+        </td>
+
+
+       
+        <td class="txtRight"> 
+          <span *ngIf ="row?.drCr== 'CR'"> {{ row?.amount  |  number:'.2'  }} </span> 
+          <span *ngIf ="row?.drCr != 'CR'">  0.00 </span> 
+      </td>
+
+
+        <td class = "txtCenter"> {{ row?.ccyCode  }}</td>
+        
+       
+       
+         <td  class="txtRight"> 
+          <span> {{ row?.chargeAmount  |  number:'.2'  }} </span> 
+        </td>
+        
+         <td> {{ row?.chargeCode  }}</td>
+       
+        <td class="txtRight"> {{ row?.chequeNo  }}</td>
+        
+        <td> 
+          {{ row?.serviceStatus }} 
+        </td>
+      </tr>
+       <tr>
+          <td colspan="4"></td>
+          <td class="txtRight"> <b>Total</b> </td>
+          <td class="txtRight"> {{instrumentForm?.totalDr  |  number:'.2'  }} </td>
+          <td class="txtRight"> {{ instrumentForm?.totalCr  |  number:'.2'  }}</td>
+          <td> </td>
+          <td class="txtRight"> {{ totalChargeAmount  |  number:'.2'  }}</td>
+          <td> </td>
+          <td> </td>
+      </tr>
+  </tbody>
+</table>
+
+<!-- Val table Error Table below-->
+<table *ngIf="validationError == true" style="background-color: white;" class="table table-bordered table-sm table-hover tableStyle">
+  <thead>
+    <tr>
+     
+      <th style="width: 20px">SNO</th>
+      <th style="width: 200px">ERROR MESSAGE</th>
+      <th style="width: 20px">VALUE DATE</th>
+      <th style="width: 20px">ACCT NO </th>
+      <th style="width: 20px">ACCT TYPE </th>
+      <th style="width: 20px">DR AMOUNT </th>
+      <th style="width: 20px">CR AMOUNT</th>
+      <th style="width: 20px">CCY</th>
+      <th style="width: 20px">CHARGE AMOUNT</th>
+       <th style="width: 20px">CHARGE CODE</th>
+      <th style="width: 20px">CHQ. NO</th>
+    
+    </tr>
+  </thead>
+  <tbody>
+    <!--Search Here-->
+    <tr>
+     
+      <!-- <td></td> -->
+      <td></td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'VALUE DATE')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'ACCT NO')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'ACCT TYPE')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'DR AMOUNT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CR AMOUNT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CCY')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CHARGE AMOUNT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+   
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CHQ. NO')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+       <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CHARGE. AMOUNT')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+      <td>
+        <input style="width: 100%" (keyup)="updateFilter($event, 'CHQ. NO')" autocomplete="off" class="form-control"
+          type="text" placeholder="Search" />
+      </td>
+     
+    </tr>
+    <!--Search End Here-->
+      <tr *ngFor="let row of rows; let h = index;">
+
+        <td [ngClass]="{'errorTdBckgrd': row.valErrorMessage !== null 
+        ||  row.valErrorMessage !== '' }"  
+            *ngIf="row.valErrorMessage != null"> {{ h + 1 }}</td>
+        <td [ngClass]="{'txtCenter': row.valErrorMessage === null ||  row.valErrorMessage === '' }"  
+        *ngIf="row.valErrorMessage == null"> {{ h + 1 }}</td>
+
+
+
+        <td [ngClass]="{'errorTdBckgrd': row.valErrorMessage !== null 
+        ||  row.valErrorMessage !== '' }"  
+            *ngIf="row.valErrorMessage != null"> {{ row?.valErrorMessage  }} </td>
+        <td [ngClass]="{'txtCenter': row.valErrorMessage === null ||  row.valErrorMessage === '' }"  
+        *ngIf="row.valErrorMessage == null"> {{ row?.valErrorMessage  }} </td>
+     
+       
+        <td [ngClass]="{'txtCenter errorTdBckgrd': row.valErrorMessage !== null ||  row.valErrorMessage !== '' }"  
+        *ngIf="row.valErrorMessage != null">  {{ row?.valueDate }}</td>
+        
+        <td [ngClass]="{'txtCenter': row.valErrorMessage === null ||  row.valErrorMessage === '' }"  
+        *ngIf="row.valErrorMessage == null"> {{ row?.valueDate | date: 'd-MMM-y'  }}</td>
+        
+        
+        <td [ngClass]="{'errorTdBckgrd': row.valErrorMessage !== null 
+        ||  row.valErrorMessage !== '' }"  
+            *ngIf="row.valErrorMessage != null"> {{ row?.acctNo  }}</td>
+        <td  [ngClass]="{'txtCenter': row.valErrorMessage === null ||  row.valErrorMessage === '' }"  
+        *ngIf="row.valErrorMessage == null"> {{ row?.acctNo  }}</td>
+
+
+        <td [ngClass]="{'errorTdBckgrd': row.valErrorMessage !== null 
+        ||  row.valErrorMessage !== '' }"  
+            *ngIf="row.valErrorMessage != null"> {{ row?.acctType  }}</td>
+        <td  [ngClass]="{'txtCenter': row.valErrorMessage === null ||  row.valErrorMessage === '' }"  
+        *ngIf="row.valErrorMessage == null"> {{ row?.acctType  }}</td>
+
+
+        <td [ngClass]="{'errorTdBckgrd': row.valErrorMessage !== null 
+        ||  row.valErrorMessage !== '' }"  
+            *ngIf="row.valErrorMessage != null"> 
+             <span *ngIf ="row?.drCr== 'DR'"> {{ row?.amount    }} </span> 
+             <span *ngIf ="row?.drCr != 'DR'"> 0.00 </span> 
+        </td>
+        <td  class="txtRight" [ngClass]="{'txtCenter': row.valErrorMessage === null ||  row.valErrorMessage === '' }"  
+        *ngIf="row.valErrorMessage == null"> 
+          <span *ngIf ="row?.drCr== 'DR'"> {{ row?.amount  |  number:'.2'  }} </span> 
+          <span *ngIf ="row?.drCr != 'DR'"> 0.00 </span> 
+        </td>
+
+
+        <td [ngClass]="{'errorTdBckgrd': row.valErrorMessage !== null 
+        ||  row.valErrorMessage !== '' }"  
+            *ngIf="row.valErrorMessage != null"> 
+            <span *ngIf ="row?.drCr== 'CR'"> {{ row?.amount   }} </span> 
+            <span *ngIf ="row?.drCr != 'CR'">  0.00 </span> 
+        </td>
+        <td class="txtRight" [ngClass]="{'txtCenter': row.valErrorMessage === null ||  row.valErrorMessage === '' }"  
+        *ngIf="row.valErrorMessage == null"> 
+          <span *ngIf ="row?.drCr== 'CR'"> {{ row?.amount  |  number:'.2'  }} </span> 
+          <span *ngIf ="row?.drCr != 'CR'">  0.00 </span> 
+        </td>
+
+
+        <td [ngClass]="{'errorTdBckgrd': row.valErrorMessage !== null 
+        ||  row.valErrorMessage !== '' }"  
+            *ngIf="row.valErrorMessage != null"> {{ row?.ccyCode  }}</td>
+        <td class = "txtCenter" [ngClass]="{'txtCenter': row.valErrorMessage === null ||  row.valErrorMessage === '' }"  
+        *ngIf="row.valErrorMessage == null"> {{ row?.ccyCode  }}</td>
+        
+        
+        
+        <td [ngClass]="{'errorTdBckgrd': row.valErrorMessage !== null 
+        ||  row.valErrorMessage !== '' }"  
+            *ngIf="row.valErrorMessage != null"> {{ row?.chargeAmount  }}</td>
+        <td class="txtRight" [ngClass]="{'txtCenter': row.valErrorMessage === null ||  row.valErrorMessage === '' }"  
+        *ngIf="row.valErrorMessage == null"> {{ row?.chargeAmount  }}</td>
+
+
+
+        
+
+
+          <td [ngClass]="{'errorTdBckgrd': row.valErrorMessage !== null 
+        ||  row.valErrorMessage !== '' }"  
+            *ngIf="row.valErrorMessage != null"> {{ row?.chargeCode  }}</td>
+            
+        <td class="" [ngClass]="{'txtCenter': row.valErrorMessage === null ||  row.valErrorMessage === '' }"  
+        *ngIf="row.valErrorMessage == null"> {{ row?.chargeCode  }}</td>
+
+        
+        
+        <td [ngClass]="{'errorTdBckgrd': row.valErrorMessage !== null 
+        ||  row.valErrorMessage !== '' }"  
+            *ngIf="row.valErrorMessage != null"> {{ row?.chequeNo  }}</td>
+            
+        <td class="txtRight" [ngClass]="{'txtCenter': row.valErrorMessage === null ||  row.valErrorMessage === '' }"  
+        *ngIf="row.valErrorMessage == null"> {{ row?.chequeNo  }}</td>
+        
+    
+      </tr>
+     
+     
+      
+  </tbody>
+</table>
+
+
+<!-- <table here -->
+<!--Items Finished here-->

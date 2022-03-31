@@ -1,0 +1,164 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+         <div class="col-sm-2">
+            <div id="square5">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div> 
+            
+           
+        </div> 
+</div>
+
+ <form [formGroup]="basicForm" [formGroup]="basicForm" (ngSubmit)="add(basicForm.value)">
+  <mat-card>
+      <mat-card-header fxLayoutAlign="left"> 
+        <!-- <mat-icon>person_add</mat-icon>        -->
+      </mat-card-header>
+      <div class="card-title-text"> <b>BANK PROFILE </b><label class="allFieldRequired"> <label class="allFieldRequiredtxt">Note:</label> All fields marked * are required</label></div>
+      <hr>
+      
+      <mat-card-content class="centerDiv">
+        <div class = "form-group row">
+          
+            <label for="input-11" class="col-sm-2 col-form-label">Bank Code</label>
+            <div class = "col-sm-1">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            </div>
+            <label for="input-11" class="col-sm-1 col-form-label">Bank Name</label>
+            <div class = "col-sm-3">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            </div>
+           
+          
+            <label for="input-11" class="col-sm-1 col-form-label">Banking System </label>
+            <div class = "col-sm-3">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            </div>
+          
+         
+        </div>
+
+        <div class = "form-group row">
+            <label for="input-11" class="col-sm-2 col-form-label">Channel ID</label>
+            <div class = "col-sm-1">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            </div>
+
+            <label for="input-11" class="col-sm-1 col-form-label">Currency Code</label>
+            <div class = "col-sm-3">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            </div>
+          
+            <label for="input-11" class="col-sm-1 col-form-label">Country</label>
+            <div class = "col-sm-3">
+                
+                <select class="form-control">
+                    <option value="">Select Country</option>
+                    <option value>Gambial Country</option>
+                </select>
+            
+            </div>
+        
+           
+         
+        </div>
+        
+        <div class = "form-group row">
+            <label for="input-11" class="col-sm-2 col-form-label">Bank Address</label>
+            <div class = "col-sm-5">
+                <input   autocomplete="off" 
+                            class="form-control" 
+                            type="text"
+                             placeholder="" 
+                             name="first_name" 
+                             formControlName="first_name" 
+                    required>
+                
+            </div>
+            <label for="input-11" class="col-sm-1 col-form-label">Processing Date</label>
+            <div class = "col-sm-3">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            </div>
+        </div>
+        
+        
+        
+        
+        <hr>
+        <div class="card-title-text"> <b>GENERAL PROCESSING INFO </b></div>
+        <br>
+        <div class = "form-group row">
+          
+            <label for="input-11" class="col-sm-2 col-form-label">Enforce Pwd Chg Duration</label>
+            <div class = "col-sm-1">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            
+            </div>
+            <div style="margin-left:-10px;"> <span> <i>D</i>  </span>
+            </div>
+            <label for="input-11" class="col-sm-1 col-form-label">Idle Time Out </label>
+            <div class = "col-sm-1">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            </div>
+
+            <label for="input-11" class="col-sm-1 col-form-label">Status </label>
+            <div class = "col-sm-2">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            </div>
+            <label for="input-11" class="col-sm-1 col-form-label">Approved Txn?</label>
+            <div class = "col-sm-1">
+
+            
+           
+                <mat-checkbox style = ""   color="primary" name="first_name" 
+                                formControlName="first_name"  class="example-margin" 
+                (change)="check()"></mat-checkbox> 
+           
+            </div>
+        </div>
+
+        <div class = "form-group row">
+          
+            <label for="input-11" class="col-sm-2 col-form-label">VAT/GST Rate</label>
+            <div class = "col-sm-1">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            </div>
+            <div style="margin-left:-10px;"> <span> <i>%</i>  </span>
+            </div>
+
+            <label for="input-11" class="col-sm-1 col-form-label">Login Count</label>
+            <div class = "col-sm-1">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            </div>
+          
+            
+            <label for="input-11" class="col-sm-1 col-form-label">Date Created</label>
+            <div class = "col-sm-2">
+                <input autocomplete="off" class="form-control" type="text" placeholder="" name="first_name" formControlName="first_name" required/>
+            </div>
+         
+        </div>
+      <br>
+
+        <div class = "form-group row"> 
+        <div class = "btn-group" style="margin: 0  50% 0 40%">
+                
+            <button  *ngIf="displayloader != true"
+            mat-raised-button color="accent" 
+            [disabled]="">Update</button>
+
+            <button style="margin: 0 0 0 10px;"  *ngIf="displayloader != true"
+            mat-raised-button color="primary" 
+            [disabled]="">Return</button>
+                   
+            <mat-spinner *ngIf ="displayloader == true" 
+            strokeWidth="1" [diameter]="30" color="primary"></mat-spinner> 
+            </div>
+        </div>
+        </mat-card-content>
+  </mat-card>
+</form>

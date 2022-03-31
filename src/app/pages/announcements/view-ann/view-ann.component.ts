@@ -1,0 +1,294 @@
+
+import { GenModel } from './../../../model/gen.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from './../../../../environments/environment.prod';
+import { Observable } from 'rxjs';
+import { GeneralService } from './../../../services/genservice.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl, 
+          FormGroupDirective, NgForm } from '@angular/forms';
+import { emailValidator } from '../../../theme/utils/app-validators';
+import { AppSettings } from '../../../app.settings';
+import { Settings } from '../../../app.settings.model';
+import {  WaitingDialog } from '../../../services/services';
+import {MatSnackBar} from '@angular/material';
+import { LocalStorageService } from 'angular-2-local-storage';
+import Swal from 'sweetalert2';
+
+
+@Component({
+    selector: 'app-view-ann',
+    templateUrl: './view-ann.component.html',
+    styleUrls: ['./view-ann.component.scss']
+})
+export class ViewAnnComponent implements OnInit {
+  public form:FormGroup;
+  basicForm: FormGroup;
+  public settings: Settings;
+  durationsnack: number = 3000;
+  displayloader: boolean = false;
+  lblProcess: any;
+  selectedPrepCat: any;
+  religionlist = [];
+
+  stateList:any;
+  NationalityList: any;
+  localGovernmentsList: any;
+  private baseUrl = environment.apiURL;
+  Email: any;
+  loadPage = true;
+  token = GenModel.tokenName;
+  record: any;
+  recordDetails = GenModel.recordDetails;
+  redirectUrl = GenModel.redirectUrl;
+  constructor(public appSettings:AppSettings, 
+              public fb: FormBuilder, public router:Router,
+              public snackBar: MatSnackBar,
+              public _waitingDialog: WaitingDialog,
+              private _localStorageService: LocalStorageService,
+              public _GeneralService: GeneralService,
+              private http: HttpClient){
+    this.settings = this.appSettings.settings; 
+    this.form = this.fb.group({
+      userName: [null, Validators.compose([Validators.required])],
+      institutionCode: [null, Validators.compose([Validators.required])],
+      password:  [null, Validators.compose([Validators.required])]
+    });
+
+  }
+
+  pageLoad() {
+    setTimeout(() => {
+      this.loadPage = false;
+    }, 100);
+
+  }
+  
+  ngOnInit() {
+    this.pageLoad();
+
+    this.record = this._localStorageService.get(this.recordDetails); 
+    console.log('record edit ann: ', this.record);
+    console.log('record edit ann body: ', this.record.body);
+     
+     this._localStorageService.set(this.recordDetails, null);
+
+    
+// id: 1
+// title: "Title"
+// body: "Body"
+// maker: 101
+// maker_name: "Ben Mike"
+// checker: null
+// checker_name: null
+// updated_by: null
+// updated_id: null
+// publish_by: null
+// publisher_id: null
+// status: "Pending"
+// created_at: "2020-03-20 20:10:46"
+// updated_at: "2020-03-20 20:10:46"
+
+
+    
+
+
+    
+       this.basicForm = new FormGroup({
+        announcement_id: new FormControl('', [
+          Validators.required
+        ]),
+        title: new FormControl('', [
+          Validators.required
+        ]),
+        body: new FormControl('', [
+          Validators.required
+        ])
+    });
+
+    this.basicForm.patchValue({
+
+      announcement_id: this.record.id,
+      title: this.record.title,
+      body: this.record.body
+    
+    });
+   
+  }
+
+  return(){
+    let redirect = this._localStorageService.get(this.redirectUrl); 
+    this.router.navigate([redirect]);
+  }
+
+  keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+
+  public add(values: Object): void {
+    this.displayloader = true;
+    this.lblProcess = 'Wait, Action in progress...';
+ 
+    
+   // console.log('posted value*:  ', this.basicForm.value);
+    if (this.basicForm.valid) {
+
+      let url = 'auth/edit-announcement';
+      
+
+      this._GeneralService.post(values, url).subscribe(
+        (data: any) => {
+          
+          console.log('data edit: ', data);
+          this.displayloader = false;
+          this.lblProcess = '';
+         
+          Swal('', data.message, 'success');
+        },
+        (error: any) => {
+          
+        
+        this.displayloader =  false;
+        this.lblProcess = '';
+          Swal('', error.error.message, 'error');
+      });
+
+
+
+      // this._agentManagementService.post(this.basicForm.value).subscribe(result =>{
+      //     console.log('result*:  ', result);
+      //     if(result.ResponseCode != '00'){
+      //       this.timeOutRes(result.ResponseMessage);
+      //     //this.openSnackBar(result.ResponseMessage, 'Ok')
+      //       Swal('Failed:', result.ResponseMessage, 'error');
+      //     //Swal('Note:', result.ResponseMessage, 'warning');
+      //     }
+      //     else 
+      //     {
+      //       this.timeOutRes(result.ResponseMessage);
+      //       Swal('Success:', result.ResponseMessage, 'success');
+      //     }
+      // });
+    }
+    else 
+    {
+      this.displayloader  = false;
+      this.lblProcess = '';
+      //this.openSnackBar('Kindly Fill your Credential!', 'Ok')
+      Swal('Note:', 'Kindly Fill your Credential!', 'error');
+    }
+  }
+
+
+
+  post(postValue: any, url: any): Observable<any> 
+  {      
+      // console.log('post start222');
+
+      let token = this._localStorageService.get(this.token);
+
+       let postingurl = `${this.baseUrl}/${url}?token=${token}`;
+       console.log('postingurl test: ', postingurl);
+      let header = new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,OPTIONS',
+        'Access-Control-Allow-Headers':'application/json',
+       // 'Authorization': 'Bearer ' + token
+      });
+
+
+       return  this.http.post<any>(postingurl, postValue, {
+             headers:  header
+           }).pipe();
+     
+ }
+
+  timeOutRes(txt) {
+    this.lblProcess = txt;
+    this.displayloader = true;
+      setTimeout(() => {
+        this.displayloader =  false;
+        this.lblProcess = '';
+      }, 3000);
+  }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration:  this.durationsnack,
+    });
+  }
+
+  ngAfterViewInit()  {
+    this.settings.loadingSpinner = false; 
+  }
+
+  // loadState(){
+  //   console.log('Error Permission Action Start');
+  //   let url='/States/GetAll';
+  //    this._agentManagementService.get(url)
+  //         .subscribe(data => {
+  //           console.log('state data: ', data.Result);
+  //           this.stateList = data.Result;  
+  //         }, 
+  //         error => {
+
+  //           console.log('Error load state');
+           
+  //         });
+  // }
+
+  
+
+  loadCountry(){
+    console.log('Error Permission Action Start');
+    let url='/api/Countries';
+    //  this._agentManagementService.get(url)
+    //       .subscribe(data => {
+    //         console.log('NationalityList data: ', data);
+    //         this.NationalityList = data;
+           
+    //       }, 
+    //       error => {
+
+    //         console.log('Error load NationalityList');
+           
+    //       });
+  }
+
+
+  localGovernments(id: any){
+    console.log('state Id:', id);
+    let url='/api/LocalGovernments';
+    let data = {
+      url : url,
+      id: id
+    }
+    //  this._agentManagementService.getById(data)
+    //       .subscribe(data => {
+    //         console.log('locaGovernments data: ', data);
+    //         this.localGovernmentsList = data;
+    //       }, 
+    //       error => {
+
+    //         console.log('Error load NationalityList');
+           
+    //       });
+  }
+
+}
+
+
+// /** Error when invalid control is dirty, touched, or submitted. */
+// export class MyErrorStateMatcher implements ErrorStateMatcher {
+//   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+//     const isSubmitted = form && form.submitted;
+//     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+//   }
+// }

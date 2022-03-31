@@ -1,0 +1,238 @@
+<!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <p>{{retryMessage}}</p>
+</div>
+
+
+
+<ul class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+  <li [class]="selectedCalss">
+    <a class="nav-link {{tab1}}" data-toggle="tab" (click)="swapTab(1)">
+      <span class="hidden-xs">
+        <b> INSTRUMENT APPROVAL LIST </b>
+      </span></a>
+  </li>
+
+
+</ul>
+
+<br>
+
+<!-- manual Upload Tabb 1-->
+
+<div class="displayOnLapTop">
+  <div class="col-sm-12 row">
+    <div class="col-sm-4">
+
+      <div class="btn-group">
+
+
+        <button id="btnApproveInstr" style="margin: 0 0 0 0px;" (click)="approveInstrument()" mat-raised-button
+          color="accent" class="mat-elevation-z12 box-button" type="submit">
+          APPROVE INSTRUMENT(S)
+        </button>
+
+        <button id="btnRejectInstrument" style="margin: 0 0 0 20px;" mat-raised-button color="primary"
+          (click)="openRejectionReason()" class="mat-elevation-z12 box-button" type="submit">
+          REJECT INSTRUMENT(S)
+        </button>
+
+      </div>
+    </div>
+    <div class="col-sm-1"></div>
+    <label for="input-11" class="col-sm-1 col-form-label">Items Per Page:</label>
+    <div class="col-sm-2">
+      <select style="margin-left: 2px" class='form-control' [(ngModel)]="pageLmit" (change)='onOptionsSelected($event)'>
+        <option class='option' *ngFor='let option of ItemsPerPage' [value]="option.itemPerPage">{{option.itemPerPage}}
+        </option>
+      </select>
+    </div>
+    <label for="input-11" class="col-sm-1 col-form-label">Instrument Type</label>
+    <div class="col-sm-2">
+
+      <select class='form-control' [(ngModel)]="pageLmit" (change)='getByServiceId($event)'>
+        <option></option>
+        <option class='option' *ngFor='let option of allInstrumet' [value]="option.serviceId">
+          {{option.serviceDescription}}</option>
+      </select>
+    </div>
+
+
+
+  </div>
+  <br>
+
+  <div class="col-sm-12 row">
+    <div class="col-sm-1">
+    </div>
+    <div class="col-sm-1">
+
+    </div>
+    <div class="col-sm-1">
+
+    </div>
+    <div class="col-sm-1">
+
+    </div>
+    <div class="col-sm-1">
+
+    </div>
+  </div>
+  <table style="background-color: white;width: 120%" class="table table-bordered table-sm table-hover tableStyle">
+    <thead>
+      <tr>
+
+        <th style="width: 20px">S/NO</th>
+        <th style="width: 10px;">ACTION</th>
+        
+        <th style="width: 20px">
+          SEL.
+        </th>
+        <th style="width: 90px">REF NO</th>
+        <th style="width: 180px">SERVICE TYPE</th>
+        <th style="width: 90px">NO.OF CHG</th>
+        <th style="width: 90px">ACCT NO</th>
+        <th style="width: 5%">ACCT TYPE</th>
+        <th style="width: 10%">ACCT NAME</th>
+        <th style="width: 90px">AMOUNT</th>
+        <th style="width: 90px">CCY</th>
+        <th style="width: 90px">STATUS</th>
+        <th style="width: 90px">DEPT</th>
+        <th style="width: 120px">USER</th>
+        <th style="width: 120px">ORIGIN BRANCH</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="rows != null">
+      <!--Search Here-->
+      <tr>
+        <td>
+
+        </td>
+        <td>
+        </td>
+        <td>
+          <mat-checkbox color="primary" [(ngModel)]="selectedAllTrans" class="example-margin" (change)="selectAll()">
+          </mat-checkbox>
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter($event, 'RefNo')" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter($event, 'serviceType')" autocomplete="off"
+            class="form-control" type="text" placeholder="Search" />
+        </td>
+         <td> <input style="width: 100%" (keyup)="updateFilter($event, 'serviceType')" autocomplete="off"
+            class="form-control" type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter($event, 'acctNo')" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter($event, 'acctType')" autocomplete="off"
+            class="form-control" type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter($event, 'amount')" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter($event, 'ccy')" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter($event, 'status')" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter($event, 'dept')" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td>
+          <input style="width: 100%" (keyup)="updateFilter($event, 'userName')" autocomplete="off" class="form-control"
+            type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter($event, 'origBranch')" autocomplete="off"
+            class="form-control" type="text" placeholder="Search" />
+        </td>
+        <td> <input style="width: 100%" (keyup)="updateFilter($event, 'PROC. DEPT')" autocomplete="off"
+            class="form-control" type="text" placeholder="Search" />
+        </td>
+      </tr>
+      <!--Search End Here-->
+
+      <tr *ngFor="let row of rows; let h = index;">
+
+        <td> {{ h + 1 }}</td>
+        <td style="text-align: center;">
+          <span class="viewSpan" (click)="action('View', row)">View</span>
+
+        </td>
+        
+        <td>
+          <mat-checkbox color="primary" [(ngModel)]="row.select" class="example-margin" (change)="select(row)">
+          </mat-checkbox>
+
+        </td>
+        <td class="txtCenter"> {{ row?.referenceNo  }}</td>
+        <td class="txtCenter"> {{ row?.serviceDescription  }}</td>
+        <td class="txtCenter"> {{ row?.noOfCharges  }}</td>
+        <td> {{ row?.acctNo }}</td>
+        <td class="txtCenter"> {{ row?.acctType }}</td>
+        <td> {{ row?.acctName }}</td>
+        <td class="txtRight"> {{ row?.amount  |  number:'.2' }}</td>
+        <td> {{ row?.ccyCode }}</td>
+        <td>
+          <mat-chip mat-sm-chip class="activestatus" [selected]="row.instrumentStatus"
+            *ngIf="row.instrumentStatus == 'Authorized'">
+
+          </mat-chip>
+          <mat-chip mat-sm-chip class="inactivestatus" *ngIf="row.instrumentStatus !== 'Authorized'">
+            {{ row.instrumentStatus }}
+          </mat-chip>
+        </td>
+        <td> {{ row?.deptName }}</td>
+        <td> {{ row?.userName }}</td>
+        <td> {{ row?.origBranchName }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row">
+    <div class="col-sm-4">
+
+    </div>
+
+    <div class="col-sm-2">
+
+      <div class="btn-group">
+        <button mat-raised-button color="primary" style="margin-left: 0%" (click)="prevPage()"
+          class="mat-elevation-z12 box-button" type="submit">
+          <mat-icon id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+        </button>
+        <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" class="mat-elevation-z12 box-button"
+          (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+      </div>
+
+    </div>
+    <div class="col-sm-2">
+      <span style="font-size: 15px; margin-left: 5px; text-align: center !important; 
+           font-weight: 900; ">
+        Page: </span>
+      <span style="font-size: 15px; text-align: center !important; font-weight: 900;" id="page"></span>
+
+    </div>
+
+  </div>
+
+</div>

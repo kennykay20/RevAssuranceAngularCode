@@ -1,0 +1,601 @@
+ 
+  <!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+  <div class="preloader" *ngIf="loadPage == true">
+    <div class="col-sm-2">
+       <div id="square5">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+       </div> 
+   </div> 
+   <p>{{retryMessage}}</p> 
+  </div>
+
+
+  
+   <ul class="nav nav-tabs nav-tabs-danger nav-justified top-icon">
+    <li [class]="selectedCalss">
+        <a  class="nav-link {{tab1}}" data-toggle="tab" (click) ="swapTab(1)"><i class="icon-home">
+
+        </i> <span class="hidden-xs">
+          <b>BATCH ITEM(S) </b>
+          </span></a>
+    </li>
+  <li [class]="selectedCalss2">
+    <a  class="nav-link {{tab2}}" data-toggle="tab" (click) ="swapTab(2)">
+      <i class="icon-home">
+
+    </i> <span class="hidden-xs">
+      <b>BULK UPLOAD</b>
+      </span></a>
+</li>
+ 
+</ul> 
+
+  <br>
+
+  <!-- manual Upload Tabb 1-->
+
+  <div class="displayOnLapTop" *ngIf ="tabVlues === 1">
+
+      <div class="col-sm-12 row">
+        <div class="col-sm-4">
+
+          <div class="btn-group"> 
+                <button id="btnRemoveBatch"  
+                  style="margin: 0 0 0 0px;" (click)="removeBatches()"  
+                  mat-raised-button color="primary" 
+                  class="mat-elevation-z12 box-button" type="button">
+                  <img *ngIf = "actionLoaderUpdate === true" 
+                  src="assets/img/loader/loader.gif"/>REMOVE BATCH(ES)  
+                </button>
+
+                <button 
+                    style="margin: 0 0 0 20px;" (click)="action('Add','')"  
+                    mat-raised-button color="accent" 
+                    class="mat-elevation-z12 box-button" type="button">
+                    CREATE BATCH  
+                </button>
+
+                <button id="btnprocessAllItem"  
+                  style="margin: 0 0 0 10px;cursor:pointer" (click)="processManual()"  
+                  mat-raised-button color="accent" 
+                  class="mat-elevation-z12 box-button" type="button">
+                  PROCESS  
+                </button>
+                
+           
+      
+          </div>
+        </div>
+        <div class="col-sm-1">
+          
+        </div>
+        <div class="col-sm-2">
+          <select style="margin-left: 0px" class='form-control' [(ngModel)]="pageLmit"
+            (change)='onOptionsSelected($event)'>
+            <option class='option'  *ngFor='let option of ItemsPerPage' 
+            [value]="option.itemPerPage">{{option.itemPerPage}}</option>
+          </select>
+        
+        </div>
+        
+  </div>
+      <br>
+
+      <div class="col-sm-12 row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-1">
+         
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+      </div>
+     <table style="background-color: white;width: 2000px" 
+     class="table table-bordered table-sm table-hover tableStyle">
+      <thead>
+        <tr>
+          <th style="width: 20px">S/NO</th>
+          <th style="width: 130px; text-align: center">ACTION</th>
+          
+          <th style="width: 20px">
+            SEL.
+          </th>
+          <th style="width: 90px">BATCH NO</th>
+          <th>STATUS</th>
+          <th style="width: 90px">NO OF ITEMS</th>
+          <th style="width: 90px">CURRENCY</th>
+          <th style="width: 150px">TOTAL POSTED TXN</th>
+          <th style="width: 100px">TOTAL DR</th>
+          <th style="width: 100px">TOTAL CR</th>
+          <th style="width: 50px">DIFFERENCE</th>
+          <th style="width: 130px">TOTAL REC. COUNT</th>
+          <th style="width: 130px">TOTAL DR COUNT</th>
+          <th style="width: 130px">TOTAL CR COUNT</th>
+          <th style="width: 150px">LOADED BY</th>
+          <th>PROC. DEPT</th>
+          
+          <th>ORIG. BRANCH</th>
+          <th>FILE NAME</th>
+         
+        </tr>
+      </thead>
+      <tbody >
+        <!--Search Here-->
+        <tr>
+          <td> 
+          
+           </td>
+            <td> 
+            </td>
+            <td> 
+                   <mat-checkbox 
+                          color="primary"  
+                          [(ngModel)] = "selectedAllTrans" 
+                          class="example-margin" 
+                          (change) = "selectAll()"
+                          [disabled]="rows.length === 0 ? true : false">
+                    </mat-checkbox> 
+             </td>
+              <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'batchNo')"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+              </td>
+                <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'STATUS')"
+                      autocomplete="off" class="form-control"
+                       type="text" placeholder="Search" 
+                        />
+                  </td>
+              <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'NoOfItems')"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+            </td>
+              <td> 
+                <input style ="width: 100%"  (keyup)="updateFilter($event, 'CURRENCY')"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+               </td>
+                <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL POSTED TXN')"
+                    autocomplete="off" class="form-control"
+                     type="text" placeholder="Search" 
+                      />
+                </td>
+                <td> 
+                  <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL DR')"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+                 </td>
+                  <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL CR')"
+                      autocomplete="off" class="form-control"
+                       type="text" placeholder="Search" 
+                        />
+                  </td>
+                  <td> 
+                    <input style ="width: 100%"  (keyup)="updateFilter($event, 'DIFFERENCE')"
+                    autocomplete="off" class="form-control"
+                     type="text" placeholder="Search" 
+                      />
+                   </td>
+                    <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL RECORD COUNT')"
+                        autocomplete="off" class="form-control"
+                         type="text" placeholder="Search" 
+                          />
+                    </td>
+                    <td> 
+                      <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL DR COUNT')"
+                      autocomplete="off" class="form-control"
+                       type="text" placeholder="Search" 
+                        />
+                     </td>
+                      <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL CR COUNT')"
+                          autocomplete="off" class="form-control"
+                           type="text" placeholder="Search" 
+                            />
+                      </td>
+                      <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'PROC. DEPT')"
+                        autocomplete="off" class="form-control"
+                         type="text" placeholder="Search" 
+                          />
+                    </td>
+
+                  
+                  <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'ORIG. BRANCH')"
+                    autocomplete="off" class="form-control"
+                     type="text" placeholder="Search" 
+                      />
+                  </td>
+                  <td>
+
+                  </td>
+
+                 
+                      
+        </tr>
+      <!--Search End Here-->
+
+        <tr *ngFor="let row of rows; let h = index;">
+         
+          <td>  {{ h + 1 }}</td> 
+          <td style="text-align: center;">  
+
+     
+            <span *ngIf="row.status" 
+                  matTooltip="View  {{ row?.batchNo}} Details" class="viewSpan" 
+            (click)="action('View', row)">View</span>  
+            <span *ngIf="row.status" matTooltip="Edit  {{ row?.batchNo }} Details" 
+            (click)="action('Edit', row)" class = "editSpan">Edit/Add Item</span>
+            
+          </td>
+           
+          <td>  
+               <mat-checkbox 
+                      color="primary" 
+                      [(ngModel)]="row.select" 
+                      class="example-margin" 
+                      (change)="select(row)">
+               </mat-checkbox> 
+            
+          </td>
+          <td  class = "txtCenter"> {{ row?.batchNo  }}</td>
+           <td>
+          {{ row.status }}  
+          </td>
+          <td class = "txtCenter" > {{ row?.itemCount  }}</td>
+          <td>  {{ row?.ccyCode }}</td>
+          <td style="text-align: center"> {{ row?.postedTransCount }}</td>
+          <td class = "txtCenter"> {{ row?.totalDr |  number:'.2' }}</td>
+          <td class = "txtCenter">   {{ row?.totalCr |  number:'.2'  }}</td>
+          <td class = "txtCenter">  {{ row?.tDifference |  number:'.2' }}</td>
+          <td>  {{ row?.recordCount }}</td>
+          <td>  {{ row?.totalDrCount }}</td>
+          <td>  {{ row?.totalCrCount }}</td>
+          <td>  {{ row?.loadedUser }}</td>
+          <td>  {{ row?.userProcessingDept }}</td>
+         
+          <td> {{ row?.originBranch }}</td>
+         <td>  {{ row?.filename }} </td>
+        </tr>     
+      </tbody>
+    </table>
+    
+    <div  class="row" >
+      <div class="col-sm-4">
+
+      </div>
+
+      <div class="col-sm-2">
+
+          <div class="btn-group">
+              <button mat-raised-button color="primary"
+              style = "margin-left: 0%" (click)="prevPage()"
+                class="mat-elevation-z12 box-button" type="submit">
+                <mat-icon  id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+              </button> 
+                <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+                class="mat-elevation-z12 box-button" (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+          </div> 
+    
+        </div>
+        <div class="col-sm-2">
+          <span style = "font-size: 15px; margin-left: 5px; text-align: center !important; 
+           font-weight: 900; ">
+          Page: </span> 
+          <span style="font-size: 15px; text-align: center !important; font-weight: 900;"
+           id="page"></span>
+    
+        </div>
+
+      </div>
+
+  </div>
+
+  <!--Manual Upload Ends here -->
+
+  <!-- File Upload Tab 2 -->
+
+  <div class="displayOnLapTop" *ngIf ="tabVlues === 2">
+
+    <div class="col-sm-12 row">
+      <div class="col-sm-5">
+
+        <div class="btn-group"> 
+          <button id="btnDownloadFormat"  
+                style="margin: 0 0 0 0px;" (click)="downloadFormat()"  
+                mat-raised-button color="accent" 
+                matTooltip ='Click to Download the Upload Format'
+                class="mat-elevation-z12 box-button" type="submit">
+              <mat-icon style="color: white">cloud_download</mat-icon>
+             DOWNLOAD UPLOAD FORMAT  
+        </button>
+
+      <button 
+        style="margin: 0 0 0 20px;" (click)="gotoUpload('Add','')"  
+        mat-raised-button color="primary" 
+        class="mat-elevation-z12 box-button" type="submit">
+         UPLOAD BATCH  
+      </button> 
+
+      <button id="btnprocessFileUpload"  
+          style="margin: 0 0 0 10px;" (click)="processFileUpload()"  
+          mat-raised-button color="accent" 
+          matTooltip ='Click to Download the Upload Format'
+          class="mat-elevation-z12 box-button" type="submit">
+          FINAL LOAD  
+    </button>
+
+        </div>
+      </div>
+
+      <div class="col-sm-1">
+       
+      </div>
+      <div class="col-sm-2">
+        <select style="margin-left: 0px" class='form-control' [(ngModel)]="pageLmit"
+          (change)='onOptionsSelected($event)'>
+          <option class='option'  *ngFor='let option of ItemsPerPage' 
+          [value]="option.itemPerPage">{{option.itemPerPage}}</option>
+        </select>
+      
+      </div>
+      
+</div>
+    <br>
+
+    <div class="col-sm-12 row">
+      <div class="col-sm-1">
+      </div>
+      <div class="col-sm-1">
+       
+      </div>
+      <div class="col-sm-1">
+
+      </div>
+      <div class="col-sm-1">
+
+      </div>
+      <div class="col-sm-1">
+
+      </div>
+    </div>
+   <table style="background-color: white;width: 2000px" 
+   class="table table-bordered table-sm table-hover tableStyle">
+    <thead>
+      <tr>
+       
+        <th style="width: 130px; text-align: center">ACTION</th>
+        <th style="width: 20px">S/NO</th>
+        <th style="width: 20px">
+          SEL.
+        </th>
+        <th style="width: 90px">BATCH NO</th>
+        <th>STATUS</th>
+        <th style="width: 90px">NO OF ITEMS</th>
+        <th style="width: 90px">CURRENCY</th>
+        <th style="width: 150px">TOTAL POSTED TXN</th>
+        <th style="width: 100px">TOTAL DR</th>
+        <th style="width: 100px">TOTAL CR</th>
+        <th style="width: 50px">DIFFERENCE</th>
+        <th style="width: 130px">TOTAL REC. COUNT</th>
+        <th style="width: 130px">TOTAL DR COUNT</th>
+        <th style="width: 130px">TOTAL CR COUNT</th>
+        <th style="width: 150px">LOADED BY</th>
+        <th>PROC. DEPT</th>
+        
+        <th>ORIG. BRANCH</th>
+        <th>FILE NAME</th>
+      </tr>
+    </thead>
+    <tbody >
+      <!--Search Here-->
+      <tr>
+        <td></td>
+        <td></td>
+          <td> 
+                 <mat-checkbox 
+                        color="primary"  
+                        [(ngModel)] = "selectedAllTrans" 
+                        class="example-margin" 
+                        (change) = "selectAll()">
+                  </mat-checkbox> 
+           </td>
+            <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'batchNo')"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+            </td>
+             <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'STATUS')"
+                    autocomplete="off" class="form-control"
+                     type="text" placeholder="Search" 
+                      />
+                </td>
+            <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'NoOfItems')"
+              autocomplete="off" class="form-control"
+               type="text" placeholder="Search" 
+                />
+          </td>
+            <td> 
+              <input style ="width: 100%"  (keyup)="updateFilter($event, 'CURRENCY')"
+              autocomplete="off" class="form-control"
+               type="text" placeholder="Search" 
+                />
+             </td>
+              <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL POSTED TXN')"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+              </td>
+              <td> 
+                <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL DR')"
+                autocomplete="off" class="form-control"
+                 type="text" placeholder="Search" 
+                  />
+               </td>
+                <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL CR')"
+                    autocomplete="off" class="form-control"
+                     type="text" placeholder="Search" 
+                      />
+                </td>
+                <td> 
+                  <input style ="width: 100%"  (keyup)="updateFilter($event, 'DIFFERENCE')"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+                 </td>
+                  <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL RECORD COUNT')"
+                      autocomplete="off" class="form-control"
+                       type="text" placeholder="Search" 
+                        />
+                  </td>
+                  <td> 
+                    <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL DR COUNT')"
+                    autocomplete="off" class="form-control"
+                     type="text" placeholder="Search" 
+                      />
+                   </td>
+                    <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'TOTAL CR COUNT')"
+                        autocomplete="off" class="form-control"
+                         type="text" placeholder="Search" 
+                          />
+                    </td>
+                    <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'PROC. DEPT')"
+                      autocomplete="off" class="form-control"
+                       type="text" placeholder="Search" 
+                        />
+                  </td>
+
+                 
+                <td>
+                   <input style ="width: 100%"  (keyup)="updateFilter($event, 'ORIG. BRANCH')"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+                </td>
+
+                <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'FILE NAME')"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+                </td>
+                <td> <input style ="width: 100%"  (keyup)="updateFilter($event, 'FILE NAME')"
+                  autocomplete="off" class="form-control"
+                   type="text" placeholder="Search" 
+                    />
+                </td>
+                    
+      </tr>
+    <!--Search End Here-->
+
+      <tr *ngFor="let row of rows; let h = index;">
+       
+        <td style="text-align: center;"> 
+          <span *ngIf="row.status" 
+                matTooltip="View  {{ row?.batchNo}} Details" class="viewSpan" 
+          (click)="gotoUpload('View', row)">View</span> 
+
+          <span *ngIf="row.status" 
+                matTooltip="View  {{ row?.batchNo}} Details" class="editSpan" 
+          (click)="gotoUpload('Edit', row)">Edit/Add Item</span> 
+      
+        </td>
+        <td>  {{ h + 1 }}</td>
+        <td>  
+             <mat-checkbox 
+                    color="primary" 
+                    [(ngModel)]="row.select" 
+                    class="example-margin" 
+                    (change)="select(row)">
+             </mat-checkbox> 
+          
+        </td>
+        <td  class = "txtCenter"> {{ row?.batchNo  }}</td>
+          <td>
+          {{ row.status }}
+        </td>
+        <td class = "txtCenter" > {{ row?.itemCount  }}</td>
+        <td>  {{ row?.ccyCode }}</td>
+        <td style="text-align: center"> {{ row?.postedTransCount }}</td>
+        <td class = "txtCenter"> {{ row?.totalDr |  number:'.2' }}</td>
+        <td class = "txtCenter">   {{ row?.totalCr |  number:'.2'  }}</td>
+        <td class = "txtCenter">  {{ row?.tDifference |  number:'.2' }}</td>
+        <td>  {{ row?.recordCount }}</td>
+        <td>  {{ row?.totalDrCount }}</td>
+        <td>  {{ row?.totalCrCount }}</td>
+        <td>  {{ row?.loadedUser }}</td>
+        <td>  {{ row?.processingDept }}</td>
+      
+        <td>  {{ row?.originBranch }}</td>
+        <td>  {{ row?.filename }}</td>
+      </tr>     
+    </tbody>
+  </table>
+  
+  <div  class="row" >
+    <div class="col-sm-4">
+
+    </div>
+
+    <div class="col-sm-2">
+
+        <div class="btn-group">
+            <button mat-raised-button color="primary"
+            style = "margin-left: 0%" (click)="prevPage()"
+              class="mat-elevation-z12 box-button" type="submit">
+              <mat-icon  id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+            </button> 
+              <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" 
+              class="mat-elevation-z12 box-button" (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+        </div> 
+  
+      </div>
+      <div class="col-sm-2">
+        <span style = "font-size: 15px; text-align: center !important; 
+         font-weight: 900; ">
+        Page: </span> 
+        <span style="font-size: 15px; text-align: center !important; font-weight: 900;"
+         id="page"></span>
+  
+      </div>
+
+    </div>
+
+</div>
+
+<!-- File Upload Tab 2 End here-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!--Tabb 2-->
+
+
+        <!--Tabb 3-->
+
+

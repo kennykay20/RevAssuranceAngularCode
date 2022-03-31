@@ -1,0 +1,61 @@
+
+
+   <div class="form-group row">
+
+    <label for="input-11" class="col-sm-1 col-form-label">Supervisor</label>
+    <div class="col-sm-2">
+      <input autocomplete="off" [(ngModel)]="allActionUser.supervisor" class="form-control" type="text"
+        readonly />
+
+    </div>
+    <label for="input-11" class="col-sm-1 col-form-label">Oringin Branch </label>
+    <div class="col-sm-2">
+      <input autocomplete="off" class="form-control" type="text" [(ngModel)]="allActionUser.originBranch"
+        readonly />
+    </div>
+    <label for="input-11" class="col-sm-1 col-form-label">Dismissed By</label>
+    <div class="col-sm-2">
+
+
+      <input autocomplete="off" class="form-control" type="text" [(ngModel)]="allActionUser.dismissedBy"
+        readonly />
+
+    </div>
+    <label for="input-11" class="col-sm-1 col-form-label">Dismiss Date</label>
+    <div class="col-sm-2">
+
+      <input autocomplete="off" class="form-control" type="text"
+       [(ngModel)]="allActionUser.dismissedDate"
+        readonly />
+    </div>
+
+  </div>
+  <div class="form-group row">
+
+    <label for="input-11" class="col-sm-1 col-form-label">Rejected By</label>
+    <div class="col-sm-2">
+      <input autocomplete="off" [(ngModel)]="allActionUser.rejectedBy" class="form-control" type="text"
+        readonly />
+
+    </div>
+    <label for="input-11" class="col-sm-1 col-form-label">Rejected Date</label>
+    <div class="col-sm-2">
+      <input autocomplete="off" class="form-control" type="text" 
+      [(ngModel)]="allActionUser.rejectedDate"
+        readonly />
+    </div>
+
+
+  </div>
+  <div class="form-group row">
+
+    <label for="input-11" class="col-sm-1 col-form-label">Rejected Reason</label>
+    <div class="col-sm-5">
+      <textarea autocomplete="off"
+        style="margin-top: 0px; margin-bottom: 0px; height: 169px; border: solid 1px black; font-size: 12px"
+        class="form-control" type="text" 
+        [(ngModel)]="allActionUser.rejectionReasons"
+        readonly></textarea>
+
+    </div>
+  </div>

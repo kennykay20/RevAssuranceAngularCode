@@ -1,0 +1,304 @@
+
+ 
+ <div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+     <div id="square5">
+         <span></span>
+         <span></span>
+         <span></span>
+         <span></span>
+     </div> 
+     
+    
+ </div> 
+</div>
+
+<form [formGroup]="basicForm" [formGroup]="basicForm">
+
+<div style="border: none solid black;">
+
+    <div class="card-title-text"> <b>  SERVICE DETAILS </b><label class="allFieldRequired"> <label class="allFieldRequiredtxt">{{requiredFieldMsg}}</label></label></div>
+    <hr>
+    <div style="border: 1px solid rgb(177, 160, 160); padding: 10px;">
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">Description</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="serviceDescription" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Channel</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+                formControlName="channel" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">Frequency</label>
+        <div class="col-sm-2" style="margin-left:-5px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="frequency" />
+        </div>
+
+
+        <!-- <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Contigent Asset Acct No</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+            <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+                formControlName="contDrAcctNo" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Income Acct No</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="incomeAcctNo" />
+        </div> -->
+    
+    </div>
+    
+    <div class="form-group row">
+
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">Contigent Asset Acct No</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder=""
+                formControlName="contDrAcctNo" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Income Acct No</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            <input style="margin-left: 10px;" autocomplete="off" class="form-control" type="text" placeholder="" formControlName="incomeAcctNo" />
+        </div>
+
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">Contigent Asset Acct Type</label>
+        <div class="col-sm-2" style="margin-left:-5px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="contDrAcctType" />
+        </div>
+    
+    
+        <!-- <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Contigent Liability Acct No</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input type="text" autocomplete="off" class="form-control" placeholder="" formControlName="contCrAcctNo" />
+        </div>
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-40px ;">Contigent Liability Acct Type</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="contCrAcctType" />
+        </div> -->
+    </div>
+    
+    
+    <div class="form-group row">
+
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">Contigent Liability Acct No</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            <input type="text" autocomplete="off" class="form-control" placeholder="" formControlName="contCrAcctNo" />
+        </div>
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px;">Contigent Liability Acct Type</label>
+        <div class="col-sm-2" style="margin-left:-10px;">
+            <input style="margin-left: 10px;" autocomplete="off" class="form-control" type="text" placeholder="" formControlName="contCrAcctType" />
+        </div>
+
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">Contigent Acct Narr</label>
+        <div class="col-sm-2" style="margin-left:-5px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="contDrAcctNarr" />
+        </div>
+    
+    
+        <!-- <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Contigent Liability Acct Narr</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input type="text" autocomplete="off" class="form-control" placeholder="" formControlName="contCrAcctNarr" />
+        </div>
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-40px ;">Department</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <select class="form-control" formControlName="defaultDept">
+                <option *ngFor="let dep of dept" 
+                [value]="dep.deptId"> {{dep.deptname}} </option>
+            </select>
+        </div> -->
+    </div>
+    
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">Contigent Liability Acct Narr</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            <input type="text" autocomplete="off" class="form-control" placeholder="" formControlName="contCrAcctNarr" />
+        </div>
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Department</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            <select style="margin-left: 10px;" class="form-control" formControlName="defaultDept">
+                <option *ngFor="let dep of dept"
+                [value]="dep.deptId"> {{dep.deptname}} </option>
+            </select>
+        </div>
+
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">Income Acct Type</label>
+        <div class="col-sm-2" style="margin-left:-5px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="incomeAcctType" />
+        </div>
+    
+    
+        <!-- <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Channel</label>
+        <div class="col-sm-2" style="margin-left:-30px ;">
+            <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+                formControlName="channel" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Frequency</label>
+        <div class="col-sm-2" style="margin-left:-20px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="frequency" />
+        </div> -->
+    
+    </div>
+    
+    
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">Sequence</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="sequence" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Ref Prefix</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+                formControlName="refPrefix" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">Cust Acct Dr TC</label>
+        <div class="col-sm-2" style="margin-left:-5px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="custAcctDrTC" />
+        </div>
+    
+    </div>
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">GL Acct Dr TC</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="glAcctDrTC" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Cust Acct Cr TC</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+                formControlName="custAcctCrTC" />
+        </div>
+    
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">GL Acct Cr TC</label>
+        <div class="col-sm-2" style="margin-left:-5px ;">
+            <input autocomplete="off" class="form-control" type="text" placeholder="" formControlName="glAcctCrTC" />
+        </div>
+    
+    </div>
+    
+    <div class="form-group row">
+    
+        <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-10px ;">Req Amort Sched</label>
+        <div class="col-sm-2" style="margin-left:-10px ;">
+            
+            <mat-checkbox formControlName="reqAmortSched"></mat-checkbox>
+        </div>
+       
+
+        <label *ngIf="data.actionName !== 'Add'" for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Service Id</label>
+        <div *ngIf="data.actionName !== 'Add'" class="col-sm-2" style="margin-left:-10px ;">
+            <input style="margin-left:10px ;" autocomplete="off" class="form-control" type="text" placeholder=""
+                formControlName="serviceId" />
+        </div>
+    
+    </div>
+</div>
+
+ <div *ngIf ="data.actionName !== 'Add'" style="padding-top: 3px;">
+
+    <div class="form-group">
+        <div class="col-sm-12 infoAcctdetails" style="background-color:#444;color:#fff; text-align:center;">
+            <label class="control-label lbl" style="color:#fff;" for="tagsinput-2">AUDIT TRAIL</label>
+        </div>
+     </div>
+     <div style="border: 1px solid rgb(177, 160, 160); padding: 10px;">
+     <div class = "form-group row">
+         
+       
+
+         <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Created By</label>
+         <div class="col-sm-2" style="margin-left:-20px ;">
+             <input [(ngModel)] = "createdBy" autocomplete="off" class="form-control" type="text" 
+             placeholder="" formControlName="createdBy" />
+         </div>
+     
+     
+         <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-50px ;">Date Created</label>
+         <div class="col-sm-2" style="margin-left:-30px ;">
+             <input style="margin-left:10px ;" 
+             autocomplete="off" class="form-control" type="text" placeholder=""
+                 formControlName="dateCreated" readonly />
+         </div>
+     
+     
+         <label for="input-11" class="col-sm-2 col-form-label" style="margin-left:-30px ;">Status</label>
+         <div class="col-sm-2" style="margin-left:-20px ;">
+            <select class="form-control" formControlName="status">
+                <option>Select Status</option>
+                <option *ngFor="let a of statuses" [value]="a.status">
+                    {{ a.status }}</option>
+            </select>
+         </div>
+     </div>
+    </div>
+ </div>
+ <hr>
+
+ <br>
+<div class = "form-group row"> 
+ <div class = "btn-group" style="margin: 0  50% 0 40%">
+
+    <!-- <button   *ngIf="data.actionName == 'Add'"
+    mat-raised-button color="accent" 
+    [disabled]="!basicForm.valid">
+    <img src="assets/img/loader/loader.gif"/>
+    Save</button> -->
+
+    <button id="btnSave"   *ngIf="data.actionName == 'Add'"
+    mat-raised-button color="accent"  (click)="add(basicForm.value)"
+    [disabled]="!basicForm.valid">
+    <img *ngIf = "actionLoaderSave === true" src="assets/img/loader/loader.gif"/>
+    Save</button>
+         
+     <button id="btnUpdate"   *ngIf="data.actionName == 'Edit'" 
+     mat-raised-button color="accent" (click)="update(basicForm.value)"
+     >
+     <img *ngIf = "actionLoaderUpdate === true" src="assets/img/loader/loader.gif"/>
+     Update</button>
+
+     <button type="button" style="margin: 0 10px 0 10px;" 
+     mat-raised-button color="primary" 
+     (click)="close()">Return</button>
+
+     <button 
+        type="button" mat-raised-button color="accent" 
+        *ngIf="data.actionName != 'Add'" 
+        (click)="auditList()"
+     >Audit Trail</button>
+            
+     <mat-spinner *ngIf ="displayloader == true" 
+     strokeWidth="1" [diameter]="30" color="primary"></mat-spinner> 
+     </div>
+ </div>
+
+</div>
+
+
+
+
+    
+
+
+</form>

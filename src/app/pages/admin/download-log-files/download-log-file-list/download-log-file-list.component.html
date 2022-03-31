@@ -1,0 +1,125 @@
+<!-- <div class="preloader" *ngIf="loadPage == true">
+    <img class = "imgLoader"  src="assets/img/loader/assuredgif.gif"/>
+    <br>
+    <p>{{retryMessage}}</p> 
+  
+  </div> -->
+
+<div class="preloader" *ngIf="loadPage == true">
+  <div class="col-sm-2">
+    <div id="square5">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <p>{{retryMessage}}</p>
+</div>
+
+<div style="text-align: center; font-size: larger; background-color: white !important" class="card-title-text"> 
+  <strong>DOWNLOAD LOG FILE(S) </strong>
+</div>
+<br>
+
+
+<div class="displayOnLapTop">
+
+   <div class="form-group row">
+      <div class="col-sm-1">
+      
+      </div>
+      <label for="input-11" class="col-sm-3 col-form-label">Item per page</label>
+      <div class="col-sm-2">
+        <select style="margin-left: 0px" class='form-control' [(ngModel)]="pageLmit" (change)='onOptionsSelected($event)'>
+          <option class='option' *ngFor='let option of ItemsPerPage' [value]="option.itemPerPage">{{option.itemPerPage}}
+          </option>
+        </select>
+      </div>
+   </div>
+   
+
+  <table style = "background-color: white; width: 70%; margin: 0% 0% 0% 10%" class="table table-responsive table-bordered table-sm table-hover tableStyle">
+    <thead>
+      <tr>
+        <th style="text-align: center" colspan="3">
+          <span  class="editSpan"  
+          (click)= "dynamicDownloadTxt()" title = "Click to Download">
+          CLICK HERE TO DOWNLOAD<mat-icon style="color: black">cloud_download</mat-icon>
+        </span> 
+          <b> LOG FILES </b>
+        </th>
+      </tr>
+      <tr>
+        <!-- <th  style="width: 10px">ACTION</th> -->
+        <th  style="width: 5px">SEL.</th>
+        <th  style="width: 60%">FOLDER NAME </th>
+        <th  style="width: 37%">DATE GENERATED</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--Search Here-->
+      <tr>
+       
+          <td> <mat-checkbox color="primary"  [(ngModel)]="selectedAllTrans" 
+            class="example-margin" 
+           (change)="selectAll()"></mat-checkbox> 
+          </td>
+          <td> 
+              <input style ="width: 100%"  (keyup)="updateFilter1($event, 'fileName')"
+              autocomplete="off" class="form-control"
+              type="text" placeholder="Search"/>  
+           </td>
+           <td> 
+            <!-- <input style ="width: 100%"  (keyup)="updateFilter1($event, 'fileDate')"
+            autocomplete="off" class="form-control"
+            type="text" placeholder="Search"/>   -->
+         </td>
+      </tr>
+    <!--Search End Here-->
+      <tr *ngFor="let row of rows; let h = index;">
+      
+        <td>  
+          <mat-checkbox color="primary"  
+                [(ngModel)]="row.select"  [(ngModel)]="row.select" 
+                class="example-margin">
+          </mat-checkbox>
+        </td>  
+        <td title ="Full Path:  {{ row?.path }}">  {{ row?.name }}</td>
+        <td>  {{ row?.date | date: 'medium'  }}</td>
+      </tr>
+     
+    </tbody>
+  </table>
+  <br>
+
+    <div class="row">
+    <div class="col-sm-4">
+
+    </div>
+
+    <div class="col-sm-2">
+
+      <div class="btn-group">
+        <button mat-raised-button color="primary" style="margin-left: 0%" (click)="prevPage()"
+          class="mat-elevation-z12 box-button" type="submit">
+          <mat-icon id="btn_prev">keyboard_arrow_left</mat-icon>Prev.
+        </button>
+        <button style="margin: 0 0 0 10px;" mat-raised-button color="accent" class="mat-elevation-z12 box-button"
+          (click)="nextPage()" type="submit">Next<mat-icon id="btn_next">keyboard_arrow_right</mat-icon></button>
+      </div>
+
+    </div>
+    <div class="col-sm-2">
+      <span style="font-size: 15px; text-align: center !important; 
+             font-weight: 900; ">
+        Page: </span>
+      <span style="font-size: 15px; text-align: center !important; font-weight: 900;" id="page"></span>
+     
+    </div>
+
+  </div>
+
+
+
+</div>

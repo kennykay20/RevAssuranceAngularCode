@@ -1,0 +1,62 @@
+<span> <b> {{templateName}} </b> </span>
+
+<div mat-dialog-actions>
+  <div class="col-sm-9 TempStlyle">
+
+    <editor apiKey="u38cczd620999bqpzg4m7hxgkbz6vvfq4ddxb9eks89r1gjt" [init]="{
+      height: 500,
+      menubar: true,
+      enabled: false,
+      plugins: [
+      'advlist autolink lists link image charmap print preview anchor',
+      'searchreplace visualblocks code fullscreen',
+      'insertdatetime media table paste code help wordcount image'
+      ],
+      toolbar:
+      'undo redo | formatselect | bold italic backcolor | \
+      alignleft aligncenter alignright alignjustify | \
+      bullist numlist outdent indent | removeformat | help',
+      image_list: [
+      {title: 'My image 1', value: 'https://mdbootstrap.com/img/Photos/Slides/img%20(68).jpg'}
+     
+    ]
+      }" [(ngModel)]="replaceData" readonly *ngIf = "serviceId !== 13">
+
+    </editor>
+
+    <editor apiKey="u38cczd620999bqpzg4m7hxgkbz6vvfq4ddxb9eks89r1gjt" 
+    [init]="{
+        height: 500,
+        menubar: true,
+        enabled: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount image'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help print',
+        image_list: [
+          {title: 'My image 1', value: 'https://mdbootstrap.com/img/Photos/Slides/img%20(68).jpg'}
+        ]
+      }" [(ngModel)]="replaceData" readonly *ngIf = "serviceId === 13"> 
+
+    </editor>
+
+
+    
+
+  </div>
+
+  <br> <br> <br>
+
+  <button style="margin-top: 10px" mat-raised-button color="accent" (click)="submit()"
+    class="mat-elevation-z12 box-button" mat-dialog-close>Ok</button>
+
+  <button style="margin-top: 10px" mat-raised-button color="primary" (click)="cancel()"
+    class="mat-elevation-z12 box-button" mat-dialog-close>Cancel</button>
+
+</div>
+
